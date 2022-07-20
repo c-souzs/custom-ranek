@@ -1,5 +1,30 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { DefaultTheme, ThemeProvider } from 'styled-components';
+import Header from './components/Header';
+import usePersistedStateLs from './hooks/usePersistedStateLs';
+import Router from './Router';
+import GlobalStyles from './styles/globalStyles';
+import dark from './styles/themes/dark';
+import light from './styles/themes/light';
 
-const App = (): JSX.Element => <h1>Olá mundo</h1>;
+const App = (): JSX.Element => {
+  const [theme, setTheme] = usePersistedStateLs<DefaultTheme>('theme', dark);
+
+  const toggleTheme = React.useCallback(() => {
+    const themeActive = theme.name === 'dark' ? light : dark;
+    setTheme(themeActive);
+  }, [theme.name, setTheme]);
+
+  return (
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Header toggleTheme={toggleTheme} />
+        <Router />
+      </ThemeProvider>
+    </BrowserRouter>
+  );
+};
 
 export default App;
