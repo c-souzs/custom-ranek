@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
+import Footer from './components/Footer';
 import Header from './components/Header';
 import usePersistedStateLs from './hooks/usePersistedStateLs';
 import Router from './Router';
@@ -22,6 +23,7 @@ const App = (): JSX.Element => {
         <GlobalStyles />
         <Header toggleTheme={toggleTheme} />
         <Router />
+        <Footer />
       </ThemeProvider>
     </BrowserRouter>
   );

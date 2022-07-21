@@ -108,6 +108,25 @@ const GlobalStyles = createGlobalStyle`
         margin-left: auto;
         margin-right: auto;
     }
+
+    // User
+    .subtitleSectionUser{
+        color: #8877ff;
+        font-size: 2.5rem !important;
+
+        margin-bottom: 1.875rem;
+
+        &::after {
+            content: '.';
+            color: ${(props) => props.theme.colors.text};
+        }
+
+        @media (max-width: 600px){
+            @media (max-width: 600px) {
+                font-size: 1.625rem !important;
+            }
+        }
+    }
     
 `;
 
