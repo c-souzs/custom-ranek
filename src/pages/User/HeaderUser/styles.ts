@@ -3,10 +3,12 @@ import styled from 'styled-components';
 
 export const HeaderUser = styled.header`
   background-color: #000;
-  padding: 3.75rem 0;
+  padding-top: 11.063rem;
+  padding-bottom: 3.75rem;
 
-  @media (max-width: 600px) {
-    padding: 2.5rem 0;
+  @media (max-width: 696px) {
+    padding-top: 8.125rem;
+    padding-bottom: 1.875rem;
   }
 `;
 

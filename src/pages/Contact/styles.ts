@@ -3,6 +3,11 @@ import styled from 'styled-components';
 export const Contact = styled.main`
   background-color: ${(props) => props.theme.colors.primary};
   position: relative;
+  padding-top: 7.313rem;
+
+  @media (max-width: 696px) {
+    padding-top: 6.25rem;
+  }
 `;
 
 export const Container = styled.div`

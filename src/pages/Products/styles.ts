@@ -3,9 +3,14 @@ import styled from 'styled-components';
 export const Products = styled.section`
   background-color: ${(props) => props.theme.colors.primary};
   padding-bottom: 3.75rem;
+  padding-top: 7.313rem;
 
   @media (max-width: 800px) {
     padding-bottom: 1.875rem;
+  }
+
+  @media (max-width: 696px) {
+    padding-top: 6.25rem;
   }
 `;
 

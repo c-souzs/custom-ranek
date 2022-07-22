@@ -19,6 +19,9 @@ const Header = ({ toggleTheme }: HeaderProps): JSX.Element => {
 
   return (
     <C.Header>
+      <C.Alert>
+        <div className="container">Esse é um sistema fictício, sem objeto comercial.</div>
+      </C.Alert>
       <C.Container className="container">
         <Link to="/">
           <Logo />

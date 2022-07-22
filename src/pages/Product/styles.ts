@@ -3,9 +3,15 @@ import styled, { css } from 'styled-components';
 export const Product = styled.main`
   background-color: ${(props) => props.theme.colors.primary};
   padding: 3.75rem 0;
+  padding-bottom: 3.75rem;
+  padding-top: 11.063rem;
 
   @media (max-width: 800px) {
-    padding: 1.875rem 0;
+    padding-bottom: 1.875rem;
+  }
+
+  @media (max-width: 696px) {
+    padding-top: 8.125rem;
   }
 `;
 

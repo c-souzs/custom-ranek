@@ -5,7 +5,11 @@ export const Introduction = styled.section`
   background-color: #000;
   box-shadow: inset 0 -120px ${(props) => props.theme.colors.primary};
 
-  padding-top: 1.875rem;
+  padding-top: 9.188rem;
+
+  @media (max-width: 696px) {
+    padding-top: 8.125rem;
+  }
 `;
 
 export const Container = styled.div`

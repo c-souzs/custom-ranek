@@ -10,8 +10,25 @@ interface ElementMobile extends ButtonMenuMobileProps {
 }
 
 export const Header = styled.header`
+  width: 100%;
+  height: 117px;
   background-color: #000000;
   position: relative;
+  position: fixed;
+  z-index: 999;
+  border-bottom: 1px solid #111;
+
+  @media (max-width: 696px) {
+    height: 100px;
+  }
+`;
+
+export const Alert = styled.div`
+  background-color: #8877ff;
+  color: #fff;
+  padding: 0.25rem 0;
+  text-align: center;
+  font-size: 0.875rem;
 `;
 
 export const Container = styled.div`
