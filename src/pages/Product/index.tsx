@@ -21,9 +21,9 @@ const Product = (): JSX.Element => (
         </C.NavImages>
       </section>
       <C.Information>
-        <C.NameProduct className="font-1-xl">Notebook</C.NameProduct>
-        <C.PriceProduct className="font-2-m">R$ 2.300,00</C.PriceProduct>
-        <C.DescriptionProduct className="font-2-s">
+        <C.NameProduct>Notebook</C.NameProduct>
+        <C.PriceProduct>R$ 2.300,00</C.PriceProduct>
+        <C.DescriptionProduct>
           {/* eslint-disable max-len */}
           Gostaria de enfatizar que o início da atividade geral de formação de atitudes pode nos levar a considerar.
         </C.DescriptionProduct>

@@ -3,10 +3,18 @@ import styled from 'styled-components';
 export const Products = styled.section`
   background-color: ${(props) => props.theme.colors.primary};
   padding-bottom: 3.75rem;
+
+  @media (max-width: 800px) {
+    padding-bottom: 1.875rem;
+  }
 `;
 
 export const Search = styled.div`
   padding-top: 3.75rem;
+
+  @media (max-width: 800px) {
+    padding-top: 1.875rem;
+  }
 `;
 
 export const FormSearch = styled.form`

@@ -12,7 +12,7 @@ const ButtonSubmitStyled = styled.button`
   background-color: #8877ff;
 
   text-transform: uppercase;
-  color: #000;
+  color: #fff;
   font: 600 1.125rem/1.35 'Poppins', sans-serif;
 
   cursor: pointer;

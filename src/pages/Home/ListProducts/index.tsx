@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useMedia from '../../../hooks/useMedia';
 
 import Title from '../../../components/Title';
 
 import imageEmphasis from '../../../assets/introduction.png';
 
 import * as C from './styles';
-import useMedia from '../../../hooks/useMedia';
 
 const ListProducts = (): JSX.Element => {
   const changeMargin = useMedia('(max-width: 800px)');

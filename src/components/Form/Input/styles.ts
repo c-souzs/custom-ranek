@@ -58,7 +58,7 @@ export const Input = styled.input`
   transition: 0.2s;
 
   &:disabled {
-    background-color: ${(props) => (props.theme.name === 'dark' ? '#545454 !important' : '#b3b3b3 !important')};
+    background-color: ${(props) => (props.theme.name === 'dark' ? '#545454' : '#CACACA')};
   }
 
   &:hover:not(&:disabled),

@@ -86,20 +86,42 @@ export const Information = styled.section`
 `;
 
 export const NameProduct = styled.h2`
-  font-size: 2.5rem;
+  font: 600 3rem/1 'Poppins', sans-serif;
+
+  display: flex;
+  align-items: center;
+
+  &::before {
+    width: 24px;
+    height: 8px;
+
+    content: '';
+    display: inline-block;
+    margin-right: 0.5rem;
+    background-color: #8877ff;
+    border-radius: 0.125rem;
+
+    transition: 0.2s;
+  }
 `;
 
 export const PriceProduct = styled.p`
+  font: 500 1.5rem/1 'Roboto', sans-serif;
   color: #b2b2b2;
   margin-bottom: 0.75rem;
+  margin-top: 0.5rem;
 `;
 
 export const DescriptionProduct = styled.p`
   margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  color: ${(props) => (props.theme.name === 'dark' ? '#b2b2b2' : '#404040')};
 `;
 
 export const Button = styled.button`
   text-transform: uppercase;
+  color: #fff;
   padding: 0.75rem 1.5rem;
   background-color: #8877ff;
   border: 2px solid #000;

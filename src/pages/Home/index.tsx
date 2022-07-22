@@ -4,7 +4,7 @@ import Introduction from './Introduction';
 import ListProducts from './ListProducts';
 import Partners from './Partners';
 import Technology from './Technology';
-import Testimony from './Testimony';
+import DataStore from './DataStore';
 
 const Home = (): JSX.Element => (
   <main>
@@ -12,8 +12,8 @@ const Home = (): JSX.Element => (
     <ListProducts />
     <Technology />
     <Partners />
-    <Testimony />
     <Faq />
+    <DataStore />
   </main>
 );
 

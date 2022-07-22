@@ -6,10 +6,10 @@ import useInput from '../../hooks/useInput';
 
 import * as C from './styles';
 
-import mapRj from '../../assets/rj-mapa.jpg';
+import mapRj from '../../assets/rjMapa.jpg';
 import time from '../../assets/time.svg';
 import local from '../../assets/local.svg';
-import warning from '../../assets/warning-circle.svg';
+import warning from '../../assets/warningCircle.svg';
 import TitlePackage from '../../components/TitlePackage';
 import Input from '../../components/Form/Input';
 import ButtonSubmit from '../../components/Form/Button';

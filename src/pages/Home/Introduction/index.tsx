@@ -1,8 +1,9 @@
 import React from 'react';
+import useMedia from '../../../hooks/useMedia';
+
+import Title from '../../../components/Title';
 
 import imageEmphasis from '../../../assets/introduction.png';
-import Title from '../../../components/Title';
-import useMedia from '../../../hooks/useMedia';
 
 import * as C from './styles';
 

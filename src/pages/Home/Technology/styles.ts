@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Technology = styled.section`
   background-color: #000;
@@ -93,12 +93,44 @@ export const DescriptionQuality = styled.p`
   color: #b2b2b2;
 `;
 
-export const ImageDelivery = styled.img`
-  width: 100%;
+const animateBorder = keyframes`
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(-360deg);
+    }
+`;
+
+export const ImageContent = styled.div`
   height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 0.25rem;
 
-  @media (max-width: 800px) {
-    max-height: 300px;
+  &::before {
+    content: '';
+    background-image: conic-gradient(#8877ff 20deg, transparent 120deg);
+    width: 250%;
+    height: 250%;
+    position: absolute;
+    animation: ${animateBorder} 5s linear infinite;
   }
+
+  @media (max-width: 800px) {
+    height: 300px;
+  }
+`;
+
+export const ImageDelivery = styled.img`
+  width: 98%;
+  height: 98%;
+  border-radius: 0.25rem;
+
+  position: relative;
+  z-index: 111;
 `;

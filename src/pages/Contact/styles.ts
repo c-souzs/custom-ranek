@@ -113,7 +113,7 @@ export const ListInformation = styled.ul`
   gap: 0.375rem;
   flex-direction: column;
 
-  color: #fff;
+  color: ${(props) => props.theme.colors.text};
   margin-top: 0.75rem;
 
   & li {

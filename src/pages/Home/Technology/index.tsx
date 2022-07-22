@@ -38,7 +38,9 @@ const Technology = (): JSX.Element => (
           </C.Quality>
         </C.Qualities>
       </C.TextContent>
-      <C.ImageDelivery src={imageDelivery} alt="Product delivery" />
+      <C.ImageContent>
+        <C.ImageDelivery src={imageDelivery} alt="Product delivery" />
+      </C.ImageContent>
     </C.Container>
   </C.Technology>
 );
