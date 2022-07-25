@@ -207,7 +207,9 @@ export const LinkAccount = styled(Link)`
   color: #fff;
   font-family: inherit;
 
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
   padding: 0.5rem 1rem !important;
   background-color: #8877ff;
   border-radius: 0.25rem;

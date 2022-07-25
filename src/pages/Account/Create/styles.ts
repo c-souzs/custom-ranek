@@ -9,6 +9,10 @@ export const Create = styled.div`
   }
 `;
 
+export const Container = styled.section`
+  position: relative;
+`;
+
 export const Form = styled.form`
   width: 100%;
 
@@ -29,4 +33,8 @@ export const Form = styled.form`
 
 export const PositionColumn = styled.div`
   grid-column: 1/2;
+`;
+
+export const Error = styled.p`
+  grid-column: 1/-1;
 `;

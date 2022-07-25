@@ -127,6 +127,14 @@ const GlobalStyles = createGlobalStyle`
             }
         }
     }
+
+    // Error
+    .error{
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        font-weight: 500;
+        color: #e54;
+    }
     
 `;
 

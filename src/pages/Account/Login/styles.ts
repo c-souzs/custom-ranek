@@ -10,6 +10,10 @@ export const Login = styled.div`
   }
 `;
 
+export const Container = styled.section`
+  position: relative;
+`;
+
 export const Form = styled.form`
   width: 100%;
 

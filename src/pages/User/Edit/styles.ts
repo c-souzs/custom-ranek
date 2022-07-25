@@ -5,6 +5,10 @@ export const EditData = styled.section`
   background-color: ${(props) => props.theme.colors.primary};
 `;
 
+export const Container = styled.section`
+  position: relative;
+`;
+
 export const Title = styled.h2`
   color: #8877ff;
   font-size: 2.5rem !important;
@@ -31,4 +35,8 @@ export const Form = styled.form`
 
 export const ElementColumn = styled.div`
   grid-column: 1/2;
+`;
+
+export const Error = styled.p`
+  grid-column: 1/-1;
 `;

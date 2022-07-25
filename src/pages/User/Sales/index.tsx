@@ -1,9 +1,20 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ProductData from '../../../components/ProductData';
+import { AppDispatch, RootState } from '../../../store/configure';
+import { transactionSales } from '../../../store/userReducer';
 
 import * as C from './styles';
 
 const Sales = (): JSX.Element => {
+  const dispatch = useDispatch<AppDispatch>();
+  const stateUser = useSelector((state: RootState) => state.user);
+
+  React.useEffect(() => {
+    dispatch(transactionSales());
+    console.log(stateUser);
+  }, [dispatch]);
+
   const data = {
     cep: '35582000',
     road: 'Ali perto',
@@ -12,6 +23,7 @@ const Sales = (): JSX.Element => {
     city: 'Pains',
     state: 'Mg',
   };
+
   return (
     <C.Sales>
       <div className="container">

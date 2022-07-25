@@ -1,10 +1,13 @@
+import { User, UserCircle } from 'phosphor-react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactSwitch from 'react-switch';
 import { ThemeContext } from 'styled-components';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import useMedia from '../../hooks/useMedia';
+import { RootState } from '../../store/configure';
 
 import * as C from './styles';
 
@@ -16,6 +19,8 @@ const Header = ({ toggleTheme }: HeaderProps): JSX.Element => {
   const { name } = React.useContext(ThemeContext);
   const [activeMenu, setActiveMenu] = React.useState(false);
   const matchMobile = useMedia('(max-width: 696px)');
+
+  const stateUser = useSelector((state: RootState) => state.user);
 
   return (
     <C.Header>
@@ -37,7 +42,16 @@ const Header = ({ toggleTheme }: HeaderProps): JSX.Element => {
               <C.LinkCustom to="/contact">Contato</C.LinkCustom>
             </li>
             <li>
-              <C.LinkAccount to="/account/login">Vender</C.LinkAccount>
+              <C.LinkAccount to={stateUser.userData.information ? '/user/products-sold' : '/account/login'}>
+                {stateUser.userData.information ? (
+                  <>
+                    <User size={24} color="#fff" />
+                    {stateUser.userData.information.nome}
+                  </>
+                ) : (
+                  'Vender'
+                )}
+              </C.LinkAccount>
             </li>
             <C.LiThemeContainer>
               ☀️

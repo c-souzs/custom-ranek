@@ -68,10 +68,5 @@ export const Input = styled.input`
 `;
 
 export const Error = styled.p`
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-  font-weight: 500;
-  color: #e54;
-
   position: absolute;
 `;

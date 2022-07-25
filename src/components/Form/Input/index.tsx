@@ -21,7 +21,7 @@ const Input = ({
     {label}
     {/* eslint-disable-next-line react/jsx-props-no-spreading */}
     <C.Input value={value} onChange={onChange} onClick={onClick} onBlur={validateAt} {...rest} />
-    {error ? <C.Error>{error}</C.Error> : undefined}
+    {error ? <C.Error className="error">{error}</C.Error> : undefined}
   </C.Label>
 );
 

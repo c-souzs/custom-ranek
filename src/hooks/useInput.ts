@@ -41,7 +41,7 @@ const useInput = (type: ValidationTypes): UseInputReturn => {
     const elementValue = e.target.value;
 
     if (error) validate(elementValue);
-    setValue(value);
+    setValue(elementValue);
   };
 
   const onClick = (): void => setError(null);
