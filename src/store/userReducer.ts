@@ -43,12 +43,23 @@ interface Transaction {
   data: string
 }
 
+interface Product {
+  id: string
+  fotos: { titulo: string; src: string }[] | null
+  nome: string
+  preco: string
+  descricao: string
+  vendido: string
+  usuario_id: string
+}
+
 interface UserData {
   information: UserInformation | null
   transaction: {
     sales: Transaction[] | null
     purchases: Transaction[] | null
   }
+  productsAnnounced: Product[]
 }
 
 interface UserRegister {
@@ -136,6 +147,12 @@ const getTransactionSales = async (): Promise<Transaction[]> => {
 const postPruchase = async (purchaseData: DataPurchase): Promise<void> => {
   await api.post<unknown, DataPurchase>('transacao', purchaseData);
 };
+
+const getProductsAnnounced = async (id: string): Promise<Product[]> => {
+  const { data } = await api.get<Product[]>(`/produto?usuario_id=${id}`);
+
+  return data;
+};
 // Recebe o dado do usuário e repassa para a função que puxa o token e salva no local storage
 // Após o token puxado, ele é validado na api. Caso tenha alguma erro o processo de login é
 // interrompido e o local storage é limpo
@@ -217,6 +234,17 @@ export const purchasesUser = createAsyncThunk('user/purchase', async (purchaseDa
   }
 });
 
+export const productsAnnounced = createAsyncThunk('user/productsAnnounced', async (id: string, thunkAPI) => {
+  try {
+    const products = await getProductsAnnounced(id);
+
+    return products;
+  } catch (error) {
+    const errorData = error as ErrorData;
+    return thunkAPI.rejectWithValue(errorData.message);
+  }
+});
+
 const initialState: InitiaStateUser = {
   loading: false,
   error: null,
@@ -226,6 +254,7 @@ const initialState: InitiaStateUser = {
       purchases: null,
       sales: null,
     },
+    productsAnnounced: [],
   },
 };
 
@@ -327,6 +356,20 @@ const user = createSlice({
         state.error = null;
       })
       .addCase(purchasesUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        state.userData.transaction.purchases = null;
+      })
+      // GET PRODUCTS ANNOUNCED USER
+      .addCase(productsAnnounced.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(productsAnnounced.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.userData.productsAnnounced = action.payload;
+      })
+      .addCase(productsAnnounced.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         state.userData.transaction.purchases = null;

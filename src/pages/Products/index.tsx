@@ -1,24 +1,35 @@
 import { MagnifyingGlass, X } from 'phosphor-react';
-import React from 'react';
+import React, { FormEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Input from '../../components/Form/Input';
 import TitlePackage from '../../components/TitlePackage';
 import useInput from '../../hooks/useInput';
+import { AppDispatch, RootState } from '../../store/configure';
+import { getSeacrhProducts } from '../../store/productReducer';
 
 import * as C from './styles';
 
 const Products = (): JSX.Element => {
   const search = useInput('');
+
+  const dispatch = useDispatch<AppDispatch>();
+  const stateProduct = useSelector((state: RootState) => state.product);
+
+  const handleSearch = (e: FormEvent): void => {
+    e.preventDefault();
+    dispatch(getSeacrhProducts(search.value));
+  };
   return (
     <C.Products>
       <TitlePackage subtitle="Explore nossos produtos" title="nossos produtos" />
       <C.Search>
         <div className="container">
-          <C.FormSearch>
+          <C.FormSearch onSubmit={handleSearch}>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
             <Input placeholder="Smartphone" name="search" style={{ marginTop: '0' }} {...search} />
             <C.ButtonsSearch>
-              <C.ButtonSearch>
+              <C.ButtonSearch type="submit">
                 <MagnifyingGlass size={24} color="#8877ff" />
               </C.ButtonSearch>
               <C.ButtonSearch>
