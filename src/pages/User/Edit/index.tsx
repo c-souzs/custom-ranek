@@ -8,7 +8,7 @@ import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
 import useInput from '../../../hooks/useInput';
 import { AppDispatch, RootState } from '../../../store/configure';
-import { updateUser } from '../../../store/userReducer';
+import { updateDataUser } from '../../../store/userReducer';
 
 import * as C from './styles';
 
@@ -52,22 +52,15 @@ const Edit = (): JSX.Element => {
         estado: stateUf.value,
       };
 
-      await dispatch(updateUser(dataUser));
+      await dispatch(updateDataUser(dataUser));
     }
   };
 
   React.useEffect(() => {
-    if (stateUser.userData.information) {
+    if (stateUser.data.information) {
       const {
-        nome,
-        email: emailUser,
-        cep: cepUser,
-        rua,
-        numero,
-        bairro,
-        cidade,
-        estado,
-      } = stateUser.userData.information;
+        nome, email: emailUser, cep: cepUser, rua, numero, bairro, cidade, estado,
+      } = stateUser.data.information;
       setValueName(nome);
       setValueEmail(emailUser);
       setValueCep(cepUser);
@@ -86,7 +79,7 @@ const Edit = (): JSX.Element => {
     setValueDistrict,
     setCity,
     setValueStateUf,
-    stateUser.userData,
+    stateUser.data,
   ]);
 
   return (

@@ -61,8 +61,8 @@ const Create = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    if (stateUser.userData.information) navigate('/user');
-  }, [stateUser.userData.information, navigate]);
+    if (stateUser.data.information) navigate('/user');
+  }, [stateUser.data.information, navigate]);
 
   return (
     <C.Create>

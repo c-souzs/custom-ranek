@@ -6,7 +6,7 @@ import Input from '../../components/Form/Input';
 import TitlePackage from '../../components/TitlePackage';
 import useInput from '../../hooks/useInput';
 import { AppDispatch, RootState } from '../../store/configure';
-import { getSeacrhProducts } from '../../store/productReducer';
+import { productSearch } from '../../store/productReducer';
 
 import * as C from './styles';
 
@@ -18,7 +18,7 @@ const Products = (): JSX.Element => {
 
   const handleSearch = (e: FormEvent): void => {
     e.preventDefault();
-    dispatch(getSeacrhProducts(search.value));
+    dispatch(productSearch(search.value));
   };
   return (
     <C.Products>

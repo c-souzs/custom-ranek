@@ -42,11 +42,11 @@ const Header = ({ toggleTheme }: HeaderProps): JSX.Element => {
               <C.LinkCustom to="/contact">Contato</C.LinkCustom>
             </li>
             <li>
-              <C.LinkAccount to={stateUser.userData.information ? '/user/products-sold' : '/account/login'}>
-                {stateUser.userData.information ? (
+              <C.LinkAccount to={stateUser.data.information ? '/user/products-sold' : '/account/login'}>
+                {stateUser.data.information ? (
                   <>
                     <User size={24} color="#fff" />
-                    {stateUser.userData.information.nome}
+                    {stateUser.data.information.nome}
                   </>
                 ) : (
                   'Vender'

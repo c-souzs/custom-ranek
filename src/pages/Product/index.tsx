@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/configure';
-import { getProductPage } from '../../store/productReducer';
+import { productPage } from '../../store/productReducer';
 import FormPruchase from './FormPurchase';
 
 import * as C from './styles';
@@ -16,7 +16,7 @@ const Product = (): JSX.Element => {
   React.useEffect(() => {
     const getProduct = async (): Promise<void> => {
       const fixSlug = slug!;
-      await dispatch(getProductPage(fixSlug));
+      await dispatch(productPage(fixSlug));
     };
 
     getProduct();

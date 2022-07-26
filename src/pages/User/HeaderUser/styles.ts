@@ -64,3 +64,5 @@ export const LinkCustom = styled(BaseNavLink)`
     width: 40px;
   }
 `;
+
+export const LinkLogout = styled(LinkCustom)``;

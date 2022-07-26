@@ -3,15 +3,24 @@ import {
   CreditCard, Package, PencilSimple, SignOut, Tag,
 } from 'phosphor-react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import * as C from './styles';
 import Title from '../../../components/Title';
 import useMedia from '../../../hooks/useMedia';
-import { RootState } from '../../../store/configure';
+import { AppDispatch, RootState } from '../../../store/configure';
+import { logout } from '../../../store/userReducer';
 
 const HeaderUser = (): JSX.Element => {
   const changeIcon = useMedia('(max-width: 800px)');
+  const dispatch = useDispatch<AppDispatch>();
   const stateUser = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
+
+  const handleLogout = async (): Promise<void> => {
+    await dispatch(logout());
+    navigate('/');
+  };
 
   return (
     <C.HeaderUser>
@@ -22,7 +31,7 @@ const HeaderUser = (): JSX.Element => {
             olá,
             {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
             {' '}
-            {stateUser.userData.information?.nome}
+            {stateUser.data.information?.nome}
           </Title>
         </div>
         <C.Nav>
@@ -38,9 +47,9 @@ const HeaderUser = (): JSX.Element => {
           <C.LinkCustom to="/user/edit-user">
             <PencilSimple size={changeIcon ? 24 : 26} color="#fff" />
           </C.LinkCustom>
-          <C.LinkCustom to="/">
+          <C.LinkLogout as="button" onClick={handleLogout}>
             <SignOut size={changeIcon ? 24 : 26} color="#fff" />
-          </C.LinkCustom>
+          </C.LinkLogout>
         </C.Nav>
       </C.Container>
     </C.HeaderUser>
