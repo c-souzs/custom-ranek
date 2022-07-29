@@ -19,6 +19,7 @@ export const Container = styled.div`
   display: grid;
   gap: 2.5rem;
   grid-template-columns: 1fr 1fr;
+  position: relative;
 
   @media (max-width: 800px) {
     grid-template-columns: 1fr;
@@ -139,4 +140,8 @@ export const Button = styled.button`
   &:hover {
     background-color: #6655dd;
   }
+`;
+
+export const Error = styled.p`
+  text-align: center;
 `;

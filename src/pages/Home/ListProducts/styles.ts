@@ -4,6 +4,8 @@ export const ListProducts = styled.section`
   background-color: ${(props) => props.theme.colors.primary};
   padding-top: 3.75rem;
   padding-bottom: 7.5rem;
+
+  position: relative;
 `;
 
 export const List = styled.ul`
@@ -82,4 +84,9 @@ export const PriceProduct = styled.p`
   color: #b2b2b2;
 
   font-weight: 400 !important;
+`;
+
+export const Error = styled.p`
+  width: 100%;
+  text-align: center;
 `;

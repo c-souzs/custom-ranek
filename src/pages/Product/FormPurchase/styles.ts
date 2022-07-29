@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
-export const Purchase = styled.section`
+interface PurchaseProps {
+  show: boolean
+}
+
+export const Purchase = styled.section<PurchaseProps>`
   grid-column: 1/-1;
+  display: ${(props) => (props.show ? 'block' : 'none')};
 `;
 
 export const TitlePurchase = styled.h2`

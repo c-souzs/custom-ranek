@@ -4,6 +4,7 @@ export const Products = styled.section`
   background-color: ${(props) => props.theme.colors.primary};
   padding-bottom: 3.75rem;
   padding-top: 7.313rem;
+  position: relative;
 
   @media (max-width: 800px) {
     padding-bottom: 1.875rem;
@@ -34,7 +35,7 @@ export const ButtonsSearch = styled.div`
   align-items: center;
 
   margin-left: -78px;
-  z-index: 999;
+  z-index: 111;
 `;
 
 export const ButtonSearch = styled.button`
@@ -115,4 +116,9 @@ export const PriceProduct = styled.p`
 export const DescriptionProduct = styled.p`
   color: ${(props) => (props.theme.name === 'dark' ? '##b2b2b2' : '#404040')};
   margin-left: 1.875rem;
+`;
+
+export const Error = styled.p`
+  text-align: center;
+  margin-top: 1rem;
 `;

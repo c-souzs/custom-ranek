@@ -1,44 +1,9 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled from 'styled-components';
 
-interface LabelProps {
-  loading: boolean | undefined
-}
-
-const animationLoader = keyframes`
-    0%{
-        transform: rotate(0);
-    }
-    100%{
-        transform: rotate(360deg);
-    }
-`;
-
-export const Label = styled.label<LabelProps>`
+export const Label = styled.label`
   color: ${(props) => props.theme.colors.text};
   font-size: 1.125rem;
   position: relative;
-
-  ${({ loading }) => {
-    if (loading) {
-      return css`
-        &::after {
-          width: 15px;
-          height: 15px;
-          border-radius: 50%;
-          content: '';
-          display: block;
-          position: absolute;
-          right: -5px;
-          top: 20px;
-          border: 3px solid #8877ff;
-          border-left-color: #6655dd;
-
-          animation: ${animationLoader} 1s cubic-bezier(0, 0.25, 0.7125, 0.1) infinite;
-        }
-      `;
-    }
-    return null;
-  }}
 `;
 
 export const Input = styled.input`

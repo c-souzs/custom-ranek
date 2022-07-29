@@ -1,18 +1,20 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../../components/Loader';
 import ProductData from '../../../components/ProductData';
-import { AppDispatch, RootState } from '../../../store/configure';
+import useControlRedux from '../../../hooks/useControlRedux';
 import { transactionPurchases } from '../../../store/userReducer';
 
 import * as C from './styles';
 
 const Purchases = (): JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>();
-  const stateUser = useSelector((state: RootState) => state.user);
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const { loading, error, data } = useAppSelector((state) => state.user);
 
   React.useEffect(() => {
-    dispatch(transactionPurchases());
-    console.log(stateUser);
+    if (data.information) {
+      dispatch(transactionPurchases());
+    }
   }, [dispatch]);
 
   return (
@@ -20,40 +22,21 @@ const Purchases = (): JSX.Element => {
       <div className="container">
         <h2 className="font-1-xl subtitleSectionUser">Produtos comprados</h2>
         <C.List>
-          <ProductData
-            type="purchase"
-            image="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg"
-            name="Compiuter"
-            price="122,00"
-            description="Usado por 2 anos"
-            email="caiohsouza2002@gmail.com"
-          />
-          <ProductData
-            type="purchase"
-            image="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg"
-            name="Compiuter"
-            price="122,00"
-            description="Usado por 2 anos"
-            email="caiohsouza2002@gmail.com"
-          />
-          <ProductData
-            type="purchase"
-            image="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg"
-            name="Compiuter"
-            price="122,00"
-            description="Usado por 2 anos"
-            email="caiohsouza2002@gmail.com"
-          />
-          <ProductData
-            type="purchase"
-            image="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg"
-            name="Compiuter"
-            price="122,00"
-            description="Usado por 2 anos"
-            email="caiohsouza2002@gmail.com"
-          />
+          {data.transaction.purchases.length
+            && data.transaction.purchases.map(({ produto, vendedor_id: vendedorId }) => (
+              <ProductData
+                type="purchase"
+                image={produto.fotos[0].src}
+                name={produto.nome}
+                price={produto.preco}
+                description={produto.descricao}
+                email={vendedorId}
+              />
+            ))}
         </C.List>
+        {error && <C.Error className="error">{error}</C.Error>}
       </div>
+      {loading && <Loader />}
     </C.Purchases>
   );
 };

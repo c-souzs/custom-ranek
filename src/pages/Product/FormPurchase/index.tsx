@@ -1,14 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/Form/Input';
+import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
-import { AppDispatch } from '../../../store/configure';
 import { purchasesUser } from '../../../store/userReducer';
 
 import * as C from './styles';
 
-const FormPruchase = (): JSX.Element => {
+interface FormPurchaseProps {
+  showFormPurchase: boolean
+  setShowFormPurchase: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+// eslint-disable-next-line max-len
+const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchaseProps): JSX.Element => {
   const { setValue: setValueName, ...name } = useInput('');
   const { setValue: setValueEmail, ...email } = useInput('email');
   const { setValue: setValueCep, ...cep } = useInput('');
@@ -16,43 +22,72 @@ const FormPruchase = (): JSX.Element => {
   const { setValue: setValueNumber, ...number } = useInput('');
   const { setValue: setValueDistrict, ...district } = useInput('');
   const { setValue: setValueCity, ...city } = useInput('');
-  const { setValue: setValueState, ...state } = useInput('');
+  const { setValue: setValueState, ...stateUf } = useInput('');
 
-  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
-  const handlePurchaseProduct = (e: FormEvent): void => {
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const { types } = useAppSelector((state) => state.product);
+  const { data } = useAppSelector((state) => state.user);
+
+  const handlePurchaseProduct = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
-    const dataPurchase = {
-      comprador_id: 'hcaiosouza@gmail.com',
-      vendedor_id: 'caiohsouza2002@gmail.com',
-      produto: {
-        id: 'notebook-5',
-        fotos: null,
-        nome: 'Notebook',
-        preco: '1111',
-        descricao: 'Usado',
-        vendido: 'false',
-        usuario_id: 'caiohsouza2002@gmail.com',
-      },
-      endereco: {
-        id: 'hcaiosouza@gmail.com',
-        nome: 'Coca coa',
-        email: 'hcaiosouza@gmail.com',
-        cep: '35582000',
-        numero: '56',
-        rua: 'Rua Ali Perto',
-        bairro: 'Centro',
-        cidade: 'Pains',
-        estado: 'MG',
-      },
-    };
+    if (data.information && types.page) {
+      const dataPurchase = {
+        comprador_id: data.information.id,
+        vendedor_id: types.page.usuario_id,
+        produto: types.page,
+        endereco: data.information,
+      };
 
-    dispatch(purchasesUser(dataPurchase));
+      try {
+        await dispatch(purchasesUser(dataPurchase));
+        navigate('/user/purchases');
+      } catch (error) {
+        navigate('/');
+      }
+    }
   };
 
+  React.useEffect(() => {
+    if (data.information) {
+      const {
+        nome,
+        email: emailInformation,
+        cep: cepInformation,
+        numero,
+        rua,
+        bairro,
+        cidade,
+        estado,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      } = data.information!;
+
+      setValueName(nome);
+      setValueEmail(emailInformation);
+      setValueCep(cepInformation);
+      setValueRoad(rua);
+      setValueNumber(numero);
+      setValueDistrict(bairro);
+      setValueCity(cidade);
+      setValueState(estado);
+    }
+  }, [
+    data.information,
+    setValueCep,
+    setValueCity,
+    setValueDistrict,
+    setValueEmail,
+    setValueName,
+    setValueNumber,
+    setValueRoad,
+    setValueState,
+  ]);
+
   return (
-    <C.Purchase>
+    <C.Purchase show={showFormPurchase}>
       <C.TitlePurchase className="font-1-xl">Informações de Envio</C.TitlePurchase>
       <C.FormPurchase onSubmit={handlePurchaseProduct}>
         <Input label="Nome" name="name" {...name} />
@@ -62,10 +97,10 @@ const FormPruchase = (): JSX.Element => {
         <Input label="Número" name="number" {...number} />
         <Input label="Bairro" name="district" {...district} />
         <Input label="Cidade" name="city" {...city} />
-        <Input label="Estado" name="state" {...state} />
+        <Input label="Estado" name="state" {...stateUf} />
         <C.Buttons>
           <C.Button type="submit">Finalizar compra</C.Button>
-          <C.Button>Cancelar compra</C.Button>
+          <C.Button onClick={() => setShowFormPurchase(false)}>Cancelar compra</C.Button>
         </C.Buttons>
       </C.FormPurchase>
     </C.Purchase>

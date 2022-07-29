@@ -3,26 +3,39 @@ import React from 'react';
 import { Trash } from 'phosphor-react';
 
 import * as C from './styles';
+import useControlRedux from '../../hooks/useControlRedux';
+import { productAnnouncedDelete } from '../../store/productReducer';
+
+interface Address {
+  cep: string
+  numero: string
+  rua: string
+  bairro: string
+  cidade: string
+  estado: string
+}
 
 interface ProductDataProps {
   type: 'product' | 'purchase' | 'sale'
+  id?: string
   image: string
   price: string
   name: string
   description?: string
   email?: string
-  dataDelivery?: {
-    cep: string
-    road: string
-    number: string
-    district: string
-    city: string
-    state: string
-  }
+  dataDelivery?: Address
 }
 
 const ProductData = ({ type, ...props }: ProductDataProps): JSX.Element => {
   const typeSaleOrPurchase = type === 'sale' || type === 'purchase';
+
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const { loading, error, data } = useAppSelector((state) => state.user);
+
+  const deleteProductAnnoucend = (): void => {
+    if (data.information && props.id) dispatch(productAnnouncedDelete(props.id));
+  };
 
   return (
     <C.Container>
@@ -54,28 +67,28 @@ const ProductData = ({ type, ...props }: ProductDataProps): JSX.Element => {
             </li>
             <li>
               <C.InformationBold>Rua:</C.InformationBold>
-              {props.dataDelivery?.road}
+              {props.dataDelivery?.rua}
             </li>
             <li>
               <C.InformationBold>Número:</C.InformationBold>
-              {props.dataDelivery?.number}
+              {props.dataDelivery?.numero}
             </li>
             <li>
               <C.InformationBold>Bairro:</C.InformationBold>
-              {props.dataDelivery?.district}
+              {props.dataDelivery?.bairro}
             </li>
             <li>
               <C.InformationBold>Cidade:</C.InformationBold>
-              {props.dataDelivery?.city}
+              {props.dataDelivery?.cidade}
               {' '}
               -
-              {props.dataDelivery?.state}
+              {props.dataDelivery?.estado}
             </li>
           </C.ListData>
         </C.DataDelivery>
       )}
       {type === 'product' && (
-        <C.ButtonDelete>
+        <C.ButtonDelete onClick={deleteProductAnnoucend}>
           {' '}
           <Trash size={32} color="#8877ff" />
           {' '}

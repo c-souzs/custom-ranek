@@ -5,9 +5,10 @@ export interface ErrorData {
   message: string
 }
 
+// Type userProduct
 export interface Product {
   id: string
-  fotos: { titulo: string; src: string }[] | null
+  fotos: { titulo: string; src: string }[]
   nome: string
   preco: string
   descricao: string
@@ -37,10 +38,7 @@ export interface Transaction {
   comprador_id: string
   vendedor_id: string
   endereco: UserInformation
-  produto: {
-    id: string
-    fotos: { titulo: string; src: string }[]
-  }
+  produto: Product;
   data: string
 }
 

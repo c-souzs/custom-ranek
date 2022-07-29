@@ -1,72 +1,43 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from '../../../components/Loader';
 import ProductData from '../../../components/ProductData';
+import useControlRedux from '../../../hooks/useControlRedux';
 import { AppDispatch, RootState } from '../../../store/configure';
 import { transactionSales } from '../../../store/userReducer';
 
 import * as C from './styles';
 
 const Sales = (): JSX.Element => {
-  const dispatch = useDispatch<AppDispatch>();
-  const stateUser = useSelector((state: RootState) => state.user);
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const { loading, error, data } = useAppSelector((state) => state.user);
 
   React.useEffect(() => {
     dispatch(transactionSales());
-    console.log(stateUser);
   }, [dispatch]);
-
-  const data = {
-    cep: '35582000',
-    road: 'Ali perto',
-    number: '55',
-    district: 'Centro',
-    city: 'Pains',
-    state: 'Mg',
-  };
 
   return (
     <C.Sales>
       <div className="container">
         <h2 className="font-1-xl subtitleSectionUser">Vendas</h2>
         <C.List>
-          <ProductData
-            type="sale"
-            image="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg"
-            name="Compiuter"
-            price="122,00"
-            description="Usado por 2 anos"
-            email="caiohsouza2002@gmail.com"
-            dataDelivery={data}
-          />
-          <ProductData
-            type="sale"
-            image="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg"
-            name="Compiuter"
-            price="122,00"
-            description="Usado por 2 anos"
-            email="caiohsouza2002@gmail.com"
-            dataDelivery={data}
-          />
-          <ProductData
-            type="sale"
-            image="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg"
-            name="Compiuter"
-            price="122,00"
-            description="Usado por 2 anos"
-            email="caiohsouza2002@gmail.com"
-            dataDelivery={data}
-          />
-          <ProductData
-            type="sale"
-            image="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg"
-            name="Compiuter"
-            price="122,00"
-            description="Usado por 2 anos"
-            email="caiohsouza2002@gmail.com"
-            dataDelivery={data}
-          />
+          {data.transaction.sales.length
+            && data.transaction.sales.map((sale) => (
+              <ProductData
+                type="sale"
+                image={sale.produto.fotos[0].src}
+                name={sale.produto.nome}
+                price={sale.produto.preco}
+                description={sale.produto.descricao}
+                email={sale.comprador_id}
+                dataDelivery={sale.endereco}
+              />
+            ))}
         </C.List>
+        {error && <C.Error className="error">{error}</C.Error>}
       </div>
+      {loading && <Loader />}
     </C.Sales>
   );
 };

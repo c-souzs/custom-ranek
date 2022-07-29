@@ -7,6 +7,7 @@ import ButtonSubmit from '../../../components/Form/Button';
 import Input from '../../../components/Form/Input';
 import Loader from '../../../components/Loader';
 import TitlePackage from '../../../components/TitlePackage';
+import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
 import { AppDispatch, RootState } from '../../../store/configure';
 import { loginUser } from '../../../store/userReducer';
@@ -19,8 +20,9 @@ const Login = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch<AppDispatch>();
-  const stateUser = useSelector((state: RootState) => state.user);
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const { loading, error, data } = useAppSelector((state) => state.user);
 
   const handleDataLogin = (e: FormEvent): void => {
     e.preventDefault();
@@ -36,8 +38,8 @@ const Login = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    if (stateUser.data.information) navigate('/user');
-  }, [stateUser.data.information, navigate]);
+    if (data.information) navigate('/user');
+  }, [data.information, navigate]);
 
   return (
     <C.Login>
@@ -46,7 +48,7 @@ const Login = (): JSX.Element => {
         <C.Form onSubmit={handleDataLogin}>
           <Input label="Email" placeholder="seuemail@gmail.com" name="email" type="email" required {...email} />
           <Input label="Senha" placeholder="••••••••" name="password" type="password" {...password} />
-          {stateUser.error && <p className="error">{stateUser.error}</p>}
+          {error && <p className="error">{error}</p>}
           <C.Information>
             <ButtonSubmit>Entrar</ButtonSubmit>
             <C.LostPassword className="font-2-s">
@@ -58,7 +60,7 @@ const Login = (): JSX.Element => {
             </C.LostPassword>
           </C.Information>
         </C.Form>
-        {stateUser.loading && <Loader />}
+        {loading && <Loader />}
       </C.Container>
     </C.Login>
   );

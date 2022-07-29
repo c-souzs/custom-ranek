@@ -1,38 +1,53 @@
 import { MagnifyingGlass, X } from 'phosphor-react';
 import React, { FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Input from '../../components/Form/Input';
+import Loader from '../../components/Loader';
 import TitlePackage from '../../components/TitlePackage';
+import useControlRedux from '../../hooks/useControlRedux';
 import useInput from '../../hooks/useInput';
-import { AppDispatch, RootState } from '../../store/configure';
-import { productSearch } from '../../store/productReducer';
+import { clearSearch, productList, productSearch } from '../../store/productReducer';
 
 import * as C from './styles';
 
 const Products = (): JSX.Element => {
   const search = useInput('');
 
-  const dispatch = useDispatch<AppDispatch>();
-  const stateProduct = useSelector((state: RootState) => state.product);
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const { loading, error, types } = useAppSelector((state) => state.product);
 
-  const handleSearch = (e: FormEvent): void => {
+  React.useEffect(() => {
+    const getProducts = async (): Promise<void> => {
+      await dispatch(productList(''));
+    };
+
+    getProducts();
+  }, [dispatch]);
+
+  const searchProduct = (e: FormEvent): void => {
     e.preventDefault();
     dispatch(productSearch(search.value));
   };
+
+  const handleClearSearch = (): void => {
+    search.setValue('');
+    dispatch(clearSearch());
+  };
+
   return (
     <C.Products>
       <TitlePackage subtitle="Explore nossos produtos" title="nossos produtos" />
       <C.Search>
         <div className="container">
-          <C.FormSearch onSubmit={handleSearch}>
+          <C.FormSearch onSubmit={searchProduct}>
             {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-            <Input placeholder="Smartphone" name="search" style={{ marginTop: '0' }} {...search} />
+            <Input placeholder="Ex: Smartphone" name="search" style={{ marginTop: '0' }} {...search} />
             <C.ButtonsSearch>
               <C.ButtonSearch type="submit">
                 <MagnifyingGlass size={24} color="#8877ff" />
               </C.ButtonSearch>
-              <C.ButtonSearch>
+              <C.ButtonSearch onClick={handleClearSearch}>
                 <X size={24} color="#8877ff" />
               </C.ButtonSearch>
             </C.ButtonsSearch>
@@ -40,47 +55,42 @@ const Products = (): JSX.Element => {
         </div>
       </C.Search>
       <C.List>
-        <C.LiProduct>
-          <Link to="/product/notebook-3">
-            <C.ImageProduct src="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg" />
-            <C.NameProduct className="font-2-xl">Notebook</C.NameProduct>
-            <C.PriceProduct className="font-2-m">R$ 299,00</C.PriceProduct>
-            <C.DescriptionProduct className="font-2-s">
-              Notebook usado - 4gb de RAM - processador 4.123
-            </C.DescriptionProduct>
-          </Link>
-        </C.LiProduct>
-        <C.LiProduct>
-          <Link to="/product/notebook-3">
-            <C.ImageProduct src="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg" />
-            <C.NameProduct className="font-2-xl">Notebook</C.NameProduct>
-            <C.PriceProduct className="font-2-m">R$ 299,00</C.PriceProduct>
-            <C.DescriptionProduct className="font-2-s">
-              Notebook usado - 4gb de RAM - processador 4.123
-            </C.DescriptionProduct>
-          </Link>
-        </C.LiProduct>
-        <C.LiProduct>
-          <Link to="/product/notebook-3">
-            <C.ImageProduct src="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg" />
-            <C.NameProduct className="font-2-xl">Notebook</C.NameProduct>
-            <C.PriceProduct className="font-2-m">R$ 299,00</C.PriceProduct>
-            <C.DescriptionProduct className="font-2-s">
-              Notebook usado - 4gb de RAM - processador 4.123
-            </C.DescriptionProduct>
-          </Link>
-        </C.LiProduct>
-        <C.LiProduct>
-          <Link to="/product/notebook-3">
-            <C.ImageProduct src="https://ranekapi.origamid.dev/wp-content/uploads/2019/03/notebook-2.jpg" />
-            <C.NameProduct className="font-2-xl">Notebook</C.NameProduct>
-            <C.PriceProduct className="font-2-m">R$ 299,00</C.PriceProduct>
-            <C.DescriptionProduct className="font-2-s">
-              Notebook usado - 4gb de RAM - processador 4.123
-            </C.DescriptionProduct>
-          </Link>
-        </C.LiProduct>
+        {types.list.length
+          && types.search.length === 0
+          && types.list.map(({
+            id, fotos, nome, preco, descricao,
+          }) => (
+            <C.LiProduct key={id}>
+              <Link to={`/product/${id}`}>
+                <C.ImageProduct src={fotos[0].src} alt={fotos[0].titulo} />
+                <C.NameProduct className="font-2-xl">{nome}</C.NameProduct>
+                <C.PriceProduct className="font-2-m">
+                  R$
+                  {preco}
+                </C.PriceProduct>
+                <C.DescriptionProduct className="font-2-s">{descricao}</C.DescriptionProduct>
+              </Link>
+            </C.LiProduct>
+          ))}
+        {types.search.length
+          && types.search.map(({
+            id, fotos, nome, preco, descricao,
+          }) => (
+            <C.LiProduct key={id}>
+              <Link to={`/product/${id}`}>
+                <C.ImageProduct src={fotos[0].src} alt={fotos[0].titulo} />
+                <C.NameProduct className="font-2-xl">{nome}</C.NameProduct>
+                <C.PriceProduct className="font-2-m">
+                  R$
+                  {preco}
+                </C.PriceProduct>
+                <C.DescriptionProduct className="font-2-s">{descricao}</C.DescriptionProduct>
+              </Link>
+            </C.LiProduct>
+          ))}
       </C.List>
+      {error && <C.Error className="error">esse é o seu erro</C.Error>}
+      {loading && <Loader />}
     </C.Products>
   );
 };

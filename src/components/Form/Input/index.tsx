@@ -10,14 +10,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   validateAt: () => boolean
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   onClick: () => void
-  // eslint-disable-next-line react/require-default-props
-  loading?: boolean | undefined
 }
 
 const Input = ({
-  label, error, validateAt, onChange, onClick, value, loading, ...rest
+  label, error, validateAt, onChange, onClick, value, ...rest
 }: InputProps): JSX.Element => (
-  <C.Label loading={loading ? true : undefined}>
+  <C.Label>
     {label}
     {/* eslint-disable-next-line react/jsx-props-no-spreading */}
     <C.Input value={value} onChange={onChange} onClick={onClick} onBlur={validateAt} {...rest} />

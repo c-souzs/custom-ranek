@@ -1,7 +1,23 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ErrorData, Product } from '../../types';
-import { getProduct, getProductList, getProductSearch } from './productService';
+import {
+  deleteProduct, getProduct, getProductList, getProductSearch, postProduct,
+} from './productService';
+
+interface ProductDataPhoto {
+  name: string
+  file: File
+}
+
+interface ProductPost {
+  nome: string
+  preco: string
+  descricao: string
+  photoCover: ProductDataPhoto
+  photoFront: ProductDataPhoto
+  photoBack: ProductDataPhoto
+}
 
 export interface InitialStateProduct {
   loading: boolean
@@ -46,6 +62,31 @@ export const productSearch = createAsyncThunk('product/productSearch', async (se
   }
 });
 
+export const productsAnnounced = createAsyncThunk('product/postProduct', async (data: ProductPost, thunkAPI) => {
+  try {
+    postProduct(data);
+
+    return true;
+  } catch (error) {
+    const errorData = error as ErrorData;
+    return thunkAPI.rejectWithValue(errorData.message);
+  }
+});
+
+export const productAnnouncedDelete = createAsyncThunk(
+  'product/deleProductAnnounced',
+  async (slug: string, thunkAPI) => {
+    try {
+      deleteProduct(slug);
+
+      return true;
+    } catch (error) {
+      const errorData = error as ErrorData;
+      return thunkAPI.rejectWithValue(errorData.message);
+    }
+  },
+);
+
 const initialState: InitialStateProduct = {
   loading: false,
   error: null,
@@ -59,7 +100,11 @@ const initialState: InitialStateProduct = {
 const product = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    clearSearch: (state) => {
+      state.types.search = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       // PRODUCT PAGE
@@ -106,8 +151,36 @@ const product = createSlice({
         state.error = action.payload as string;
         state.loading = false;
         state.types.search = [];
+      })
+      // PRODUCT ANNOUNCED
+      .addCase(productsAnnounced.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productsAnnounced.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(productsAnnounced.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      })
+      // PRODUCT DELETE
+      .addCase(productAnnouncedDelete.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productAnnouncedDelete.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(productAnnouncedDelete.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
       });
   },
 });
+
+export const { clearSearch } = product.actions;
 
 export default product.reducer;

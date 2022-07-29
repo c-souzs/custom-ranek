@@ -1,28 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import useMedia from '../../../hooks/useMedia';
 
 import Title from '../../../components/Title';
 
-import imageEmphasis from '../../../assets/introduction.png';
-
 import * as C from './styles';
-import { AppDispatch, RootState } from '../../../store/configure';
-// import { getProductsHome } from '../../../store/productReducer';
+import { productList } from '../../../store/productReducer';
+import useControlRedux from '../../../hooks/useControlRedux';
+import Loader from '../../../components/Loader';
 
 const ListProducts = (): JSX.Element => {
   const changeMargin = useMedia('(max-width: 800px)');
-  const dispatch = useDispatch<AppDispatch>();
-  const stateProduct = useSelector((state: RootState) => state.product);
 
-  //   React.useEffect(() => {
-  //     const getProducts = async (): Promise<void> => {
-  //       await dispatch(getProductsHome());
-  //     };
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const { loading, error, types } = useAppSelector((state) => state.product);
 
-  //     getProducts();
-  //   }, []);
+  React.useEffect(() => {
+    const getProducts = async (): Promise<void> => {
+      await dispatch(productList('?_limit=9'));
+    };
+
+    getProducts();
+  }, [dispatch]);
 
   return (
     <C.ListProducts>
@@ -32,35 +32,24 @@ const ListProducts = (): JSX.Element => {
         </Title>
       </div>
       <C.List>
-        <C.Product>
-          <Link to="/product/notebook-3">
-            <C.ImageProduct src={imageEmphasis} alt="" />
-            <C.TitleProduct className="font-1-xl">Smartphone</C.TitleProduct>
-            <C.PriceProduct className="font-2-m">R$ 2499</C.PriceProduct>
-          </Link>
-        </C.Product>
-        <C.Product>
-          <Link to="/product/smartwatch">
-            <C.ImageProduct src={imageEmphasis} alt="" />
-            <C.TitleProduct className="font-1-xl">Smartphone</C.TitleProduct>
-            <C.PriceProduct className="font-2-m">R$ 2499</C.PriceProduct>
-          </Link>
-        </C.Product>
-        <C.Product>
-          <Link to="/product">
-            <C.ImageProduct src={imageEmphasis} alt="" />
-            <C.TitleProduct className="font-1-xl">Smartphone</C.TitleProduct>
-            <C.PriceProduct className="font-2-m">R$ 2499</C.PriceProduct>
-          </Link>
-        </C.Product>
-        <C.Product>
-          <Link to="/product">
-            <C.ImageProduct src={imageEmphasis} alt="" />
-            <C.TitleProduct className="font-1-xl">Smartphone</C.TitleProduct>
-            <C.PriceProduct className="font-2-m">R$ 2499</C.PriceProduct>
-          </Link>
-        </C.Product>
+        {types.list.length
+          && types.list.map(({
+            id, fotos, nome, preco,
+          }) => (
+            <C.Product key={id}>
+              <Link to={`/product/${id}`}>
+                <C.ImageProduct src={fotos[0].src} alt={fotos[0].titulo} />
+                <C.TitleProduct className="font-1-xl">{nome}</C.TitleProduct>
+                <C.PriceProduct className="font-2-m">
+                  R$
+                  {preco}
+                </C.PriceProduct>
+              </Link>
+            </C.Product>
+          ))}
       </C.List>
+      {error && <C.Error className="error">Esse é o seu erro</C.Error>}
+      {loading && <Loader />}
     </C.ListProducts>
   );
 };
