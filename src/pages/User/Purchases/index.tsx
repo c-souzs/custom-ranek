@@ -2,19 +2,19 @@ import React from 'react';
 import Loader from '../../../components/Loader';
 import ProductData from '../../../components/ProductData';
 import useControlRedux from '../../../hooks/useControlRedux';
-import { transactionPurchases } from '../../../store/userReducer';
+import { userTransactionPurchases } from '../../../store/userReducer';
 
 import * as C from './styles';
 
 const Purchases = (): JSX.Element => {
+  // Conjunto referente aoa redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, data } = useAppSelector((state) => state.user);
 
+  // Busca as transações de compras do usuário.
   React.useEffect(() => {
-    if (data.information) {
-      dispatch(transactionPurchases());
-    }
+    dispatch(userTransactionPurchases());
   }, [dispatch]);
 
   return (

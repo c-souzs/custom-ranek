@@ -8,7 +8,8 @@ import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
 import useInput from '../../../hooks/useInput';
 import { AppDispatch, RootState } from '../../../store/configure';
-import { updateDataUser } from '../../../store/userReducer';
+import { localizationAddress, reset } from '../../../store/localizationReducer';
+import { userUpdate } from '../../../store/userReducer';
 
 import * as C from './styles';
 
@@ -20,13 +21,16 @@ const Edit = (): JSX.Element => {
   const { setValue: setValueRoad, ...road } = useInput('');
   const { setValue: setValueNumber, ...number } = useInput('');
   const { setValue: setValueDistrict, ...district } = useInput('');
-  const [city, setCity] = React.useState('Pains');
-  const [citys, setCitys] = React.useState<string[]>(['Pains']);
+  const [city, setCity] = React.useState('');
+  const [citys, setCitys] = React.useState<string[]>([]);
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
 
+  // Conjunto referente ao redux.
   const dispatch = useDispatch<AppDispatch>();
   const stateUser = useSelector((state: RootState) => state.user);
+  const stateLocalization = useSelector((state: RootState) => state.localization);
 
+  // Valida os campos.
   const validateInputs = (): boolean => name.validateAt()
     && password.validateAt()
     && cep.validateAt()
@@ -36,7 +40,8 @@ const Edit = (): JSX.Element => {
     && city !== 'Selecione uma cidade'
     && stateUf.validateAt();
 
-  const handleUpdateUser = async (e: FormEvent): Promise<void> => {
+  // Realiza a atualização de dados do usuário.
+  const accomplishUpdate = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
     if (validateInputs()) {
@@ -52,10 +57,21 @@ const Edit = (): JSX.Element => {
         estado: stateUf.value,
       };
 
-      await dispatch(updateDataUser(dataUser));
+      await dispatch(userUpdate(dataUser));
     }
   };
 
+  // Após o usuário remover o foco do campo do cep, o valor é validado e é realizado
+  // a consulta na api.
+  const customOnBlurCep = (): void => {
+    if (cep.validateAt()) {
+      dispatch(localizationAddress(cep.value));
+    } else {
+      dispatch(reset());
+    }
+  };
+
+  // Preenche os campos já com os dados do usuário.
   React.useEffect(() => {
     if (stateUser.data.information) {
       const {
@@ -82,20 +98,61 @@ const Edit = (): JSX.Element => {
     stateUser.data,
   ]);
 
+  React.useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const cepActual = stateUser.data.information!.cep;
+    dispatch(localizationAddress(cepActual));
+  }, [stateUser.data.information, dispatch]);
+
+  // Lista as cidades após a consulta de dados do cep.
+  React.useEffect(() => {
+    if (stateLocalization.data.citys.length) {
+      setCitys(stateLocalization.data.citys);
+    } else {
+      setCitys(['Selecione uma cidade']);
+    }
+  }, [stateLocalization.data.citys]);
+
+  // Preenche o campo do estado baseado no cep, de forma automatica.
+  React.useEffect(() => {
+    if (stateLocalization.data.uf) {
+      setValueStateUf(stateLocalization.data.uf);
+    } else {
+      setValueStateUf('');
+    }
+  }, [stateLocalization.data.uf, setValueStateUf]);
+
   return (
     <C.EditData>
       <C.Container className="container">
         <h2 className="font-1-xl subtitleSectionUser">Altere seus dados</h2>
-        <C.Form onSubmit={handleUpdateUser}>
+        <C.Form onSubmit={accomplishUpdate}>
           <Input label="Nome" name="name" type="text" {...name} />
           <Input label="Email" name="email" type="email" required {...email} />
           <Input label="Senha" name="password" type="password" {...password} placeholder="Insira sua nova senha" />
-          <Input label="Cep" name="cep" type="text" {...cep} />
+          <div>
+            <Input
+              label="Cep"
+              name="cep"
+              type="text"
+              onBlur={customOnBlurCep}
+              {...cep}
+              maxLength={9}
+              disabled={stateLocalization.loading}
+            />
+            {stateLocalization.error && <p className="error">{stateLocalization.error}</p>}
+          </div>
           <Input label="Rua" name="road" type="text" {...road} />
           <Input label="Número" name="number" type="text" {...number} />
           <Input label="Bairro" name="district" type="text" {...district} />
-          <Select label="Cidade" value={city} setValue={setCity} options={citys} />
-          <Input label="Estado" name="state" type="text" {...stateUf} />
+          <Select
+            label="Cidade"
+            value={city}
+            setValue={setCity}
+            options={citys}
+            disabled={stateLocalization.data.citys.length === 0 || stateLocalization.loading}
+          />
+          <Input label="Estado" name="state" type="text" {...stateUf} disabled />
           {stateUser.error && <C.Error className="error">{stateUser.error}</C.Error>}
           <C.ElementColumn>
             <ButtonSubmit>Alterar</ButtonSubmit>

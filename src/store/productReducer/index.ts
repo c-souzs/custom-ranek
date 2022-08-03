@@ -1,23 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ErrorData, Product } from '../../types';
+import { ErrorData, Product, ProductPost } from '../../types';
 import {
-  deleteProduct, getProduct, getProductList, getProductSearch, postProduct,
+  deleteProduct,
+  getProduct,
+  getProductList,
+  getProductSearch,
+  getProductUserAnnounced,
+  postProduct,
 } from './productService';
-
-interface ProductDataPhoto {
-  name: string
-  file: File
-}
-
-interface ProductPost {
-  nome: string
-  preco: string
-  descricao: string
-  photoCover: ProductDataPhoto
-  photoFront: ProductDataPhoto
-  photoBack: ProductDataPhoto
-}
 
 export interface InitialStateProduct {
   loading: boolean
@@ -26,10 +17,11 @@ export interface InitialStateProduct {
     page: Product | null
     list: Product[]
     search: Product[]
+    user: Product[]
   }
 }
 
-export const productPage = createAsyncThunk('product/page', async (slug: string, thunkAPI) => {
+export const productPage = createAsyncThunk('product/pageGet', async (slug: string, thunkAPI) => {
   try {
     const product = await getProduct(slug);
 
@@ -40,7 +32,7 @@ export const productPage = createAsyncThunk('product/page', async (slug: string,
   }
 });
 
-export const productList = createAsyncThunk('product/productList', async (query: string, thunkAPI) => {
+export const productList = createAsyncThunk('product/listGet', async (query: string, thunkAPI) => {
   try {
     const products = await getProductList(query);
 
@@ -51,7 +43,7 @@ export const productList = createAsyncThunk('product/productList', async (query:
   }
 });
 
-export const productSearch = createAsyncThunk('product/productSearch', async (search: string, thunkAPI) => {
+export const productSearch = createAsyncThunk('product/searchGet', async (search: string, thunkAPI) => {
   try {
     const result = await getProductSearch(search);
 
@@ -62,7 +54,7 @@ export const productSearch = createAsyncThunk('product/productSearch', async (se
   }
 });
 
-export const productsAnnounced = createAsyncThunk('product/postProduct', async (data: ProductPost, thunkAPI) => {
+export const productAnnounce = createAsyncThunk('product/announcePost', async (data: ProductPost, thunkAPI) => {
   try {
     postProduct(data);
 
@@ -73,19 +65,27 @@ export const productsAnnounced = createAsyncThunk('product/postProduct', async (
   }
 });
 
-export const productAnnouncedDelete = createAsyncThunk(
-  'product/deleProductAnnounced',
-  async (slug: string, thunkAPI) => {
-    try {
-      deleteProduct(slug);
+export const productUnannounced = createAsyncThunk('product/announceDelete', async (slug: string, thunkAPI) => {
+  try {
+    deleteProduct(slug);
 
-      return true;
-    } catch (error) {
-      const errorData = error as ErrorData;
-      return thunkAPI.rejectWithValue(errorData.message);
-    }
-  },
-);
+    return true;
+  } catch (error) {
+    const errorData = error as ErrorData;
+    return thunkAPI.rejectWithValue(errorData.message);
+  }
+});
+
+export const productUser = createAsyncThunk('product/userAnnounceGet', async (id: string, thunkAPI) => {
+  try {
+    const products = await getProductUserAnnounced(id);
+
+    return products;
+  } catch (error) {
+    const errorData = error as ErrorData;
+    return thunkAPI.rejectWithValue(errorData.message);
+  }
+});
 
 const initialState: InitialStateProduct = {
   loading: false,
@@ -94,6 +94,7 @@ const initialState: InitialStateProduct = {
     page: null,
     list: [],
     search: [],
+    user: [],
   },
 };
 
@@ -153,30 +154,45 @@ const product = createSlice({
         state.types.search = [];
       })
       // PRODUCT ANNOUNCED
-      .addCase(productsAnnounced.pending, (state) => {
+      .addCase(productAnnounce.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(productsAnnounced.fulfilled, (state) => {
+      .addCase(productAnnounce.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
       })
-      .addCase(productsAnnounced.rejected, (state, action) => {
+      .addCase(productAnnounce.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
       })
       // PRODUCT DELETE
-      .addCase(productAnnouncedDelete.pending, (state) => {
+      .addCase(productUnannounced.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(productAnnouncedDelete.fulfilled, (state) => {
+      .addCase(productUnannounced.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
       })
-      .addCase(productAnnouncedDelete.rejected, (state, action) => {
+      .addCase(productUnannounced.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
+      })
+      // PRODUCT USER
+      .addCase(productUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(productUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.types.user = action.payload;
+      })
+      .addCase(productUser.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+        state.types.user = [];
       });
   },
 });

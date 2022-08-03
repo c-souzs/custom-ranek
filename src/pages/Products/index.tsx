@@ -1,35 +1,39 @@
 import { MagnifyingGlass, X } from 'phosphor-react';
 import React, { FormEvent } from 'react';
-import { Link } from 'react-router-dom';
 import Input from '../../components/Form/Input';
 import Loader from '../../components/Loader';
 import TitlePackage from '../../components/TitlePackage';
 import useControlRedux from '../../hooks/useControlRedux';
 import useInput from '../../hooks/useInput';
-import { clearSearch, productList, productSearch } from '../../store/productReducer';
+import { clearSearch, productSearch } from '../../store/productReducer';
+import ItemList from './ItemList';
 
 import * as C from './styles';
 
 const Products = (): JSX.Element => {
   const search = useInput('');
 
+  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, types } = useAppSelector((state) => state.product);
 
+  // Busca os produto ao entrar na página.
   React.useEffect(() => {
     const getProducts = async (): Promise<void> => {
-      await dispatch(productList(''));
+      await dispatch(productSearch(''));
     };
 
     getProducts();
   }, [dispatch]);
 
+  // Dispara a ação para consultar os dados da pesquisa.
   const searchProduct = (e: FormEvent): void => {
     e.preventDefault();
     dispatch(productSearch(search.value));
   };
 
+  // Limpa os dados da pesquisa, como se entrasse na página novamente.
   const handleClearSearch = (): void => {
     search.setValue('');
     dispatch(clearSearch());
@@ -55,39 +59,9 @@ const Products = (): JSX.Element => {
         </div>
       </C.Search>
       <C.List>
-        {types.list.length
-          && types.search.length === 0
-          && types.list.map(({
-            id, fotos, nome, preco, descricao,
-          }) => (
-            <C.LiProduct key={id}>
-              <Link to={`/product/${id}`}>
-                <C.ImageProduct src={fotos[0].src} alt={fotos[0].titulo} />
-                <C.NameProduct className="font-2-xl">{nome}</C.NameProduct>
-                <C.PriceProduct className="font-2-m">
-                  R$
-                  {preco}
-                </C.PriceProduct>
-                <C.DescriptionProduct className="font-2-s">{descricao}</C.DescriptionProduct>
-              </Link>
-            </C.LiProduct>
-          ))}
-        {types.search.length
-          && types.search.map(({
-            id, fotos, nome, preco, descricao,
-          }) => (
-            <C.LiProduct key={id}>
-              <Link to={`/product/${id}`}>
-                <C.ImageProduct src={fotos[0].src} alt={fotos[0].titulo} />
-                <C.NameProduct className="font-2-xl">{nome}</C.NameProduct>
-                <C.PriceProduct className="font-2-m">
-                  R$
-                  {preco}
-                </C.PriceProduct>
-                <C.DescriptionProduct className="font-2-s">{descricao}</C.DescriptionProduct>
-              </Link>
-            </C.LiProduct>
-          ))}
+        {/* eslint-disable-next-line max-len */}
+        {types.search.length && types.search.map((product) => <ItemList key={product.id} product={product} />)}
+        {types.search.length === 0 && <p>Nenhum produto encontrado.</p>}
       </C.List>
       {error && <C.Error className="error">esse é o seu erro</C.Error>}
       {loading && <Loader />}

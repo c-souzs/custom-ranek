@@ -134,6 +134,8 @@ const GlobalStyles = createGlobalStyle`
         margin-top: 0.25rem;
         font-weight: 500;
         color: #e54;
+        text-align: center;
+        margin: 1rem 0;
     }
     
 `;

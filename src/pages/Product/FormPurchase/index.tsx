@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/Form/Input';
 import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
-import { purchasesUser } from '../../../store/userReducer';
+import { userTransaction } from '../../../store/userReducer';
 
 import * as C from './styles';
 
@@ -26,12 +26,14 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
 
   const navigate = useNavigate();
 
+  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { types } = useAppSelector((state) => state.product);
   const { data } = useAppSelector((state) => state.user);
 
-  const handlePurchaseProduct = async (e: FormEvent): Promise<void> => {
+  // Valida os dados e efetua a compra do produto do cliente.
+  const accomplishTransaction = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
     if (data.information && types.page) {
@@ -43,7 +45,7 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
       };
 
       try {
-        await dispatch(purchasesUser(dataPurchase));
+        await dispatch(userTransaction(dataPurchase));
         navigate('/user/purchases');
       } catch (error) {
         navigate('/');
@@ -51,6 +53,7 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
     }
   };
 
+  // Preenche de forma automática os dados do formulário com as informações do ciente.
   React.useEffect(() => {
     if (data.information) {
       const {
@@ -89,7 +92,7 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
   return (
     <C.Purchase show={showFormPurchase}>
       <C.TitlePurchase className="font-1-xl">Informações de Envio</C.TitlePurchase>
-      <C.FormPurchase onSubmit={handlePurchaseProduct}>
+      <C.FormPurchase onSubmit={accomplishTransaction}>
         <Input label="Nome" name="name" {...name} />
         <Input label="Email" name="email" type="email" {...email} />
         <Input label="Cep" name="cep" {...cep} />

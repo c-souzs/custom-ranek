@@ -29,6 +29,8 @@ export const Container = styled.div`
 export const ContainerImages = styled.section`
   display: flex;
   overflow-x: hidden;
+
+  transition: 0.2s;
 `;
 
 export const ImageSlide = styled.img`
@@ -55,11 +57,11 @@ export const NavImages = styled.nav`
   justify-content: center;
 `;
 
-interface CircleNavProps {
+interface SlideActive {
   active?: boolean
 }
 
-export const CircleNav = styled.span<CircleNavProps>`
+export const CircleNav = styled.span<SlideActive>`
   width: 15px;
   height: 15px;
 

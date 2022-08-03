@@ -1,6 +1,6 @@
 import { api } from '../../services/api';
 import {
-  DataPurchase, Product, Transaction, UserGetToken, UserInformation, UserRegister,
+  DataPurchase, Transaction, UserGetToken, UserInformation, UserRegister,
 } from '../../types';
 
 interface GetTokenResponse {
@@ -8,16 +8,6 @@ interface GetTokenResponse {
   user_email: string
   user_nicename: string
   user_display_name: string
-}
-
-interface PostProduct {
-  nome: string
-  descricao: string
-  preco: string
-  photos: {
-    name: string
-    src: string
-  }[]
 }
 
 export const getToken = async (user: UserGetToken): Promise<GetTokenResponse> => {
@@ -60,14 +50,4 @@ export const getTransactionSales = async (): Promise<Transaction[]> => {
 
 export const postPurchases = async (purchaseData: DataPurchase): Promise<void> => {
   await api.post<unknown, DataPurchase>('transacao', purchaseData);
-};
-
-// export const postProductAnnounced = async (dataProduct: PostProduct): Promise<void> => {
-//   await api.post<unknown, unknown>('/produto', dataWithPhotos);
-// };
-
-export const getProductsAnnounced = async (id: string): Promise<Product[]> => {
-  const { data } = await api.get<Product[]>(`/produto?usuario_id=${id}`);
-
-  return data;
 };

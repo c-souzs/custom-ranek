@@ -12,17 +12,20 @@ const Product = (): JSX.Element => {
   const [showFormPurchase, setShowFormPurchase] = React.useState(false);
   const navigate = useNavigate();
 
+  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, types } = useAppSelector((state) => state.product);
   const { data } = useAppSelector((state) => state.user);
 
+  // Verifica se tem um usuário logado para efetuar a compra.
   const checkUserToShowFormPurchase = (): void => {
     if (data.information) {
       setShowFormPurchase(true);
     } else navigate('/account/login');
   };
 
+  // Busca os dados referente ao produto.
   React.useEffect(() => {
     const getProduct = async (): Promise<void> => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -47,6 +50,7 @@ const Product = (): JSX.Element => {
               </C.ContainerImages>
               <C.NavImages>
                 {types.page.fotos.map(({ src }) => (
+                  // eslint-disable-next-line max-len
                   <C.CircleNav key={src} />
                 ))}
               </C.NavImages>

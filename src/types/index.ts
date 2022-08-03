@@ -16,6 +16,13 @@ export interface Product {
   usuario_id: string
 }
 
+export interface ProductPost {
+  name: string
+  price: string
+  description: string
+  photos: { name: string; file: File }[]
+}
+
 // Types userReducer
 export interface UserGetToken {
   username: string
@@ -38,7 +45,7 @@ export interface Transaction {
   comprador_id: string
   vendedor_id: string
   endereco: UserInformation
-  produto: Product;
+  produto: Product
   data: string
 }
 

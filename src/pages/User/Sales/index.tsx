@@ -1,20 +1,20 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../../components/Loader';
 import ProductData from '../../../components/ProductData';
 import useControlRedux from '../../../hooks/useControlRedux';
-import { AppDispatch, RootState } from '../../../store/configure';
-import { transactionSales } from '../../../store/userReducer';
+import { userTransactionSales } from '../../../store/userReducer';
 
 import * as C from './styles';
 
 const Sales = (): JSX.Element => {
+  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, data } = useAppSelector((state) => state.user);
 
+  // Busca as transações referente as vendas do usuário.
   React.useEffect(() => {
-    dispatch(transactionSales());
+    dispatch(userTransactionSales());
   }, [dispatch]);
 
   return (

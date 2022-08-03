@@ -1,10 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-  DataPurchase, ErrorData, Product, Transaction, UserGetToken, UserInformation, UserRegister,
+  DataPurchase, ErrorData, Transaction, UserGetToken, UserInformation, UserRegister,
 } from '../../types';
 import {
-  getProductsAnnounced,
   getToken,
   getTransactionPurchases,
   getTransactionSales,
@@ -21,7 +20,6 @@ interface UserData {
     sales: Transaction[]
     purchases: Transaction[]
   }
-  productsAnnounced: Product[]
 }
 
 export interface InitialStateUser {
@@ -30,7 +28,7 @@ export interface InitialStateUser {
   data: UserData
 }
 
-export const loginUser = createAsyncThunk('user/login', async (user: UserGetToken, thunkAPI) => {
+export const userLogin = createAsyncThunk('user/loginGet', async (user: UserGetToken, thunkAPI) => {
   try {
     await getToken(user);
     await validateToken();
@@ -45,11 +43,11 @@ export const loginUser = createAsyncThunk('user/login', async (user: UserGetToke
   }
 });
 
-export const registerUser = createAsyncThunk('user/register', async (user: UserRegister, thunkAPI) => {
+export const userRegister = createAsyncThunk('user/registerPost', async (user: UserRegister, thunkAPI) => {
   try {
     await postUser(user);
     await thunkAPI.dispatch(
-      loginUser({
+      userLogin({
         username: user.email,
         password: user.senha,
       }),
@@ -62,7 +60,7 @@ export const registerUser = createAsyncThunk('user/register', async (user: UserR
   }
 });
 
-export const updateDataUser = createAsyncThunk('user/update', async (user: UserRegister, thunkAPI) => {
+export const userUpdate = createAsyncThunk('user/dataUpdate', async (user: UserRegister, thunkAPI) => {
   try {
     await updateUser(user);
     const dataUser = await getUser();
@@ -74,7 +72,7 @@ export const updateDataUser = createAsyncThunk('user/update', async (user: UserR
   }
 });
 
-export const transactionPurchases = createAsyncThunk('user/transactionPurchases', async (_, thunkAPI) => {
+export const userTransactionPurchases = createAsyncThunk('user/transactionPurchasesGet', async (_, thunkAPI) => {
   try {
     const data = await getTransactionPurchases();
 
@@ -85,7 +83,7 @@ export const transactionPurchases = createAsyncThunk('user/transactionPurchases'
   }
 });
 
-export const transactionSales = createAsyncThunk('user/transactionSales', async (_, thunkAPI) => {
+export const userTransactionSales = createAsyncThunk('user/transactionSalesGet', async (_, thunkAPI) => {
   try {
     const data = await getTransactionSales();
 
@@ -96,29 +94,21 @@ export const transactionSales = createAsyncThunk('user/transactionSales', async 
   }
 });
 
-export const purchasesUser = createAsyncThunk('user/purchases', async (purchaseData: DataPurchase, thunkAPI) => {
-  try {
-    await postPurchases(purchaseData);
+export const userTransaction = createAsyncThunk(
+  'user/transactionPost',
+  async (purchaseData: DataPurchase, thunkAPI) => {
+    try {
+      await postPurchases(purchaseData);
 
-    return true;
-  } catch (error) {
-    const errorData = error as ErrorData;
-    return thunkAPI.rejectWithValue(errorData.message);
-  }
-});
+      return true;
+    } catch (error) {
+      const errorData = error as ErrorData;
+      return thunkAPI.rejectWithValue(errorData.message);
+    }
+  },
+);
 
-export const productsAnnounced = createAsyncThunk('user/productsAnnounced', async (id: string, thunkAPI) => {
-  try {
-    const products = await getProductsAnnounced(id);
-
-    return products;
-  } catch (error) {
-    const errorData = error as ErrorData;
-    return thunkAPI.rejectWithValue(errorData.message);
-  }
-});
-
-export const logout = createAsyncThunk('user/logout', async () => {
+export const userLogout = createAsyncThunk('user/logout', async () => {
   localStorage.removeItem('token');
 });
 
@@ -131,7 +121,6 @@ const initialState: InitialStateUser = {
       purchases: [],
       sales: [],
     },
-    productsAnnounced: [],
   },
 };
 
@@ -142,108 +131,91 @@ const user = createSlice({
   extraReducers: (builder) => {
     builder
       // LOGIN
-      .addCase(loginUser.pending, (state) => {
+      .addCase(userLogin.pending, (state) => {
         state.loading = true;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(userLogin.fulfilled, (state, action) => {
         state.error = null;
         state.loading = false;
         state.data.information = action.payload;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(userLogin.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
         state.data.information = null;
-        state.data.productsAnnounced = [];
         state.data.transaction.purchases = [];
         state.data.transaction.sales = [];
       })
       // REGISTER
-      .addCase(registerUser.pending, (state) => {
+      .addCase(userRegister.pending, (state) => {
         state.loading = true;
       })
-      .addCase(registerUser.fulfilled, (state) => {
+      .addCase(userRegister.fulfilled, (state) => {
         state.error = null;
         state.loading = false;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(userRegister.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
       })
       // UPDATE
-      .addCase(updateDataUser.pending, (state) => {
+      .addCase(userUpdate.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateDataUser.fulfilled, (state, action) => {
+      .addCase(userUpdate.fulfilled, (state, action) => {
         state.error = null;
         state.loading = false;
         state.data.information = action.payload;
       })
-      .addCase(updateDataUser.rejected, (state, action) => {
+      .addCase(userUpdate.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
       })
       // TRANSACTION PURCHASE
-      .addCase(transactionPurchases.pending, (state) => {
+      .addCase(userTransactionPurchases.pending, (state) => {
         state.loading = true;
       })
-      .addCase(transactionPurchases.fulfilled, (state, action) => {
+      .addCase(userTransactionPurchases.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data.transaction.purchases = action.payload;
       })
-      .addCase(transactionPurchases.rejected, (state, action) => {
+      .addCase(userTransactionPurchases.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         state.data.transaction.purchases = [];
       })
       // TRANSACTION SALES
-      .addCase(transactionSales.pending, (state) => {
+      .addCase(userTransactionSales.pending, (state) => {
         state.loading = true;
       })
-      .addCase(transactionSales.fulfilled, (state, action) => {
+      .addCase(userTransactionSales.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data.transaction.sales = action.payload;
       })
-      .addCase(transactionSales.rejected, (state, action) => {
+      .addCase(userTransactionSales.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         state.data.transaction.sales = [];
       })
-      // POST PURCHASES USER
-      .addCase(purchasesUser.pending, (state) => {
+      // POST TRANSACTION
+      .addCase(userTransaction.pending, (state) => {
         state.loading = true;
       })
-      .addCase(purchasesUser.fulfilled, (state) => {
+      .addCase(userTransaction.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
       })
-      .addCase(purchasesUser.rejected, (state, action) => {
+      .addCase(userTransaction.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        state.data.transaction.purchases = [];
-      })
-      // PRODUCTS ANNOUNCED
-      .addCase(productsAnnounced.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(productsAnnounced.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.data.productsAnnounced = action.payload;
-      })
-      .addCase(productsAnnounced.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-        state.data.productsAnnounced = [];
       })
       // LOGOUT
-      .addCase(logout.fulfilled, (state) => {
+      .addCase(userLogout.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
         state.data.information = null;
-        state.data.productsAnnounced = [];
         state.data.transaction.purchases = [];
         state.data.transaction.sales = [];
       });

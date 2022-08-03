@@ -4,7 +4,7 @@ import { Trash } from 'phosphor-react';
 
 import * as C from './styles';
 import useControlRedux from '../../hooks/useControlRedux';
-import { productAnnouncedDelete } from '../../store/productReducer';
+import { productUnannounced } from '../../store/productReducer';
 
 interface Address {
   cep: string
@@ -34,7 +34,7 @@ const ProductData = ({ type, ...props }: ProductDataProps): JSX.Element => {
   const { loading, error, data } = useAppSelector((state) => state.user);
 
   const deleteProductAnnoucend = (): void => {
-    if (data.information && props.id) dispatch(productAnnouncedDelete(props.id));
+    if (data.information && props.id) dispatch(productUnannounced(props.id));
   };
 
   return (

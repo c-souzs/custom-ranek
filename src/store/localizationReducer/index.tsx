@@ -24,7 +24,7 @@ const initialState: InitialStateLocalization = {
   },
 };
 
-export const getLocalization = createAsyncThunk('localization/getLocalization', async (cep: string, thunkAPI) => {
+export const localizationAddress = createAsyncThunk('localization/localizationGet', async (cep: string, thunkAPI) => {
   try {
     const { cep: cepFormat, uf } = await getCep(cep);
     const citys = await getCitys(uf);
@@ -49,18 +49,18 @@ const localization = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getLocalization.pending, (state) => {
+      .addCase(localizationAddress.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getLocalization.fulfilled, (state, action) => {
+      .addCase(localizationAddress.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data.cepFormat = action.payload.cepFormat;
         state.data.uf = action.payload.uf;
         state.data.citys = action.payload.citys;
       })
-      .addCase(getLocalization.rejected, (state, action) => {
+      .addCase(localizationAddress.rejected, (state, action) => {
         const errorMessage = action.payload as string;
 
         state.loading = false;

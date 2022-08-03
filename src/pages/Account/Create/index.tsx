@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
-import { AxiosResponseHeaders } from 'axios';
 import React, { FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import ButtonSubmit from '../../../components/Form/Button';
 import Input from '../../../components/Form/Input';
 import Select from '../../../components/Form/Select';
@@ -11,8 +9,8 @@ import Loader from '../../../components/Loader';
 import TitlePackage from '../../../components/TitlePackage';
 import useInput from '../../../hooks/useInput';
 import { AppDispatch, RootState } from '../../../store/configure';
-import { getLocalization, reset } from '../../../store/localizationReducer';
-import { loginUser, registerUser } from '../../../store/userReducer';
+import { localizationAddress, reset } from '../../../store/localizationReducer';
+import { userRegister } from '../../../store/userReducer';
 
 import * as C from './styles';
 
@@ -24,16 +22,16 @@ const Create = (): JSX.Element => {
   const { setValue: setValueRoad, ...road } = useInput('');
   const { setValue: setValueNumber, ...number } = useInput('');
   const { setValue: setValueDistrict, ...district } = useInput('');
-  const [city, setCity] = React.useState('Pains');
+  const [city, setCity] = React.useState('');
   const [citys, setCitys] = React.useState<string[]>(['Selecione uma cidade']);
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
 
-  const navigate = useNavigate();
-
+  // Conjunto referente ao redux.
   const dispatch = useDispatch<AppDispatch>();
   const stateUser = useSelector((state: RootState) => state.user);
   const stateLocalization = useSelector((state: RootState) => state.localization);
 
+  // Verifica se os campos foram preenchidos corretamente.
   const validateInputs = (): boolean => name.validateAt()
     && password.validateAt()
     && cep.validateAt()
@@ -43,7 +41,8 @@ const Create = (): JSX.Element => {
     && city !== 'Selecione uma cidade'
     && stateUf.validateAt();
 
-  const handleRegisterUser = async (e: FormEvent): Promise<void> => {
+  // Realiza o cadastro do usuário
+  const accomplishRegister = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
     if (validateInputs()) {
@@ -59,28 +58,28 @@ const Create = (): JSX.Element => {
         estado: stateUf.value,
       };
 
-      await dispatch(registerUser(dataUser));
+      await dispatch(userRegister(dataUser));
     }
   };
 
-  const customOnBlurCep = async (): Promise<void> => {
+  // Após o usuário remover o foco do campo do cep, o valor é validado e é realizado
+  // a consulta na api.
+  const customOnBlurCep = (): void => {
     if (cep.validateAt()) {
-      dispatch(getLocalization(cep.value));
+      dispatch(localizationAddress(cep.value));
     } else {
       dispatch(reset());
     }
   };
 
-  React.useEffect(() => {
-    if (stateUser.data.information) navigate('/user');
-  }, [stateUser.data.information, navigate]);
-
+  // Preenche o cep formatado.
   React.useEffect(() => {
     if (stateLocalization.data.cepFormat) {
       setValueCep(stateLocalization.data.cepFormat);
     }
   }, [stateLocalization.data.cepFormat, setValueCep]);
 
+  // Preenche o campo do estado baseado no cep, de forma automatica.
   React.useEffect(() => {
     if (stateLocalization.data.uf) {
       setValueStateUf(stateLocalization.data.uf);
@@ -89,6 +88,7 @@ const Create = (): JSX.Element => {
     }
   }, [stateLocalization.data.uf, setValueStateUf]);
 
+  // Lista as cidades após a consulta de dados do cep.
   React.useEffect(() => {
     if (stateLocalization.data.citys.length) {
       setCitys(stateLocalization.data.citys);
@@ -101,7 +101,7 @@ const Create = (): JSX.Element => {
     <C.Create>
       <TitlePackage subtitle="compre produtos" title="crie sua conta" />
       <C.Container className="container">
-        <C.Form onSubmit={handleRegisterUser}>
+        <C.Form onSubmit={accomplishRegister}>
           <Input label="Nome" name="name" type="text" {...name} />
           <Input label="Email" name="email" type="email" required {...email} />
           <Input label="Senha" name="password" type="password" {...password} />
@@ -125,7 +125,7 @@ const Create = (): JSX.Element => {
             value={city}
             setValue={setCity}
             options={citys}
-            disabled={!stateLocalization.data.citys.length}
+            disabled={stateLocalization.data.citys.length === 0 || stateLocalization.loading}
           />
           <Input label="Estado" name="state" type="text" {...stateUf} disabled />
           {stateUser.error && <C.Error className="error">{stateUser.error}</C.Error>}

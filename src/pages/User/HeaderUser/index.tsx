@@ -9,7 +9,7 @@ import * as C from './styles';
 import Title from '../../../components/Title';
 import useMedia from '../../../hooks/useMedia';
 import { AppDispatch, RootState } from '../../../store/configure';
-import { logout } from '../../../store/userReducer';
+import { userLogout } from '../../../store/userReducer';
 
 const HeaderUser = (): JSX.Element => {
   const changeIcon = useMedia('(max-width: 800px)');
@@ -18,7 +18,7 @@ const HeaderUser = (): JSX.Element => {
   const navigate = useNavigate();
 
   const handleLogout = async (): Promise<void> => {
-    await dispatch(logout());
+    await dispatch(userLogout());
     navigate('/');
   };
 

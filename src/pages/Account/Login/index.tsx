@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import ButtonSubmit from '../../../components/Form/Button';
 import Input from '../../../components/Form/Input';
 import Loader from '../../../components/Loader';
 import TitlePackage from '../../../components/TitlePackage';
 import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
-import { AppDispatch, RootState } from '../../../store/configure';
-import { loginUser } from '../../../store/userReducer';
+import { userLogin } from '../../../store/userReducer';
 
 import * as C from './styles';
 
@@ -18,13 +15,13 @@ const Login = (): JSX.Element => {
   const { setValue: setValueEmail, ...email } = useInput('email');
   const { setValue: setValuePassword, ...password } = useInput('');
 
-  const navigate = useNavigate();
-
+  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
-  const { loading, error, data } = useAppSelector((state) => state.user);
+  const { loading, error } = useAppSelector((state) => state.user);
 
-  const handleDataLogin = (e: FormEvent): void => {
+  // Faz o login do usuário.
+  const accomplishLogin = (e: FormEvent): void => {
     e.preventDefault();
 
     if (email.validateAt() && password.validateAt()) {
@@ -33,19 +30,15 @@ const Login = (): JSX.Element => {
         password: password.value,
       };
 
-      dispatch(loginUser(dataUser));
+      dispatch(userLogin(dataUser));
     }
   };
-
-  React.useEffect(() => {
-    if (data.information) navigate('/user');
-  }, [data.information, navigate]);
 
   return (
     <C.Login>
       <TitlePackage subtitle="Bem vindo de volta" title="acesse sua conta" />
       <C.Container className="container">
-        <C.Form onSubmit={handleDataLogin}>
+        <C.Form onSubmit={accomplishLogin}>
           <Input label="Email" placeholder="seuemail@gmail.com" name="email" type="email" required {...email} />
           <Input label="Senha" placeholder="••••••••" name="password" type="password" {...password} />
           {error && <p className="error">{error}</p>}
