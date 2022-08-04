@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ButtonSubmit from '../../../components/Form/Button';
 import Input from '../../../components/Form/Input';
 import Loader from '../../../components/Loader';
@@ -14,11 +15,12 @@ import * as C from './styles';
 const Login = (): JSX.Element => {
   const { setValue: setValueEmail, ...email } = useInput('email');
   const { setValue: setValuePassword, ...password } = useInput('');
+  const navigate = useNavigate();
 
   // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
-  const { loading, error } = useAppSelector((state) => state.user);
+  const { loading, error, data } = useAppSelector((state) => state.user);
 
   // Faz o login do usuário.
   const accomplishLogin = (e: FormEvent): void => {
@@ -33,6 +35,11 @@ const Login = (): JSX.Element => {
       dispatch(userLogin(dataUser));
     }
   };
+
+  // Redireciona o usuário após o login.
+  React.useEffect(() => {
+    if (data.information) navigate('/user/products-sold');
+  }, [data.information, navigate]);
 
   return (
     <C.Login>

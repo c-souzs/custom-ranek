@@ -6,6 +6,7 @@ import ButtonSubmit from '../../../components/Form/Button';
 import Input from '../../../components/Form/Input';
 import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
+import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
 import { AppDispatch, RootState } from '../../../store/configure';
 import { localizationAddress, reset } from '../../../store/localizationReducer';
@@ -26,9 +27,10 @@ const Edit = (): JSX.Element => {
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
 
   // Conjunto referente ao redux.
-  const dispatch = useDispatch<AppDispatch>();
-  const stateUser = useSelector((state: RootState) => state.user);
-  const stateLocalization = useSelector((state: RootState) => state.localization);
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const stateUser = useAppSelector((state) => state.user);
+  const stateLocalization = useAppSelector((state) => state.localization);
 
   // Valida os campos.
   const validateInputs = (): boolean => name.validateAt()

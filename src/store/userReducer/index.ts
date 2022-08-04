@@ -43,6 +43,19 @@ export const userLogin = createAsyncThunk('user/loginGet', async (user: UserGetT
   }
 });
 
+export const userDataAutomatic = createAsyncThunk('user/loginAutomaticGet', async (_, thunkAPI) => {
+  try {
+    await validateToken();
+
+    const dataUser = await getUser();
+    return dataUser;
+  } catch (error) {
+    localStorage.removeItem('token');
+    const errorData = error as ErrorData;
+    return thunkAPI.rejectWithValue(errorData.message);
+  }
+});
+
 export const userRegister = createAsyncThunk('user/registerPost', async (user: UserRegister, thunkAPI) => {
   try {
     await postUser(user);
@@ -157,6 +170,21 @@ const user = createSlice({
       .addCase(userRegister.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
+      })
+      // LOGIN AUTOMATIC
+      .addCase(userDataAutomatic.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(userDataAutomatic.fulfilled, (state, action) => {
+        state.error = null;
+        state.loading = false;
+        state.data.information = action.payload;
+      })
+      .addCase(userDataAutomatic.rejected, (state) => {
+        state.loading = false;
+        state.data.information = null;
+        state.data.transaction.purchases = [];
+        state.data.transaction.sales = [];
       })
       // UPDATE
       .addCase(userUpdate.pending, (state) => {

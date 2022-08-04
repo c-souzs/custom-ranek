@@ -27,7 +27,7 @@ const Register = (): JSX.Element => {
   // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
-  const { loading, error, types: dataProductR } = useAppSelector((state) => state.product);
+  const { loading, error } = useAppSelector((state) => state.product);
 
   // Valida se os inputs estão preenchidos. Inclusive se o usuário preencheu as 3 fotos.
   const validateInputs = (): boolean => {
@@ -55,6 +55,7 @@ const Register = (): JSX.Element => {
         await dispatch(productAnnounce(dataProduct));
         navigate('/user/products-sold');
       } catch (errorAnnounce) {
+        // Exibir um erro aqui!!!
         navigate('/');
       }
     }

@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import ButtonSubmit from '../../../components/Form/Button';
 import Input from '../../../components/Form/Input';
 import Select from '../../../components/Form/Select';
@@ -25,6 +26,7 @@ const Create = (): JSX.Element => {
   const [city, setCity] = React.useState('');
   const [citys, setCitys] = React.useState<string[]>(['Selecione uma cidade']);
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
+  const navigate = useNavigate();
 
   // Conjunto referente ao redux.
   const dispatch = useDispatch<AppDispatch>();
@@ -96,6 +98,11 @@ const Create = (): JSX.Element => {
       setCitys(['Selecione uma cidade']);
     }
   }, [stateLocalization.data.citys]);
+
+  // Redireciona o usuário após o login.
+  React.useEffect(() => {
+    if (stateUser.data.information) navigate('/user/products-sold');
+  }, [stateUser.data.information, navigate]);
 
   return (
     <C.Create>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import PageNotFound from './components/PageNotFound';
 import Account from './pages/Account';
 import Create from './pages/Account/Create';
 import Login from './pages/Account/Login';
@@ -29,6 +30,7 @@ const Router = (): JSX.Element => (
       <Route path="create" element={<Create />} />
       <Route path="login" element={<Login />} />
     </Route>
+    <Route path="*" element={<PageNotFound />} />
   </Routes>
 );
 

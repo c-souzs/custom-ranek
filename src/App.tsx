@@ -12,6 +12,7 @@ import light from './styles/themes/light';
 const App = (): JSX.Element => {
   const [theme, setTheme] = usePersistedStateLs<DefaultTheme>('theme', dark);
 
+  // Altera o tema e persiste a informação.
   const toggleTheme = React.useCallback(() => {
     const themeActive = theme.name === 'dark' ? light : dark;
     setTheme(themeActive);

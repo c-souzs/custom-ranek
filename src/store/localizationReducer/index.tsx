@@ -8,7 +8,7 @@ interface DataLocalization {
   citys: string[]
 }
 
-interface InitialStateLocalization {
+export interface InitialStateLocalization {
   loading: boolean
   error: string | null
   data: DataLocalization

@@ -1,5 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/configure';
+import { InitialStateLocalization } from '../store/localizationReducer';
 import { InitialStateProduct } from '../store/productReducer';
 import { InitialStateUser } from '../store/userReducer';
 
@@ -8,6 +9,7 @@ interface UseControReduxReturn {
   useAppSelector: TypedUseSelectorHook<{
     user: InitialStateUser
     product: InitialStateProduct
+    localization: InitialStateLocalization
   }>
 }
 
