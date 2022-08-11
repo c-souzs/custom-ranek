@@ -23,7 +23,7 @@ const Home = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <main>
+    <main className="paddingDistanceHeader">
       {loading && <Loader />}
       <Introduction />
       <ListProducts />

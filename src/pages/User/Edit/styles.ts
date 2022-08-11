@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-export const EditData = styled.section`
-  padding: 1.875rem 0;
-  background-color: ${(props) => props.theme.colors.primary};
-`;
-
-export const Container = styled.section`
-  position: relative;
-`;
-
 export const Title = styled.h2`
   color: #8877ff;
   font-size: 2.5rem !important;

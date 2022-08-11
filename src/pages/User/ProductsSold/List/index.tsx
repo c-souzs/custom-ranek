@@ -20,27 +20,25 @@ const List = (): JSX.Element => {
   }, [data.information, dispatch]);
 
   return (
-    <C.List>
-      <div className="container">
-        <h2 className="font-1-xl subtitleSectionUser">Produtos anunciados</h2>
-        {error && <C.Error className="error">{error}</C.Error>}
-        <C.ListProducts>
-          {types.user.length
-            && types.user.map((product) => (
-              <ProductData
-                key={product.id}
-                id={product.id}
-                type="product"
-                image={product.fotos[0].src}
-                name={product.nome}
-                price={product.preco}
-                description={product.descricao}
-              />
-            ))}
-        </C.ListProducts>
-      </div>
+    <div className="container">
+      <h2 className="font-1-xl subtitleSectionUser">Produtos anunciados</h2>
+      {error && <C.Error className="error">{error}</C.Error>}
+      <C.ListProducts>
+        {types.user.length
+          && types.user.map((product) => (
+            <ProductData
+              key={product.id}
+              id={product.id}
+              type="product"
+              image={product.fotos[0].src}
+              name={product.nome}
+              price={product.preco}
+              description={product.descricao}
+            />
+          ))}
+      </C.ListProducts>
       {loading && <Loader />}
-    </C.List>
+    </div>
   );
 };
 

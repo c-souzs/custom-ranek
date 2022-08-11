@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -21,7 +22,7 @@ const Contact = (): JSX.Element => {
   const { setValue: setValueMessage, ...message } = useInput('');
 
   return (
-    <C.Contact>
+    <C.Contact className="paddingDistanceHeader">
       <TitlePackage subtitle="meios de contato" title="fale conosco" />
       <C.Container className="container">
         <C.SectionForm>

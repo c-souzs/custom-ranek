@@ -18,26 +18,24 @@ const Purchases = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <C.Purchases>
-      <div className="container">
-        <h2 className="font-1-xl subtitleSectionUser">Produtos comprados</h2>
-        <C.List>
-          {data.transaction.purchases.length
-            && data.transaction.purchases.map(({ produto, vendedor_id: vendedorId }) => (
-              <ProductData
-                type="purchase"
-                image={produto.fotos[0].src}
-                name={produto.nome}
-                price={produto.preco}
-                description={produto.descricao}
-                email={vendedorId}
-              />
-            ))}
-        </C.List>
-        {error && <C.Error className="error">{error}</C.Error>}
-      </div>
+    <div className="container">
+      <h2 className="font-1-xl subtitleSectionUser">Produtos comprados</h2>
+      <C.List>
+        {data.transaction.purchases.length
+          && data.transaction.purchases.map(({ produto, vendedor_id: vendedorId }) => (
+            <ProductData
+              type="purchase"
+              image={produto.fotos[0].src}
+              name={produto.nome}
+              price={produto.preco}
+              description={produto.descricao}
+              email={vendedorId}
+            />
+          ))}
+      </C.List>
+      {error && <C.Error className="error">{error}</C.Error>}
       {loading && <Loader />}
-    </C.Purchases>
+    </div>
   );
 };
 

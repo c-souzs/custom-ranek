@@ -1,16 +1,7 @@
 import styled from 'styled-components';
 
-export const Create = styled.div`
-  background-color: ${(props) => props.theme.colors.primary};
-  padding-top: 7.313rem;
-
-  @media (max-width: 696px) {
-    padding-top: 6.25rem;
-  }
-`;
-
 export const Container = styled.section`
-  position: relative;
+  background-color: ${(props) => props.theme.colors.primary};
 `;
 
 export const Form = styled.form`

@@ -18,27 +18,25 @@ const Sales = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <C.Sales>
-      <div className="container">
-        <h2 className="font-1-xl subtitleSectionUser">Vendas</h2>
-        <C.List>
-          {data.transaction.sales.length
-            && data.transaction.sales.map((sale) => (
-              <ProductData
-                type="sale"
-                image={sale.produto.fotos[0].src}
-                name={sale.produto.nome}
-                price={sale.produto.preco}
-                description={sale.produto.descricao}
-                email={sale.comprador_id}
-                dataDelivery={sale.endereco}
-              />
-            ))}
-        </C.List>
-        {error && <C.Error className="error">{error}</C.Error>}
-      </div>
+    <div className="container">
+      <h2 className="font-1-xl subtitleSectionUser">Vendas</h2>
+      <C.List>
+        {data.transaction.sales.length
+          && data.transaction.sales.map((sale) => (
+            <ProductData
+              type="sale"
+              image={sale.produto.fotos[0].src}
+              name={sale.produto.nome}
+              price={sale.produto.preco}
+              description={sale.produto.descricao}
+              email={sale.comprador_id}
+              dataDelivery={sale.endereco}
+            />
+          ))}
+      </C.List>
+      {error && <C.Error className="error">{error}</C.Error>}
       {loading && <Loader />}
-    </C.Sales>
+    </div>
   );
 };
 

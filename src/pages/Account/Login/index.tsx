@@ -42,27 +42,29 @@ const Login = (): JSX.Element => {
   }, [data.information, navigate]);
 
   return (
-    <C.Login>
+    <>
       <TitlePackage subtitle="Bem vindo de volta" title="acesse sua conta" />
-      <C.Container className="container">
-        <C.Form onSubmit={accomplishLogin}>
-          <Input label="Email" placeholder="seuemail@gmail.com" name="email" type="email" required {...email} />
-          <Input label="Senha" placeholder="••••••••" name="password" type="password" {...password} />
-          {error && <p className="error">{error}</p>}
-          <C.Information>
-            <ButtonSubmit>Entrar</ButtonSubmit>
-            <C.LostPassword className="font-2-s">
-              Esqueceu a senha?
-              <C.LinkLostPassword to="https://ranekapi.origamid.dev/wp-login.php?action=lostpassword" target="_blank">
-                Clique aqui
-              </C.LinkLostPassword>
-              .
-            </C.LostPassword>
-          </C.Information>
-        </C.Form>
+      <C.Container>
+        <div className="container">
+          <C.Form onSubmit={accomplishLogin}>
+            <Input label="Email" placeholder="seuemail@gmail.com" name="email" type="email" required {...email} />
+            <Input label="Senha" placeholder="••••••••" name="password" type="password" {...password} />
+            {error && <p className="error">{error}</p>}
+            <C.Information>
+              <ButtonSubmit>Entrar</ButtonSubmit>
+              <C.LostPassword className="font-2-s">
+                Esqueceu a senha?
+                <C.LinkLostPassword to="https://ranekapi.origamid.dev/wp-login.php?action=lostpassword" target="_blank">
+                  Clique aqui
+                </C.LinkLostPassword>
+                .
+              </C.LostPassword>
+            </C.Information>
+          </C.Form>
+        </div>
         {loading && <Loader />}
       </C.Container>
-    </C.Login>
+    </>
   );
 };
 

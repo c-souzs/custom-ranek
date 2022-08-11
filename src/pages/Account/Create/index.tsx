@@ -105,44 +105,46 @@ const Create = (): JSX.Element => {
   }, [stateUser.data.information, navigate]);
 
   return (
-    <C.Create>
+    <>
       <TitlePackage subtitle="compre produtos" title="crie sua conta" />
-      <C.Container className="container">
-        <C.Form onSubmit={accomplishRegister}>
-          <Input label="Nome" name="name" type="text" {...name} />
-          <Input label="Email" name="email" type="email" required {...email} />
-          <Input label="Senha" name="password" type="password" {...password} />
-          <div>
-            <Input
-              label="Cep"
-              name="cep"
-              type="text"
-              onBlur={customOnBlurCep}
-              {...cep}
-              maxLength={9}
-              disabled={stateLocalization.loading}
+      <C.Container>
+        <div className="container">
+          <C.Form onSubmit={accomplishRegister}>
+            <Input label="Nome" name="name" type="text" {...name} />
+            <Input label="Email" name="email" type="email" required {...email} />
+            <Input label="Senha" name="password" type="password" {...password} />
+            <div>
+              <Input
+                label="Cep"
+                name="cep"
+                type="text"
+                onBlur={customOnBlurCep}
+                {...cep}
+                maxLength={9}
+                disabled={stateLocalization.loading}
+              />
+              {stateLocalization.error && <p className="error">{stateLocalization.error}</p>}
+            </div>
+            <Input label="Rua" name="road" type="text" {...road} />
+            <Input label="Número" name="number" type="text" {...number} />
+            <Input label="Bairro" name="district" type="text" {...district} />
+            <Select
+              label="Cidade"
+              value={city}
+              setValue={setCity}
+              options={citys}
+              disabled={stateLocalization.data.citys.length === 0 || stateLocalization.loading}
             />
-            {stateLocalization.error && <p className="error">{stateLocalization.error}</p>}
-          </div>
-          <Input label="Rua" name="road" type="text" {...road} />
-          <Input label="Número" name="number" type="text" {...number} />
-          <Input label="Bairro" name="district" type="text" {...district} />
-          <Select
-            label="Cidade"
-            value={city}
-            setValue={setCity}
-            options={citys}
-            disabled={stateLocalization.data.citys.length === 0 || stateLocalization.loading}
-          />
-          <Input label="Estado" name="state" type="text" {...stateUf} disabled />
-          {stateUser.error && <C.Error className="error">{stateUser.error}</C.Error>}
-          <C.PositionColumn>
-            <ButtonSubmit>Criar</ButtonSubmit>
-          </C.PositionColumn>
-        </C.Form>
+            <Input label="Estado" name="state" type="text" {...stateUf} disabled />
+            {stateUser.error && <C.Error className="error">{stateUser.error}</C.Error>}
+            <C.PositionColumn>
+              <ButtonSubmit>Criar</ButtonSubmit>
+            </C.PositionColumn>
+          </C.Form>
+        </div>
         {stateUser.loading && <Loader />}
       </C.Container>
-    </C.Create>
+    </>
   );
 };
 

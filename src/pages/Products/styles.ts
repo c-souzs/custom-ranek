@@ -1,21 +1,16 @@
 import styled from 'styled-components';
 
-export const Products = styled.section`
+export const Products = styled.main`
   background-color: ${(props) => props.theme.colors.primary};
   padding-bottom: 3.75rem;
-  padding-top: 7.313rem;
   position: relative;
 
   @media (max-width: 800px) {
     padding-bottom: 1.875rem;
   }
-
-  @media (max-width: 696px) {
-    padding-top: 6.25rem;
-  }
 `;
 
-export const Search = styled.div`
+export const Search = styled.section`
   padding-top: 3.75rem;
 
   @media (max-width: 800px) {

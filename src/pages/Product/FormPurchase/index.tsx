@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { QRCodeSVG } from 'qrcode.react';
 import React, { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 import Input from '../../../components/Form/Input';
 import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
@@ -24,6 +26,8 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
   const { setValue: setValueCity, ...city } = useInput('');
   const { setValue: setValueState, ...stateUf } = useInput('');
 
+  const { href: hrefProduct } = window.location;
+  const { colors } = React.useContext(ThemeContext);
   const navigate = useNavigate();
 
   // Conjunto referente ao redux.
@@ -92,6 +96,14 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
   return (
     <C.Purchase show={showFormPurchase}>
       <C.TitlePurchase className="font-1-xl">Informações de Envio</C.TitlePurchase>
+      <C.DescriptionPurchase className="font-2-s">
+        <p>
+          {/* eslint-disable-next-line max-len */}
+          Leia o QR CODE para ganhar o frete grátis. Enviamos com desconto para as sgeuintes regiões: Nordeste, Sudeste,
+          Centro Oeste e Sul. Fique antento ao confirmar sua compra.
+        </p>
+        <QRCodeSVG value={hrefProduct} bgColor={colors.primary} fgColor="#8877ff" size={125} />
+      </C.DescriptionPurchase>
       <C.FormPurchase onSubmit={accomplishTransaction}>
         <Input label="Nome" name="name" {...name} />
         <Input label="Email" name="email" type="email" {...email} />

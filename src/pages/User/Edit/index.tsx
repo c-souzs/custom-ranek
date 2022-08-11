@@ -125,44 +125,42 @@ const Edit = (): JSX.Element => {
   }, [stateLocalization.data.uf, setValueStateUf]);
 
   return (
-    <C.EditData>
-      <C.Container className="container">
-        <h2 className="font-1-xl subtitleSectionUser">Altere seus dados</h2>
-        <C.Form onSubmit={accomplishUpdate}>
-          <Input label="Nome" name="name" type="text" {...name} />
-          <Input label="Email" name="email" type="email" required {...email} />
-          <Input label="Senha" name="password" type="password" {...password} placeholder="Insira sua nova senha" />
-          <div>
-            <Input
-              label="Cep"
-              name="cep"
-              type="text"
-              onBlur={customOnBlurCep}
-              {...cep}
-              maxLength={9}
-              disabled={stateLocalization.loading}
-            />
-            {stateLocalization.error && <p className="error">{stateLocalization.error}</p>}
-          </div>
-          <Input label="Rua" name="road" type="text" {...road} />
-          <Input label="Número" name="number" type="text" {...number} />
-          <Input label="Bairro" name="district" type="text" {...district} />
-          <Select
-            label="Cidade"
-            value={city}
-            setValue={setCity}
-            options={citys}
-            disabled={stateLocalization.data.citys.length === 0 || stateLocalization.loading}
+    <div className="container">
+      <h2 className="font-1-xl subtitleSectionUser">Altere seus dados</h2>
+      <C.Form onSubmit={accomplishUpdate}>
+        <Input label="Nome" name="name" type="text" {...name} />
+        <Input label="Email" name="email" type="email" required {...email} />
+        <Input label="Senha" name="password" type="password" {...password} placeholder="Insira sua nova senha" />
+        <div>
+          <Input
+            label="Cep"
+            name="cep"
+            type="text"
+            onBlur={customOnBlurCep}
+            {...cep}
+            maxLength={9}
+            disabled={stateLocalization.loading}
           />
-          <Input label="Estado" name="state" type="text" {...stateUf} disabled />
-          {stateUser.error && <C.Error className="error">{stateUser.error}</C.Error>}
-          <C.ElementColumn>
-            <ButtonSubmit>Alterar</ButtonSubmit>
-          </C.ElementColumn>
-        </C.Form>
-        {stateUser.loading && <Loader />}
-      </C.Container>
-    </C.EditData>
+          {stateLocalization.error && <p className="error">{stateLocalization.error}</p>}
+        </div>
+        <Input label="Rua" name="road" type="text" {...road} />
+        <Input label="Número" name="number" type="text" {...number} />
+        <Input label="Bairro" name="district" type="text" {...district} />
+        <Select
+          label="Cidade"
+          value={city}
+          setValue={setCity}
+          options={citys}
+          disabled={stateLocalization.data.citys.length === 0 || stateLocalization.loading}
+        />
+        <Input label="Estado" name="state" type="text" {...stateUf} disabled />
+        {stateUser.error && <C.Error className="error">{stateUser.error}</C.Error>}
+        <C.ElementColumn>
+          <ButtonSubmit>Alterar</ButtonSubmit>
+        </C.ElementColumn>
+      </C.Form>
+      {stateUser.loading && <Loader />}
+    </div>
   );
 };
 

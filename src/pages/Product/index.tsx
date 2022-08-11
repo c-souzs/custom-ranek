@@ -1,9 +1,13 @@
+/* eslint-disable react/button-has-type */
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 import Loader from '../../components/Loader';
+import TitlePackage from '../../components/TitlePackage';
 import useControlRedux from '../../hooks/useControlRedux';
 import { productPage } from '../../store/productReducer';
 import FormPruchase from './FormPurchase';
+import Slide from './Slide';
 
 import * as C from './styles';
 
@@ -37,39 +41,27 @@ const Product = (): JSX.Element => {
   }, [dispatch, slug]);
 
   return (
-    <C.Product>
-      <C.Container className="container">
-        {loading && <Loader />}
-        {types.page && (
-          <>
-            <section>
-              <C.ContainerImages>
-                {types.page.fotos.map(({ src, titulo }) => (
-                  <C.ImageSlide key={src} src={src} alt={titulo} />
-                ))}
-              </C.ContainerImages>
-              <C.NavImages>
-                {types.page.fotos.map(({ src }) => (
-                  // eslint-disable-next-line max-len
-                  <C.CircleNav key={src} />
-                ))}
-              </C.NavImages>
-            </section>
+    <C.Product className="paddingDistanceHeader">
+      {loading && <Loader />}
+      {types.page && (
+        <>
+          <TitlePackage title={types.page.nome} subtitle="Frete grátis em compras acima de R$ 500,00." />
+          <C.Container className="container">
             <C.Information>
-              <C.NameProduct>{types.page.nome}</C.NameProduct>
-              <C.PriceProduct>
-                R$
-                {types.page.preco}
-              </C.PriceProduct>
-              <C.DescriptionProduct>{types.page.descricao}</C.DescriptionProduct>
-              <C.Button onClick={checkUserToShowFormPurchase}>Comprar</C.Button>
+              <Slide photos={types.page.fotos} />
+              <C.DataProduct>
+                <C.NameProduct>{types.page.nome}</C.NameProduct>
+                <C.PriceProduct>{`R$ ${types.page.preco}`}</C.PriceProduct>
+                <C.DescriptionProduct>{types.page.descricao}</C.DescriptionProduct>
+                <C.Button onClick={checkUserToShowFormPurchase}>Comprar</C.Button>
+              </C.DataProduct>
             </C.Information>
             {/* eslint-disable-next-line max-len */}
             <FormPruchase showFormPurchase={showFormPurchase} setShowFormPurchase={setShowFormPurchase} />
-          </>
-        )}
-        {error && <C.Error className="error">Sua menssagem de erro</C.Error>}
-      </C.Container>
+          </C.Container>
+        </>
+      )}
+      {error && <C.Error className="error">Sua menssagem de erro</C.Error>}
     </C.Product>
   );
 };

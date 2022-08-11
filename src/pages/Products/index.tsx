@@ -40,7 +40,7 @@ const Products = (): JSX.Element => {
   };
 
   return (
-    <C.Products>
+    <C.Products className="paddingDistanceHeader">
       <TitlePackage subtitle="Explore nossos produtos" title="nossos produtos" />
       <C.Search>
         <div className="container">

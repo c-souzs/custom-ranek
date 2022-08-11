@@ -109,6 +109,15 @@ const GlobalStyles = createGlobalStyle`
         margin-right: auto;
     }
 
+    // Distancia baseada no tamanho do header visto que o mesmo é fixo
+    .paddingDistanceHeader{
+        padding-top: 7.313rem;
+
+        @media (max-width: 696px) {
+            padding-top: 6.25rem;
+        }
+    }
+
     // User
     .subtitleSectionUser{
         color: #8877ff;

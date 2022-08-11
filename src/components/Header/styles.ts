@@ -131,7 +131,7 @@ export const Nav = styled.nav<ElementMobile>`
 
         position: absolute;
         z-index: 999;
-        top: 70px;
+        top: 90px;
         right: 20px;
         animation: ${animationMenu} 0.2s forwards;
       `;

@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-export const Purchases = styled.section`
-  padding: 1.875rem 0;
-  background-color: ${(props) => props.theme.colors.primary};
-
-  position: relative;
-`;
-
 export const List = styled.ul`
   display: flex;
   gap: 1.875rem;

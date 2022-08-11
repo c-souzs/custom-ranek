@@ -7,6 +7,7 @@ interface PurchaseProps {
 export const Purchase = styled.section<PurchaseProps>`
   grid-column: 1/-1;
   display: ${(props) => (props.show ? 'block' : 'none')};
+  margin-top: 1.875rem;
 `;
 
 export const TitlePurchase = styled.h2`
@@ -19,6 +20,20 @@ export const TitlePurchase = styled.h2`
     content: '.';
     color: ${(props) => props.theme.colors.text};
   }
+`;
+
+export const DescriptionPurchase = styled.div`
+  display: grid;
+  gap: 60px;
+  grid-template-columns: 1fr auto;
+  color: ${(props) => (props.theme.name === 'dark' ? '#b2b2b2' : '#404040')};
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  margin-bottom: 30px;
 `;
 
 export const FormPurchase = styled.form`
@@ -44,7 +59,7 @@ export const Button = styled.button`
   color: #fff;
   padding: 0.75rem 1.5rem;
   background-color: #8877ff;
-  border: 2px solid #000;
+  border: 0.125rem solid #000;
   border-radius: 0.25rem;
   transition: 0.2s;
   cursor: pointer;

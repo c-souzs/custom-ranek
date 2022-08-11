@@ -79,24 +79,22 @@ const Register = (): JSX.Element => {
   };
 
   return (
-    <section>
-      <div className="container">
-        <h2 className="font-1-xl subtitleSectionUser">Venda seus produtos</h2>
-        <C.FormAddProduct onSubmit={handleSaleProduct}>
-          <Input label="Nome" name="nome" type="text" {...name} />
-          <Input label="Preco (R$)" name="price" type="text" {...price} />
-          <div>
-            {/* <C.LabelFiles htmlFor="photos">Fotos</C.LabelFiles>
+    <div className="container">
+      <h2 className="font-1-xl subtitleSectionUser">Venda seus produtos</h2>
+      <C.FormAddProduct onSubmit={handleSaleProduct}>
+        <Input label="Nome" name="nome" type="text" {...name} />
+        <Input label="Preco (R$)" name="price" type="text" {...price} />
+        <div>
+          {/* <C.LabelFiles htmlFor="photos">Fotos</C.LabelFiles>
             <C.InputFiles name="photos" id="photos" type="file" onChange={onChangeFiles} /> */}
-            <Input label="Fotos" name="photos" type="file" {...photos} onChange={onChangeFiles} />
-          </div>
-          <Input label="Descrição" name="description" type="text" {...description} />
-          <ButtonSubmit>Vender</ButtonSubmit>
-        </C.FormAddProduct>
-      </div>
+          <Input label="Fotos" name="photos" type="file" {...photos} onChange={onChangeFiles} />
+        </div>
+        <Input label="Descrição" name="description" type="text" {...description} />
+        <ButtonSubmit>Vender</ButtonSubmit>
+      </C.FormAddProduct>
       {error && <p className="error">Esse é seu erro</p>}
       {loading && <Loader />}
-    </section>
+    </div>
   );
 };
 

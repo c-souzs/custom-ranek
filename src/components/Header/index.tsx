@@ -1,4 +1,4 @@
-import { User, UserCircle } from 'phosphor-react';
+import { User } from 'phosphor-react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';

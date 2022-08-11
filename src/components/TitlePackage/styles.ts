@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BgTitle = styled.div`
+export const BgTitle = styled.section`
   background-color: #000;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;

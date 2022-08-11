@@ -1,7 +1,15 @@
 import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import useControlRedux from '../../hooks/useControlRedux';
 import HeaderUser from './HeaderUser';
+
+const SectionPatternUser = styled.section`
+  padding: 1.875rem 0;
+  background-color: ${(props) => props.theme.colors.primary};
+
+  position: relative;
+`;
 
 const User = (): JSX.Element => {
   const navigate = useNavigate();
@@ -16,10 +24,13 @@ const User = (): JSX.Element => {
       navigate('/account/login');
     }
   }, [navigate, stateUser.data.information]);
+
   return (
-    <main>
+    <main className="paddingDistanceHeader">
       <HeaderUser />
-      <Outlet />
+      <SectionPatternUser>
+        <Outlet />
+      </SectionPatternUser>
     </main>
   );
 };
