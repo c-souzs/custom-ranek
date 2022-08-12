@@ -1,22 +1,19 @@
 import styled from 'styled-components';
 
 export const Container = styled.li`
-  min-width: 500px;
-  display: grid;
-  gap: 16px;
-  grid-template-columns: 275px 1fr auto;
+  width: 100%;
 
   background-color: #000;
   padding: 8px 16px;
   border-radius: 4px;
 
   color: #fff;
+  position: relative;
 
   @media (max-width: 600px) {
     width: 100%;
     grid-template-columns: 1fr;
     min-width: auto;
-    position: relative;
   }
 `;
 
@@ -33,6 +30,8 @@ export const Image = styled.img`
 export const DataProduct = styled.div`
   word-break: break-all;
   align-self: end;
+  margin-top: 12px;
+  margin-bottom: 16px;
 `;
 
 export const Price = styled.p`
@@ -41,6 +40,7 @@ export const Price = styled.p`
 
 export const Description = styled.p`
   color: #b2b2b2;
+  max-width: 300px;
 `;
 
 export const ButtonDelete = styled.button`
@@ -63,11 +63,9 @@ export const ButtonDelete = styled.button`
     background-color: #111;
   }
 
-  @media (max-width: 600px) {
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-  }
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
 `;
 
 export const Email = styled.span`

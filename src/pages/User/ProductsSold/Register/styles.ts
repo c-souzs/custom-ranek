@@ -5,7 +5,7 @@ export const FormAddProduct = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.875rem;
-
+  margin-bottom: 30px;
   position: relative;
 `;
 

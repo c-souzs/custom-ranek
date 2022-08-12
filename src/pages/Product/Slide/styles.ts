@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Slide = styled.section`
   overflow-x: hidden;
@@ -48,6 +48,25 @@ export const ButtonChangeSlide = styled.button`
   padding: 0.25rem 0.5rem;
 
   &:hover {
-    background-color: #1d1d1d;
+    background-color: ${(props) => (props.theme.name === 'dark' ? '#1d1d1d' : '#E0E0E0')};
   }
+`;
+
+const animationSkeleton = keyframes`
+    from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -200%;
+  }
+`;
+
+export const SkeletonLoading = styled.div`
+  width: 100%;
+  height: 400px;
+  background-image: ${(props) => (props.theme.name === 'dark'
+    ? 'linear-gradient(90deg, #161616 0px, #1d1d1d 50%, #161616 100%)'
+    : 'linear-gradient(90deg, #eee 0px, #fff 50%, #eee 100%)')};
+  animation: ${animationSkeleton} 5s infinite linear;
+  background-size: 200%;
 `;

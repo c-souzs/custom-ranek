@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 120px 0;
+  background-color: ${(props) => props.theme.colors.primary};
 `;
 
 export const ImageAlert = styled.img`

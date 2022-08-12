@@ -1,8 +1,13 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
-export const Product = styled.main`
+interface ProductProps {
+  show: boolean
+}
+
+export const Product = styled.main<ProductProps>`
   background-color: ${(props) => props.theme.colors.primary};
   position: relative;
+  display: ${(props) => (props.show ? 'block' : 'none')};
 `;
 
 export const Container = styled.div`
@@ -80,4 +85,8 @@ export const Button = styled.button`
 
 export const Error = styled.p`
   text-align: center;
+`;
+
+export const ContainerSkeleton = styled.main`
+  background-color: ${(props) => props.theme.colors.primary};
 `;

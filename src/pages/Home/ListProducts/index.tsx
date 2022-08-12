@@ -7,7 +7,9 @@ import * as C from './styles';
 import { productList } from '../../../store/productReducer';
 import useControlRedux from '../../../hooks/useControlRedux';
 import Loader from '../../../components/Loader';
-import ItemProduct from './ItemProduct';
+import { useInterval } from '../../../hooks/useInterval';
+import ProductSampleCard from '../../../components/ProductSampleCard';
+import ProductSampleCardSkeleton from '../../../components/ProductSampleCard/Skeleton';
 
 const ListProducts = (): JSX.Element => {
   const changeMargin = useMedia('(max-width: 800px)');
@@ -16,6 +18,10 @@ const ListProducts = (): JSX.Element => {
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, types } = useAppSelector((state) => state.product);
+  const [showItems, setShowItems] = React.useState(false);
+
+  // Mostra os produtos após 7 segundos para a imagem estar carregada
+  useInterval(() => setShowItems(true), 7000);
 
   // Busca os dados ao entrar na página.
   React.useEffect(() => {
@@ -33,10 +39,19 @@ const ListProducts = (): JSX.Element => {
           escolha seu produto
         </Title>
       </div>
-      <C.List>
-        {/*  eslint-disable-next-line max-len */}
-        {types.list.length && types.list.map((product) => <ItemProduct key={product.id} product={product} />)}
-      </C.List>
+      {!showItems && (
+        <C.List>
+          <ProductSampleCardSkeleton amount={9} width="100%" height="350px" />
+        </C.List>
+      )}
+      <C.CustomList show={showItems}>
+        {types.list.length ? (
+          /*  eslint-disable-next-line max-len */
+          types.list.map((product) => <ProductSampleCard key={product.id} typeSample="home" product={product} />)
+        ) : (
+          <p>Nenhum dado encontrado.</p>
+        )}
+      </C.CustomList>
       {error && <p className="error">{error}</p>}
       {loading && <Loader />}
     </C.ListProducts>

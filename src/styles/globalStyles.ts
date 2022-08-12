@@ -139,12 +139,14 @@ const GlobalStyles = createGlobalStyle`
 
     // Error
     .error{
+        width: 100%;
         font-size: 0.875rem;
         margin-top: 0.25rem;
         font-weight: 500;
         color: #e54;
         text-align: center;
         margin: 1rem 0;
+        grid-column: 1/-1;
     }
     
 `;

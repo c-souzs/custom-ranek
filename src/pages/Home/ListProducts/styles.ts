@@ -10,9 +10,8 @@ export const ListProducts = styled.section`
 
 export const List = styled.ul`
   max-width: 1400px;
-
   display: flex;
-  gap: 2.5rem;
+  gap: 0.938rem;
 
   padding: 0 1.25rem 1.25rem 1.25rem;
   margin-left: auto;
@@ -35,4 +34,12 @@ export const List = styled.ul`
     border-top: 4px solid ${(props) => (props.theme.name === 'dark' ? '#1d1d1d' : '#f2f2f2')};
     border-bottom: 4px solid ${(props) => (props.theme.name === 'dark' ? '#1d1d1d' : '#f2f2f2')};
   }
+`;
+
+interface CustomListProps {
+  show: boolean
+}
+
+export const CustomList = styled(List)<CustomListProps>`
+  display: ${(props) => (props.show ? 'flex' : 'none')};
 `;
