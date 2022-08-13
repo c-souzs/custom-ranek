@@ -8,6 +8,7 @@ import ProductSampleCard from '../../components/ProductSampleCard';
 import ProductSampleCardSkeleton from '../../components/ProductSampleCard/Skeleton';
 import TitlePackage from '../../components/TitlePackage';
 import useControlRedux from '../../hooks/useControlRedux';
+import useInformationPage from '../../hooks/useInformationPage';
 import useInput from '../../hooks/useInput';
 import { useInterval } from '../../hooks/useInterval';
 import { clearSearch, productSearch } from '../../store/productReducer';
@@ -23,6 +24,12 @@ const Products = (): JSX.Element => {
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, types } = useAppSelector((state) => state.product);
+
+  const dataInformationPage = {
+    title: 'Produtos',
+    description: 'Encontre diversos produtos e faça uma pesquisa produto em nosso estoque.',
+  };
+  useInformationPage(dataInformationPage);
 
   // Mostra os produtos após 7 segundos para a imagem estar carregada
   useInterval(() => setShowItems(true), 7000);

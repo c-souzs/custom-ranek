@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ErrorData, Product, ProductPost } from '../../types';
+import { RootState } from '../configure';
 import {
   deleteProduct,
   getProduct,
@@ -54,17 +55,6 @@ export const productSearch = createAsyncThunk('product/searchGet', async (search
   }
 });
 
-export const productAnnounce = createAsyncThunk('product/announcePost', async (data: ProductPost, thunkAPI) => {
-  try {
-    postProduct(data);
-
-    return true;
-  } catch (error) {
-    const errorData = error as ErrorData;
-    return thunkAPI.rejectWithValue(errorData.message);
-  }
-});
-
 export const productUnannounced = createAsyncThunk('product/announceDelete', async (slug: string, thunkAPI) => {
   try {
     deleteProduct(slug);
@@ -76,11 +66,24 @@ export const productUnannounced = createAsyncThunk('product/announceDelete', asy
   }
 });
 
+// eslint-disable-next-line max-len
 export const productUser = createAsyncThunk('product/userAnnounceGet', async (id: string, thunkAPI) => {
   try {
     const products = await getProductUserAnnounced(id);
 
     return products;
+  } catch (error) {
+    const errorData = error as ErrorData;
+    return thunkAPI.rejectWithValue(errorData.message);
+  }
+});
+
+export const productAnnounce = createAsyncThunk('product/announcePost', async (data: ProductPost, thunkAPI) => {
+  try {
+    await postProduct(data);
+    await thunkAPI.dispatch(productUser(''));
+
+    return true;
   } catch (error) {
     const errorData = error as ErrorData;
     return thunkAPI.rejectWithValue(errorData.message);

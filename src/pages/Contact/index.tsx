@@ -14,12 +14,20 @@ import warning from '../../assets/warningCircle.svg';
 import TitlePackage from '../../components/TitlePackage';
 import Input from '../../components/Form/Input';
 import Subtitle from '../../components/Subtitle';
+import useInformationPage from '../../hooks/useInformationPage';
 
 const Contact = (): JSX.Element => {
   const { setValue: setValueName, ...name } = useInput('');
   const { setValue: setValueTelephone, ...telephone } = useInput('');
   const { setValue: setValueEmail, ...email } = useInput('email');
   const { setValue: setValueMessage, ...message } = useInput('');
+
+  // Altera o titúlo e a descrição da página.
+  const dataInformationPage = {
+    title: 'Contato',
+    description: 'Entre em contato conosco por email e aguarde 24 horas ou agende sua visita.',
+  };
+  useInformationPage(dataInformationPage);
 
   return (
     <C.Contact className="paddingDistanceHeader">

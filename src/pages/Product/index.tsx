@@ -6,6 +6,7 @@ import { ThemeContext } from 'styled-components';
 import Loader from '../../components/Loader';
 import TitlePackage from '../../components/TitlePackage';
 import useControlRedux from '../../hooks/useControlRedux';
+import useInformationPage from '../../hooks/useInformationPage';
 import { useInterval } from '../../hooks/useInterval';
 import { productPage } from '../../store/productReducer';
 import FormPruchase from './FormPurchase';
@@ -20,6 +21,16 @@ const Product = (): JSX.Element => {
   const navigate = useNavigate();
   const [showItems, setShowItems] = React.useState(false);
   const { colors } = React.useContext(ThemeContext);
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const nameSlug = slug!.split('-')[0];
+  const customSlug = nameSlug[0].toLocaleUpperCase() + nameSlug.substring(1);
+
+  const dataInformationPage = {
+    title: customSlug,
+    description: 'Sua loja de produtos eletrônicos usados e originais com a maior e melhor experiência no mercado',
+  };
+  useInformationPage(dataInformationPage);
 
   // Mostra os produtos após 7 segundos para a imagem estar carregada
   useInterval(() => setShowItems(true), 7000);

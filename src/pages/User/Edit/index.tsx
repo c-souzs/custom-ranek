@@ -8,6 +8,7 @@ import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
 import Subtitle from '../../../components/Subtitle';
 import useControlRedux from '../../../hooks/useControlRedux';
+import useInformationPage from '../../../hooks/useInformationPage';
 import useInput from '../../../hooks/useInput';
 import { localizationAddress, reset } from '../../../store/localizationReducer';
 import { userUpdate } from '../../../store/userReducer';
@@ -42,6 +43,12 @@ const Edit = (): JSX.Element => {
     && district.validateAt()
     && city !== 'Selecione uma cidade'
     && stateUf.validateAt();
+
+  const dataInformationPage = {
+    title: 'Altere seus dados',
+    description: 'Edite seus dados como e quando quiser.',
+  };
+  useInformationPage(dataInformationPage);
 
   // Realiza a atualização de dados do usuário.
   const accomplishUpdate = async (e: FormEvent): Promise<void> => {

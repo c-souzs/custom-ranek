@@ -59,6 +59,7 @@ export const ButtonMenuMobile = styled.button<ButtonMenuMobileProps>`
   cursor: pointer;
   transition: 0.2s;
   border: none;
+  border-radius: 0.25rem;
 
   &::after {
     width: 20px;

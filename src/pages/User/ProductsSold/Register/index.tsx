@@ -9,7 +9,7 @@ import Loader from '../../../../components/Loader';
 import Subtitle from '../../../../components/Subtitle';
 import useControlRedux from '../../../../hooks/useControlRedux';
 import useInput from '../../../../hooks/useInput';
-import { productAnnounce } from '../../../../store/productReducer';
+import { productAnnounce, productUser } from '../../../../store/productReducer';
 
 import * as C from './styles';
 
@@ -32,6 +32,7 @@ const Register = (): JSX.Element => {
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.product);
+  const { data } = useAppSelector((state) => state.user);
 
   // Valida se os inputs estão preenchidos. Inclusive se o usuário preencheu as 3 fotos.
   const validateInputs = (): boolean => {
@@ -57,7 +58,6 @@ const Register = (): JSX.Element => {
 
       try {
         await dispatch(productAnnounce(dataProduct));
-        navigate('/home');
       } catch (errorAnnounce) {
         // Exibir um erro aqui!!!
         navigate('/pageNotFound');

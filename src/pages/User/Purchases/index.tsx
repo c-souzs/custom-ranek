@@ -6,6 +6,7 @@ import ProductSampleCardSkeleton from '../../../components/ProductSampleCard/Ske
 import ProductUserCard from '../../../components/ProductUserCard';
 import Subtitle from '../../../components/Subtitle';
 import useControlRedux from '../../../hooks/useControlRedux';
+import useInformationPage from '../../../hooks/useInformationPage';
 import { useInterval } from '../../../hooks/useInterval';
 import { userTransactionPurchases } from '../../../store/userReducer';
 
@@ -18,6 +19,12 @@ const Purchases = (): JSX.Element => {
   const { loading, error, data } = useAppSelector((state) => state.user);
   const [showItems, setShowItems] = React.useState(false);
   const { colors } = React.useContext(ThemeContext);
+
+  const dataInformationPage = {
+    title: 'Suas compras',
+    description: 'Veja todos seus produtos na Ranek, cuidado a lista pode ser grande.',
+  };
+  useInformationPage(dataInformationPage);
 
   // Mostra os produtos após 7 segundos para a imagem estar carregada
   useInterval(() => setShowItems(true), 7000);

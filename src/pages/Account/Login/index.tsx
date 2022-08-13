@@ -9,6 +9,7 @@ import Loader from '../../../components/Loader';
 import Subtitle from '../../../components/Subtitle';
 import TitlePackage from '../../../components/TitlePackage';
 import useControlRedux from '../../../hooks/useControlRedux';
+import useInformationPage from '../../../hooks/useInformationPage';
 import useInput from '../../../hooks/useInput';
 import { userLogin } from '../../../store/userReducer';
 
@@ -24,6 +25,13 @@ const Login = (): JSX.Element => {
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, data } = useAppSelector((state) => state.user);
+
+  // Altera o titulo e a descrião da página
+  const dataInformationPage = {
+    title: 'Login',
+    description: 'Entre na sua conta e aproveite nossos produtos.',
+  };
+  useInformationPage(dataInformationPage);
 
   // Faz o login do usuário.
   const accomplishLogin = (e: FormEvent): void => {

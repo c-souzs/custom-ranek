@@ -9,6 +9,7 @@ import Input from '../../../components/Form/Input';
 import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
 import TitlePackage from '../../../components/TitlePackage';
+import useInformationPage from '../../../hooks/useInformationPage';
 import useInput from '../../../hooks/useInput';
 import { AppDispatch, RootState } from '../../../store/configure';
 import { localizationAddress, reset } from '../../../store/localizationReducer';
@@ -29,6 +30,13 @@ const Create = (): JSX.Element => {
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
   const navigate = useNavigate();
   const { colors } = React.useContext(ThemeContext);
+
+  // Altera o titulo e a descrião da página
+  const dataInformationPage = {
+    title: 'Cadastro',
+    description: 'Crie sua conta na melhor loja de produtos eletrônicos usados e originais.',
+  };
+  useInformationPage(dataInformationPage);
 
   // Conjunto referente ao redux.
   const dispatch = useDispatch<AppDispatch>();

@@ -6,6 +6,7 @@ import ProductSampleCardSkeleton from '../../../components/ProductSampleCard/Ske
 import ProductUserCard from '../../../components/ProductUserCard';
 import Subtitle from '../../../components/Subtitle';
 import useControlRedux from '../../../hooks/useControlRedux';
+import useInformationPage from '../../../hooks/useInformationPage';
 import { useInterval } from '../../../hooks/useInterval';
 import { userTransactionSales } from '../../../store/userReducer';
 
@@ -18,6 +19,12 @@ const Sales = (): JSX.Element => {
   const { loading, error, data } = useAppSelector((state) => state.user);
   const [showItems, setShowItems] = React.useState(false);
   const { colors } = React.useContext(ThemeContext);
+
+  const dataInformationPage = {
+    title: 'Vendas',
+    description: 'Todos seus produtos anunciados e já vendidos se encontram aqui.',
+  };
+  useInformationPage(dataInformationPage);
 
   // Mostra os produtos após 7 segundos para a imagem estar carregada
   useInterval(() => setShowItems(true), 7000);
