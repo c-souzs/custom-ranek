@@ -16,7 +16,7 @@ export const Header = styled.header`
   position: relative;
   position: fixed;
   z-index: 999;
-  border-bottom: 1px solid #111;
+  border-bottom: 0.063rem solid #111;
 
   @media (max-width: 696px) {
     height: 100px;
@@ -61,7 +61,7 @@ export const ButtonMenuMobile = styled.button<ButtonMenuMobileProps>`
   border: none;
 
   &::after {
-    width: 1.2rem;
+    width: 20px;
     height: 2px;
 
     display: block;
@@ -76,7 +76,7 @@ export const ButtonMenuMobile = styled.button<ButtonMenuMobileProps>`
   ${(props) => {
     if (props.active) {
       return css`
-        box-shadow: 0 0 3px #8877ff;
+        box-shadow: 0 0 0.188rem #8877ff;
         &::after {
           width: 4px;
           height: 4px;
@@ -93,7 +93,7 @@ export const ButtonMenuMobile = styled.button<ButtonMenuMobileProps>`
 
   &:hover,
   &:focus {
-    box-shadow: 0 0 3px #8877ff;
+    box-shadow: 0 0 0.188rem #8877ff;
 
     &::after {
       color: #8877ff;
@@ -128,10 +128,11 @@ export const Nav = styled.nav<ElementMobile>`
         background-color: #111;
         padding: 0.75rem 1.5rem;
         border-radius: 0.25rem;
+        box-shadow: 0 0 0.188rem #8877ff;
 
         position: absolute;
         z-index: 999;
-        top: 90px;
+        top: 100px;
         right: 20px;
         animation: ${animationMenu} 0.2s forwards;
       `;
@@ -146,7 +147,7 @@ export const ListMenu = styled.ul<ElementMobile>`
   align-items: center;
   flex-wrap: wrap;
 
-  gap: 1rem 2.5rem;
+  gap: 1rem 1.875rem;
 
   & li {
     font-family: inherit;
@@ -223,6 +224,6 @@ export const LinkAccount = styled(Link)`
 
 export const LiThemeContainer = styled.div`
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   align-items: center;
 `;

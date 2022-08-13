@@ -1,5 +1,7 @@
 import { MagnifyingGlass, X } from 'phosphor-react';
 import React, { FormEvent } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { ThemeContext } from 'styled-components';
 import Input from '../../components/Form/Input';
 import Loader from '../../components/Loader';
 import ProductSampleCard from '../../components/ProductSampleCard';
@@ -15,6 +17,7 @@ import * as C from './styles';
 const Products = (): JSX.Element => {
   const search = useInput('');
   const [showItems, setShowItems] = React.useState(false);
+  const { colors } = React.useContext(ThemeContext);
 
   // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
@@ -44,6 +47,11 @@ const Products = (): JSX.Element => {
     search.setValue('');
     dispatch(clearSearch());
   };
+
+  // Exibe um alerta de erro.
+  React.useEffect(() => {
+    if (error) toast.error('Verique a mensagem de erro.');
+  }, [error]);
 
   return (
     <C.Products className="paddingDistanceHeader">
@@ -77,7 +85,12 @@ const Products = (): JSX.Element => {
           <p className="error">Nenhum dado encontrado.</p>
         )}
       </C.CustomList>
-      {error && <C.Error className="error">esse é o seu erro</C.Error>}
+      <Toaster
+        position="top-right"
+        // eslint-disable-next-line max-len
+        toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
+      />
+      {error && <p className="error">esse é o seu erro</p>}
       {loading && <Loader />}
     </C.Products>
   );

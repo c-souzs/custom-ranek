@@ -3,12 +3,12 @@ import styled, { keyframes } from 'styled-components';
 
 export const Technology = styled.section`
   background-color: #000;
-  box-shadow: inset 0 80px ${(props) => props.theme.colors.primary},
-    inset 0 -80px ${(props) => props.theme.colors.primary};
+  box-shadow: inset 0 5rem ${(props) => props.theme.colors.primary},
+    inset 0 -5rem ${(props) => props.theme.colors.primary};
 
   @media (max-width: 800px) {
     display: block;
-    box-shadow: inset 0 -80px ${(props) => props.theme.colors.primary};
+    box-shadow: inset 0 -5rem ${(props) => props.theme.colors.primary};
   }
 `;
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import useMedia from '../../../hooks/useMedia';
 
 import Title from '../../../components/Title';
@@ -21,7 +22,9 @@ const Introduction = (): JSX.Element => {
             {/* eslint-disable max-len */}
             Na ranek prezamos sempre a segurança e a qualidade. Explore o mundo e economize com os melhores ofertadas.
           </C.Description>
-          <C.LinkProduct to="/products">Produtos</C.LinkProduct>
+          <Link to="/products" className="basicStyleButtonOrLink">
+            Produtos
+          </Link>
         </C.TextContent>
         <C.ImageEmphasis src={imageEmphasis} alt="Product example store" />
       </C.Container>

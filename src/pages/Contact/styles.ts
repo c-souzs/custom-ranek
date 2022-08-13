@@ -5,7 +5,7 @@ export const Contact = styled.main`
   position: relative;
 `;
 
-export const Container = styled.div`
+export const Container = styled.section`
   padding-top: 3.75rem;
   padding-bottom: 3.75rem;
 
@@ -54,9 +54,12 @@ export const Title = styled.h2`
   }
 `;
 
-export const SectionForm = styled.section`
-  height: fit-content;
+export const ContentForm = styled.div`
   margin-bottom: 3.75rem;
+
+  @media (max-width: 800px) {
+    margin-bottom: 1.875rem;
+  }
 `;
 
 export const FormContact = styled.form`
@@ -70,6 +73,7 @@ export const FormContact = styled.form`
 
   @media (max-width: 800px) {
     grid-template-columns: 1fr;
+    padding: 1.875rem;
   }
 `;
 
@@ -83,7 +87,7 @@ export const ImageLocal = styled.img`
   max-height: 350px;
 
   border-radius: 0.25rem;
-  border: 2px solid #000;
+  border: 0.125rem solid #000;
 `;
 
 export const City = styled.p`

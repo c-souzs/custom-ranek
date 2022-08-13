@@ -44,7 +44,7 @@ export const ButtonChangeSlide = styled.button`
   border: none;
   cursor: pointer;
   transition: 0.2s;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   padding: 0.25rem 0.5rem;
 
   &:hover {

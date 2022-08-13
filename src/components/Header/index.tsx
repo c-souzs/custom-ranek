@@ -46,7 +46,7 @@ const Header = ({ toggleTheme }: HeaderProps): JSX.Element => {
                 {stateUser.data.information ? (
                   <>
                     <User size={24} color="#fff" />
-                    {stateUser.data.information.nome}
+                    Perfil
                   </>
                 ) : (
                   'Vender'

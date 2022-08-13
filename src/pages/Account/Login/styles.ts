@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.section`
@@ -31,7 +30,7 @@ export const LostPassword = styled.p`
   color: #b2b2b2;
 `;
 
-export const LinkLostPassword = styled(Link)`
+export const LinkLostPassword = styled.a`
   color: inherit;
   transition: 0.2s;
   margin-left: 0.25rem;
@@ -39,4 +38,14 @@ export const LinkLostPassword = styled(Link)`
   &:hover {
     color: #8877ff;
   }
+`;
+
+export const AnnounceCreateAccount = styled.div`
+  padding: 1.875rem 0;
+
+  display: flex;
+  gap: 0 3.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 `;

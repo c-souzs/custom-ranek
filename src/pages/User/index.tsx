@@ -7,8 +7,6 @@ import HeaderUser from './HeaderUser';
 const SectionPatternUser = styled.section`
   padding: 1.875rem 0;
   background-color: ${(props) => props.theme.colors.primary};
-
-  position: relative;
 `;
 
 const User = (): JSX.Element => {

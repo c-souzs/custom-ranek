@@ -77,5 +77,5 @@ export const PriceProduct = styled.p`
 export const DescriptionProduct = styled.p`
   color: ${(props) => (props.theme.name === 'dark' ? '#b2b2b2' : '#404040')};
   margin-left: 1.875rem;
-  margin-top: 12px;
+  margin-top: 0.75rem;
 `;

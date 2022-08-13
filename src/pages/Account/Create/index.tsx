@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import ButtonSubmit from '../../../components/Form/Button';
+import { ThemeContext } from 'styled-components';
 import Input from '../../../components/Form/Input';
 import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
@@ -27,6 +28,7 @@ const Create = (): JSX.Element => {
   const [citys, setCitys] = React.useState<string[]>(['Selecione uma cidade']);
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
   const navigate = useNavigate();
+  const { colors } = React.useContext(ThemeContext);
 
   // Conjunto referente ao redux.
   const dispatch = useDispatch<AppDispatch>();
@@ -104,6 +106,11 @@ const Create = (): JSX.Element => {
     if (stateUser.data.information) navigate('/user/products-sold');
   }, [stateUser.data.information, navigate]);
 
+  // Exibe um alerta de erro.
+  React.useEffect(() => {
+    if (stateUser.error) toast.error('Verique a mensagem de erro.');
+  }, [stateUser.error]);
+
   return (
     <>
       <TitlePackage subtitle="compre produtos" title="crie sua conta" />
@@ -136,12 +143,19 @@ const Create = (): JSX.Element => {
               disabled={stateLocalization.data.citys.length === 0 || stateLocalization.loading}
             />
             <Input label="Estado" name="state" type="text" {...stateUf} disabled />
-            {stateUser.error && <C.Error className="error">{stateUser.error}</C.Error>}
+            {stateUser.error && <p className="error">{stateUser.error}</p>}
             <C.PositionColumn>
-              <ButtonSubmit>Criar</ButtonSubmit>
+              <button className="basicStyleButtonOrLink" type="submit">
+                Criar
+              </button>
             </C.PositionColumn>
           </C.Form>
         </div>
+        <Toaster
+          position="top-right"
+          // eslint-disable-next-line max-len
+          toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
+        />
         {stateUser.loading && <Loader />}
       </C.Container>
     </>

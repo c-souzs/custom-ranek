@@ -21,7 +21,7 @@ const BasicStyleSkeleton = styled.div`
 
   animation: ${animationSkeleton} 5s infinite linear;
   background-size: 200%;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 `;
 
 export const HeaderSkeleton = styled(BasicStyleSkeleton)`
@@ -62,14 +62,14 @@ export const ContainerButtons = styled.div`
 export const SkeletonTitle = styled(BasicStyleSkeleton)`
   width: 100%;
   height: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
   display: block;
 `;
 
 export const SkeletonText = styled(BasicStyleSkeleton)`
   width: 100%;
   height: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   display: block;
 `;
 

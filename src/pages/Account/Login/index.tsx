@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ButtonSubmit from '../../../components/Form/Button';
+import toast, { Toaster } from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 import Input from '../../../components/Form/Input';
 import Loader from '../../../components/Loader';
+import Subtitle from '../../../components/Subtitle';
 import TitlePackage from '../../../components/TitlePackage';
 import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
@@ -16,6 +18,7 @@ const Login = (): JSX.Element => {
   const { setValue: setValueEmail, ...email } = useInput('email');
   const { setValue: setValuePassword, ...password } = useInput('');
   const navigate = useNavigate();
+  const { colors } = React.useContext(ThemeContext);
 
   // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
@@ -41,6 +44,11 @@ const Login = (): JSX.Element => {
     if (data.information) navigate('/user/products-sold');
   }, [data.information, navigate]);
 
+  // Exibe um alerta de erro.
+  React.useEffect(() => {
+    if (error) toast.error('Verique a mensagem de erro.');
+  }, [error]);
+
   return (
     <>
       <TitlePackage subtitle="Bem vindo de volta" title="acesse sua conta" />
@@ -51,17 +59,33 @@ const Login = (): JSX.Element => {
             <Input label="Senha" placeholder="••••••••" name="password" type="password" {...password} />
             {error && <p className="error">{error}</p>}
             <C.Information>
-              <ButtonSubmit>Entrar</ButtonSubmit>
+              <button className="basicStyleButtonOrLink" type="submit">
+                Entrar
+              </button>
               <C.LostPassword className="font-2-s">
                 Esqueceu a senha?
-                <C.LinkLostPassword to="https://ranekapi.origamid.dev/wp-login.php?action=lostpassword" target="_blank">
+                <C.LinkLostPassword
+                  href="https://ranekapi.origamid.dev/wp-login.php?action=lostpassword"
+                  target="_blank"
+                >
                   Clique aqui
                 </C.LinkLostPassword>
                 .
               </C.LostPassword>
             </C.Information>
           </C.Form>
+          <C.AnnounceCreateAccount>
+            <Subtitle text="Crie sua conta" />
+            <Link to="/account/create" className="basicStyleButtonOrLink">
+              Cadastre-se agora mesmo
+            </Link>
+          </C.AnnounceCreateAccount>
         </div>
+        <Toaster
+          position="top-right"
+          // eslint-disable-next-line max-len
+          toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
+        />
         {loading && <Loader />}
       </C.Container>
     </>

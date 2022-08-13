@@ -24,16 +24,16 @@ export const TitlePurchase = styled.h2`
 
 export const DescriptionPurchase = styled.div`
   display: grid;
-  gap: 60px;
+  gap: 3.75rem;
   grid-template-columns: 1fr auto;
   color: ${(props) => (props.theme.name === 'dark' ? '#b2b2b2' : '#404040')};
 
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
-    gap: 15px;
+    gap: 0.938rem;
   }
 
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
 `;
 
 export const FormPurchase = styled.form`

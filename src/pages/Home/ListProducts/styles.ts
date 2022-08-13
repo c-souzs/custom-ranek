@@ -30,9 +30,9 @@ export const List = styled.ul`
   ::-webkit-scrollbar-thumb {
     background-color: ${(props) => (props.theme.name === 'dark' ? '#161616' : '#E0E0E0')};
 
-    border-radius: 4px;
-    border-top: 4px solid ${(props) => (props.theme.name === 'dark' ? '#1d1d1d' : '#f2f2f2')};
-    border-bottom: 4px solid ${(props) => (props.theme.name === 'dark' ? '#1d1d1d' : '#f2f2f2')};
+    border-radius: 0.25rem;
+    border-top: 0.25rem solid ${(props) => (props.theme.name === 'dark' ? '#1d1d1d' : '#f2f2f2')};
+    border-bottom: 0.25rem solid ${(props) => (props.theme.name === 'dark' ? '#1d1d1d' : '#f2f2f2')};
   }
 `;
 

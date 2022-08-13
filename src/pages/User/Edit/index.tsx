@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import ButtonSubmit from '../../../components/Form/Button';
+import toast, { Toaster } from 'react-hot-toast';
+import { ThemeContext } from 'styled-components';
 import Input from '../../../components/Form/Input';
 import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
+import Subtitle from '../../../components/Subtitle';
 import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
-import { AppDispatch, RootState } from '../../../store/configure';
 import { localizationAddress, reset } from '../../../store/localizationReducer';
 import { userUpdate } from '../../../store/userReducer';
 
@@ -25,6 +25,7 @@ const Edit = (): JSX.Element => {
   const [city, setCity] = React.useState('');
   const [citys, setCitys] = React.useState<string[]>([]);
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
+  const { colors } = React.useContext(ThemeContext);
 
   // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
@@ -124,9 +125,14 @@ const Edit = (): JSX.Element => {
     }
   }, [stateLocalization.data.uf, setValueStateUf]);
 
+  // Exibe um alerta de erro.
+  React.useEffect(() => {
+    if (stateUser.error) toast.error('Verique a mensagem de erro.');
+  }, [stateUser.error]);
+
   return (
-    <div className="container">
-      <h2 className="font-1-xl subtitleSectionUser">Altere seus dados</h2>
+    <C.Edit className="container">
+      <Subtitle text="Seus dados" />
       <C.Form onSubmit={accomplishUpdate}>
         <Input label="Nome" name="name" type="text" {...name} />
         <Input label="Email" name="email" type="email" required {...email} />
@@ -154,13 +160,20 @@ const Edit = (): JSX.Element => {
           disabled={stateLocalization.data.citys.length === 0 || stateLocalization.loading}
         />
         <Input label="Estado" name="state" type="text" {...stateUf} disabled />
-        {stateUser.error && <C.Error className="error">{stateUser.error}</C.Error>}
+        {stateUser.error && <p className="error">{stateUser.error}</p>}
         <C.ElementColumn>
-          <ButtonSubmit>Alterar</ButtonSubmit>
+          <button className="basicStyleButtonOrLink" type="submit">
+            Alterar
+          </button>
         </C.ElementColumn>
       </C.Form>
+      <Toaster
+        position="top-right"
+        // eslint-disable-next-line max-len
+        toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
+      />
       {stateUser.loading && <Loader />}
-    </div>
+    </C.Edit>
   );
 };
 

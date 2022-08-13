@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
+export const Sales = styled.div`
+  position: relative;
+`;
+
 export const List = styled.ul`
   display: grid;
-  gap: 30px;
+  gap: 1.875rem;
   grid-template-columns: 1fr 1fr;
 
   @media (max-width: 800px) {
@@ -16,8 +20,4 @@ interface CustomListProps {
 
 export const CustomList = styled(List)<CustomListProps>`
   display: ${(props) => (props.show ? 'grid' : 'none')};
-`;
-
-export const Error = styled.p`
-  text-align: center;
 `;

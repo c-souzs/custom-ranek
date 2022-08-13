@@ -1,23 +1,43 @@
 import styled from 'styled-components';
-import { Input, Label } from '../../../../components/Form/Input/styles';
+
+export const Register = styled.div`
+  position: relative;
+`;
 
 export const FormAddProduct = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.875rem;
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
   position: relative;
 `;
 
-export const LabelFiles = styled(Label)``;
-
-export const InputFiles = styled(Input)`
-  cursor: pointer;
+export const ContainerActionsFiles = styled.div`
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+  margin-top: 0.5rem;
 `;
 
-export const OrientationPhotos = styled.p`
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-  font-weight: 500;
-  color: #16c70b;
+export const ButtonClearPhotos = styled.button`
+  background-color: transparent;
+  color: ${(props) => (props.theme.name === 'dark' ? '#404040' : '#b2b2b2')};
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #8877ff;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #6655dd;
+    color: ${(props) => props.theme.colors.text};
+  }
+`;
+
+interface OrientationProps {
+  amountPhotos: number
+}
+
+export const Orientation = styled.p<OrientationProps>`
+  color: ${(props) => (props.amountPhotos >= 3 ? '#16C70B' : '#e54')};
 `;

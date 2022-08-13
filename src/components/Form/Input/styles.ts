@@ -9,7 +9,7 @@ export const Label = styled.label`
 export const Input = styled.input`
   width: 100%;
   padding: 0.625rem 0.938rem;
-  border: 2px solid #000;
+  border: 0.125rem solid #000;
   border-radius: 0.25rem;
   outline: none;
   background-color: #fff;
@@ -29,6 +29,16 @@ export const Input = styled.input`
   &:hover:not(&:disabled),
   &:focus:not(&:disabled) {
     border-color: #8877ff;
+  }
+
+  &[type='file'] {
+    cursor: pointer;
+  }
+
+  &[type='file']:disabled {
+    background-color: ${(props) => (props.theme.name === 'dark' ? '#1D1D1D' : '#F2F2F2')};
+    color: ${(props) => (props.theme.name === 'dark' ? '#000' : '#b2b2b2')};
+    cursor: auto;
   }
 `;
 

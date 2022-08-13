@@ -25,7 +25,3 @@ export const Form = styled.form`
 export const PositionColumn = styled.div`
   grid-column: 1/2;
 `;
-
-export const Error = styled.p`
-  grid-column: 1/-1;
-`;

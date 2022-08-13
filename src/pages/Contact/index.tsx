@@ -13,7 +13,7 @@ import local from '../../assets/local.svg';
 import warning from '../../assets/warningCircle.svg';
 import TitlePackage from '../../components/TitlePackage';
 import Input from '../../components/Form/Input';
-import ButtonSubmit from '../../components/Form/Button';
+import Subtitle from '../../components/Subtitle';
 
 const Contact = (): JSX.Element => {
   const { setValue: setValueName, ...name } = useInput('');
@@ -25,8 +25,8 @@ const Contact = (): JSX.Element => {
     <C.Contact className="paddingDistanceHeader">
       <TitlePackage subtitle="meios de contato" title="fale conosco" />
       <C.Container className="container">
-        <C.SectionForm>
-          <C.Title className="font-1-xl">Respondemos em até 24 horas</C.Title>
+        <C.ContentForm>
+          <Subtitle text="Aguarde até 24 hrs" />
           <C.FormContact>
             <Input label="Nome" placeholder="Nome" name="name" {...name} />
             <Input label="Telefone" placeholder="(XX XXXX-XXXX)" name="telephone" {...telephone} />
@@ -36,11 +36,13 @@ const Contact = (): JSX.Element => {
             <C.ElementInline>
               <Input label="Messagem" placeholder="O que você precisa?" name="message" {...message} />
             </C.ElementInline>
-            <ButtonSubmit>Enviar menssagem</ButtonSubmit>
+            <button className="basicStyleButtonOrLink" type="submit">
+              Enviar menssagem
+            </button>
           </C.FormContact>
-        </C.SectionForm>
-        <section>
-          <C.Title className="font-1-xl">Ou nós faça uma visita</C.Title>
+        </C.ContentForm>
+        <div>
+          <Subtitle text="Viste nossas sedes" />
           <C.ImageLocal src={mapRj} />
           <C.Lists>
             <C.ListInformation className="font-2-s">
@@ -70,7 +72,7 @@ const Contact = (): JSX.Element => {
               <YoutubeLogo size={36} color="#8877ff" />
             </Link>
           </C.Social>
-        </section>
+        </div>
       </C.Container>
     </C.Contact>
   );

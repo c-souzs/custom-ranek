@@ -1,6 +1,8 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ThemeContext } from 'styled-components';
 import Loader from '../../components/Loader';
 import TitlePackage from '../../components/TitlePackage';
 import useControlRedux from '../../hooks/useControlRedux';
@@ -17,6 +19,7 @@ const Product = (): JSX.Element => {
   const [showFormPurchase, setShowFormPurchase] = React.useState(false);
   const navigate = useNavigate();
   const [showItems, setShowItems] = React.useState(false);
+  const { colors } = React.useContext(ThemeContext);
 
   // Mostra os produtos após 7 segundos para a imagem estar carregada
   useInterval(() => setShowItems(true), 7000);
@@ -45,6 +48,11 @@ const Product = (): JSX.Element => {
     getProduct();
   }, [dispatch, slug]);
 
+  // Exibe um alerta de erro.
+  React.useEffect(() => {
+    if (error) toast.error('Verique a mensagem de erro.');
+  }, [error]);
+
   return (
     <>
       {!showItems && (
@@ -53,7 +61,6 @@ const Product = (): JSX.Element => {
         </C.ContainerSkeleton>
       )}
       <C.Product className="paddingDistanceHeader" show={showItems}>
-        {loading && <Loader />}
         {!showItems && <ProductSkeleton height="350px" width="100%" />}
         {types.page && (
           <>
@@ -65,7 +72,9 @@ const Product = (): JSX.Element => {
                   <C.NameProduct>{types.page.nome}</C.NameProduct>
                   <C.PriceProduct>{`R$ ${types.page.preco}`}</C.PriceProduct>
                   <C.DescriptionProduct>{types.page.descricao}</C.DescriptionProduct>
-                  <C.Button onClick={checkUserToShowFormPurchase}>Comprar</C.Button>
+                  <button className="basicStyleButtonOrLink" onClick={checkUserToShowFormPurchase}>
+                    Comprar
+                  </button>
                 </C.DataProduct>
               </C.Information>
               {/* eslint-disable-next-line max-len */}
@@ -73,7 +82,13 @@ const Product = (): JSX.Element => {
             </C.Container>
           </>
         )}
-        {error && <C.Error className="error">Sua menssagem de erro</C.Error>}
+        <Toaster
+          position="top-right"
+          // eslint-disable-next-line max-len
+          toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
+        />
+        {loading && <Loader />}
+        {error && <p className="error">Sua menssagem de erro</p>}
       </C.Product>
     </>
   );

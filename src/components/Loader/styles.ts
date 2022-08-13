@@ -29,7 +29,7 @@ const animate = keyframes`
 export const Loader = styled.div`
   width: 50px;
   height: 50px;
-  border-radius: 5px;
+  border-radius: 0.25rem;
   background-color: #8877ff;
   animation: ${animate} 1s infinite;
 `;

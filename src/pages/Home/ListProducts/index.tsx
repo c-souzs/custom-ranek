@@ -1,4 +1,6 @@
 import React from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { ThemeContext } from 'styled-components';
 import useMedia from '../../../hooks/useMedia';
 
 import Title from '../../../components/Title';
@@ -13,6 +15,7 @@ import ProductSampleCardSkeleton from '../../../components/ProductSampleCard/Ske
 
 const ListProducts = (): JSX.Element => {
   const changeMargin = useMedia('(max-width: 800px)');
+  const { colors } = React.useContext(ThemeContext);
 
   // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
@@ -31,6 +34,11 @@ const ListProducts = (): JSX.Element => {
 
     getProducts();
   }, [dispatch]);
+
+  // Exibe um alerta de erro.
+  React.useEffect(() => {
+    if (error) toast.error('Verique a mensagem de erro.');
+  }, [error]);
 
   return (
     <C.ListProducts>
@@ -52,6 +60,11 @@ const ListProducts = (): JSX.Element => {
           <p>Nenhum dado encontrado.</p>
         )}
       </C.CustomList>
+      <Toaster
+        position="top-right"
+        // eslint-disable-next-line max-len
+        toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
+      />
       {error && <p className="error">{error}</p>}
       {loading && <Loader />}
     </C.ListProducts>

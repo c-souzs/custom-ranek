@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 interface ProductProps {
   show: boolean
@@ -39,13 +39,13 @@ export const NameProduct = styled.h2`
 
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 `;
 
 export const PriceProduct = styled.p`
   font: 500 1.5rem/1 'Roboto', sans-serif;
   color: #b2b2b2;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 `;
 
 export const DescriptionProduct = styled.p`
@@ -61,30 +61,10 @@ export const DescriptionProduct = styled.p`
     content: '';
     display: inline-block;
     margin-right: 0.5rem;
-    margin-bottom: 2px;
+    margin-bottom: 0.125rem;
     background-color: #6655dd;
     border-radius: 0.125rem;
   }
-`;
-
-export const Button = styled.button`
-  text-transform: uppercase;
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  background-color: #8877ff;
-  border: 0.125rem solid #000;
-  border-radius: 0.25rem;
-  transition: 0.2s;
-  cursor: pointer;
-  font: 500 1.125rem/1.35 'Roboto', sans-serif;
-
-  &:hover {
-    background-color: #6655dd;
-  }
-`;
-
-export const Error = styled.p`
-  text-align: center;
 `;
 
 export const ContainerSkeleton = styled.main`

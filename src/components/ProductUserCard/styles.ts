@@ -4,8 +4,8 @@ export const Container = styled.li`
   width: 100%;
 
   background-color: #000;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
 
   color: #fff;
   position: relative;
@@ -20,7 +20,7 @@ export const Container = styled.li`
 export const Image = styled.img`
   width: 100%;
   height: 200px;
-  border-radius: 4px;
+  border-radius: 0.25rem;
 
   @media (max-width: 600px) {
     grid-column: 1/-1;
@@ -30,8 +30,8 @@ export const Image = styled.img`
 export const DataProduct = styled.div`
   word-break: break-all;
   align-self: end;
-  margin-top: 12px;
-  margin-bottom: 16px;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
 `;
 
 export const Price = styled.p`
@@ -40,7 +40,6 @@ export const Price = styled.p`
 
 export const Description = styled.p`
   color: #b2b2b2;
-  max-width: 300px;
 `;
 
 export const ButtonDelete = styled.button`
@@ -48,7 +47,7 @@ export const ButtonDelete = styled.button`
   height: 40px;
 
   background-color: transparent;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   border: 0;
 
   display: flex;
@@ -64,14 +63,14 @@ export const ButtonDelete = styled.button`
   }
 
   position: absolute;
-  bottom: 8px;
+  bottom: 64px;
   right: 16px;
 `;
 
 export const Email = styled.span`
   color: #e80;
-  margin-right: 4px;
-  margin-top: 4px;
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
 `;
 
 export const DataDelivery = styled.div`
@@ -86,17 +85,17 @@ export const Title = styled.h3`
   font-weight: 500;
   color: #8877ff;
 
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 `;
 
 export const ListData = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 `;
 
 export const InformationBold = styled.p`
   display: inline-block;
-  margin-right: 4px;
+  margin-right: 0.25rem;
   font-weight: 500;
 `;

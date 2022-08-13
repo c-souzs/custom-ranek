@@ -62,8 +62,3 @@ interface CustomListProps {
 export const CustomList = styled(List)<CustomListProps>`
   display: ${(props) => (props.show ? 'grid' : 'none')};
 `;
-
-export const Error = styled.p`
-  text-align: center;
-  margin-top: 1rem;
-`;

@@ -103,8 +103,8 @@ const GlobalStyles = createGlobalStyle`
     // Container
     .container{
         max-width: 1200px;
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
         margin-left: auto;
         margin-right: auto;
     }
@@ -118,22 +118,25 @@ const GlobalStyles = createGlobalStyle`
         }
     }
 
-    // User
-    .subtitleSectionUser{
-        color: #8877ff;
-        font-size: 2.5rem !important;
+    // Estilo padrão de botão
+    .basicStyleButtonOrLink {
+        width: fit-content;
+        display: inline-block;
 
-        margin-bottom: 1.875rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.25rem;
+        border: 2px solid #000;
+        background-color: #8877ff;
 
-        &::after {
-            content: '.';
-            color: ${(props) => props.theme.colors.text};
-        }
+        text-transform: uppercase;
+        color: #fff;
+        font: 600 1.125rem/1.35 'Poppins', sans-serif;
 
-        @media (max-width: 600px){
-            @media (max-width: 600px) {
-                font-size: 1.625rem !important;
-            }
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+            background-color: #6655dd;
         }
     }
 

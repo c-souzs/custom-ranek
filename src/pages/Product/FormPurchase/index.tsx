@@ -114,8 +114,13 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
         <Input label="Cidade" name="city" {...city} />
         <Input label="Estado" name="state" {...stateUf} />
         <C.Buttons>
-          <C.Button type="submit">Finalizar compra</C.Button>
-          <C.Button onClick={() => setShowFormPurchase(false)}>Cancelar compra</C.Button>
+          <button className="basicStyleButtonOrLink" type="submit">
+            Finalizar compra
+          </button>
+          {/* eslint-disable-next-line react/button-has-type */}
+          <button className="basicStyleButtonOrLink" onClick={() => setShowFormPurchase(false)}>
+            Cancelar compra
+          </button>
         </C.Buttons>
       </C.FormPurchase>
     </C.Purchase>
