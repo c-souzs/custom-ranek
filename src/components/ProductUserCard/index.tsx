@@ -2,9 +2,10 @@
 import React from 'react';
 import { Trash } from 'phosphor-react';
 
-import * as C from './styles';
-import useControlRedux from '../../hooks/useControlRedux';
 import { productUnannounced } from '../../store/productReducer';
+import useControlRedux from '../../hooks/useControlRedux';
+
+import * as C from './styles';
 
 interface Address {
   cep: string

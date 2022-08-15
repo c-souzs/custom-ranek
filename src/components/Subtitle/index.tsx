@@ -2,11 +2,11 @@ import React from 'react';
 
 import * as C from './styles';
 
-interface SubtitleProps {
+interface ISubtitleProps {
   text: string
 }
 
-const Subtitle = ({ text }: SubtitleProps): JSX.Element => (
+const Subtitle = ({ text }: ISubtitleProps): JSX.Element => (
   <C.Subtitle className="font-1-xl">
     {text}
     <C.Decoration>.</C.Decoration>

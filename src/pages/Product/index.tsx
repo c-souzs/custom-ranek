@@ -1,17 +1,18 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
-import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ThemeContext } from 'styled-components';
-import Loader from '../../components/Loader';
-import TitlePackage from '../../components/TitlePackage';
+
+import { productPage } from '../../store/productReducer';
 import useControlRedux from '../../hooks/useControlRedux';
 import useInformationPage from '../../hooks/useInformationPage';
 import { useInterval } from '../../hooks/useInterval';
-import { productPage } from '../../store/productReducer';
+
 import FormPruchase from './FormPurchase';
 import ProductSkeleton from './Skeleton';
 import Slide from './Slide';
+import Loader from '../../components/Loader';
+import TitlePackage from '../../components/TitlePackage';
+import ToastError from '../../components/ToastError';
 
 import * as C from './styles';
 
@@ -20,35 +21,26 @@ const Product = (): JSX.Element => {
   const [showFormPurchase, setShowFormPurchase] = React.useState(false);
   const navigate = useNavigate();
   const [showItems, setShowItems] = React.useState(false);
-  const { colors } = React.useContext(ThemeContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const nameSlug = slug!.split('-')[0];
-  const customSlug = nameSlug[0].toLocaleUpperCase() + nameSlug.substring(1);
-
-  const dataInformationPage = {
-    title: customSlug,
-    description: 'Sua loja de produtos eletrônicos usados e originais com a maior e melhor experiência no mercado',
-  };
-  useInformationPage(dataInformationPage);
-
-  // Mostra os produtos após 7 segundos para a imagem estar carregada
   useInterval(() => setShowItems(true), 7000);
 
-  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, types } = useAppSelector((state) => state.product);
   const { data } = useAppSelector((state) => state.user);
 
-  // Verifica se tem um usuário logado para efetuar a compra.
+  const dataInformationPage = {
+    title: types.page?.nome || 'Carregando produto...',
+    description: 'Sua loja de produtos eletrônicos usados e originais com a maior e melhor experiência no mercado',
+  };
+  useInformationPage(dataInformationPage);
+
   const checkUserToShowFormPurchase = (): void => {
     if (data.information) {
       setShowFormPurchase(true);
     } else navigate('/account/login');
   };
 
-  // Busca os dados referente ao produto.
   React.useEffect(() => {
     const getProduct = async (): Promise<void> => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -58,11 +50,6 @@ const Product = (): JSX.Element => {
 
     getProduct();
   }, [dispatch, slug]);
-
-  // Exibe um alerta de erro.
-  React.useEffect(() => {
-    if (error) toast.error('Verique a mensagem de erro.');
-  }, [error]);
 
   return (
     <>
@@ -93,11 +80,7 @@ const Product = (): JSX.Element => {
             </C.Container>
           </>
         )}
-        <Toaster
-          position="top-right"
-          // eslint-disable-next-line max-len
-          toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
-        />
+        <ToastError />
         {loading && <Loader />}
         {error && <p className="error">Sua menssagem de erro</p>}
       </C.Product>

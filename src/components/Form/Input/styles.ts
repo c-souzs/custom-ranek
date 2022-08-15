@@ -43,5 +43,6 @@ export const Input = styled.input`
 `;
 
 export const Error = styled.p`
-  position: absolute;
+  text-align: start !important;
+  margin: 0.5rem 0 !important;
 `;

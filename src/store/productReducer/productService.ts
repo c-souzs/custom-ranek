@@ -1,7 +1,7 @@
 import { api } from '../../services/api';
-import { Product, ProductPost } from '../../types';
+import { IProduct, IProductPost } from '../../types';
 
-export const postProduct = async (dataProduct: ProductPost): Promise<void> => {
+export const postProduct = async (dataProduct: IProductPost): Promise<void> => {
   const {
     photos, name, description, price,
   } = dataProduct;
@@ -24,26 +24,26 @@ export const deleteProduct = async (slug: string): Promise<void> => {
   await api.delete(`/produto/${slug}`);
 };
 
-export const getProduct = async (slug: string): Promise<Product> => {
-  const { data } = await api.get<Product>(`/produto/${slug}`);
+export const getProduct = async (slug: string): Promise<IProduct> => {
+  const { data } = await api.get<IProduct>(`/produto/${slug}`);
 
   return data;
 };
 
-export const getProductList = async (query: string): Promise<Product[]> => {
-  const { data } = await api.get<Product[]>(`/produto${query}`);
+export const getProductList = async (query: string): Promise<IProduct[]> => {
+  const { data } = await api.get<IProduct[]>(`/produto${query}`);
 
   return data;
 };
 
-export const getProductSearch = async (search: string): Promise<Product[]> => {
-  const { data } = await api.get<Product[]>(`produto?_limit=9&q=${search}`);
+export const getProductSearch = async (search: string): Promise<IProduct[]> => {
+  const { data } = await api.get<IProduct[]>(`produto?_limit=9&q=${search}`);
 
   return data;
 };
 
-export const getProductUserAnnounced = async (id: string): Promise<Product[]> => {
-  const { data } = await api.get<Product[]>(`/produto?usuario_id=${id}`);
+export const getProductUserAnnounced = async (id: string): Promise<IProduct[]> => {
+  const { data } = await api.get<IProduct[]>(`/produto?usuario_id=${id}`);
 
   return data;
 };

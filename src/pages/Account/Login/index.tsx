@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
-import { ThemeContext } from 'styled-components';
+
+import { userLogin } from '../../../store/userReducer';
+import useControlRedux from '../../../hooks/useControlRedux';
+import useInformationPage from '../../../hooks/useInformationPage';
+import useInput from '../../../hooks/useInput';
+
 import Input from '../../../components/Form/Input';
 import Loader from '../../../components/Loader';
 import Subtitle from '../../../components/Subtitle';
 import TitlePackage from '../../../components/TitlePackage';
-import useControlRedux from '../../../hooks/useControlRedux';
-import useInformationPage from '../../../hooks/useInformationPage';
-import useInput from '../../../hooks/useInput';
-import { userLogin } from '../../../store/userReducer';
+import ToastError from '../../../components/ToastError';
 
 import * as C from './styles';
 
@@ -19,21 +20,17 @@ const Login = (): JSX.Element => {
   const { setValue: setValueEmail, ...email } = useInput('email');
   const { setValue: setValuePassword, ...password } = useInput('');
   const navigate = useNavigate();
-  const { colors } = React.useContext(ThemeContext);
 
-  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, data } = useAppSelector((state) => state.user);
 
-  // Altera o titulo e a descrião da página
   const dataInformationPage = {
     title: 'Login',
     description: 'Entre na sua conta e aproveite nossos produtos.',
   };
   useInformationPage(dataInformationPage);
 
-  // Faz o login do usuário.
   const accomplishLogin = (e: FormEvent): void => {
     e.preventDefault();
 
@@ -47,15 +44,9 @@ const Login = (): JSX.Element => {
     }
   };
 
-  // Redireciona o usuário após o login.
   React.useEffect(() => {
     if (data.information) navigate('/user/products-sold');
   }, [data.information, navigate]);
-
-  // Exibe um alerta de erro.
-  React.useEffect(() => {
-    if (error) toast.error('Verique a mensagem de erro.');
-  }, [error]);
 
   return (
     <>
@@ -89,11 +80,7 @@ const Login = (): JSX.Element => {
             </Link>
           </C.AnnounceCreateAccount>
         </div>
-        <Toaster
-          position="top-right"
-          // eslint-disable-next-line max-len
-          toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
-        />
+        <ToastError />
         {loading && <Loader />}
       </C.Container>
     </>

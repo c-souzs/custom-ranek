@@ -1,10 +1,11 @@
 import React from 'react';
 import { CheckCircle, Truck } from 'phosphor-react';
 
+import Title from '../../../components/Title';
+
 import imageDelivery from '../../../assets/imageDelivery.jpg';
 
 import * as C from './styles';
-import Title from '../../../components/Title';
 
 const Technology = (): JSX.Element => (
   <C.Technology>

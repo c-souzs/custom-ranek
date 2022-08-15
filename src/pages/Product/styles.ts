@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-interface ProductProps {
+interface IProduct {
   show: boolean
 }
 
-export const Product = styled.main<ProductProps>`
+export const Product = styled.main<IProduct>`
   background-color: ${(props) => props.theme.colors.primary};
   position: relative;
   display: ${(props) => (props.show ? 'block' : 'none')};

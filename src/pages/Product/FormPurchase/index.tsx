@@ -1,22 +1,24 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { QRCodeSVG } from 'qrcode.react';
 import React, { FormEvent } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
-import Input from '../../../components/Form/Input';
+
+import { userTransaction } from '../../../store/userReducer';
 import useControlRedux from '../../../hooks/useControlRedux';
 import useInput from '../../../hooks/useInput';
-import { userTransaction } from '../../../store/userReducer';
+
+import Input from '../../../components/Form/Input';
 
 import * as C from './styles';
 
-interface FormPurchaseProps {
+interface IFormPurchaseProps {
   showFormPurchase: boolean
   setShowFormPurchase: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // eslint-disable-next-line max-len
-const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchaseProps): JSX.Element => {
+const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: IFormPurchaseProps): JSX.Element => {
   const { setValue: setValueName, ...name } = useInput('');
   const { setValue: setValueEmail, ...email } = useInput('email');
   const { setValue: setValueCep, ...cep } = useInput('');
@@ -30,13 +32,11 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
   const { colors } = React.useContext(ThemeContext);
   const navigate = useNavigate();
 
-  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { types } = useAppSelector((state) => state.product);
   const { data } = useAppSelector((state) => state.user);
 
-  // Valida os dados e efetua a compra do produto do cliente.
   const accomplishTransaction = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
@@ -57,7 +57,6 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
     }
   };
 
-  // Preenche de forma automática os dados do formulário com as informações do ciente.
   React.useEffect(() => {
     if (data.information) {
       const {
@@ -117,8 +116,7 @@ const FormPruchase = ({ showFormPurchase, setShowFormPurchase }: FormPurchasePro
           <button className="basicStyleButtonOrLink" type="submit">
             Finalizar compra
           </button>
-          {/* eslint-disable-next-line react/button-has-type */}
-          <button className="basicStyleButtonOrLink" onClick={() => setShowFormPurchase(false)}>
+          <button className="basicStyleButtonOrLink" type="button" onClick={() => setShowFormPurchase(false)}>
             Cancelar compra
           </button>
         </C.Buttons>

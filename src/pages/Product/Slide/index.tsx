@@ -3,29 +3,26 @@ import { ArrowLeft, ArrowRight } from 'phosphor-react';
 
 import * as C from './styles';
 
-interface SlideProps {
+interface ISlideProps {
   photos: { src: string; titulo: string }[]
 }
 
-const Slide = ({ photos }: SlideProps): JSX.Element => {
+const Slide = ({ photos }: ISlideProps): JSX.Element => {
   const [slideActive, setSlideActive] = React.useState(0);
   const [translateX, setTranslateX] = React.useState(0);
   const imageSlideRef = React.useRef<null | HTMLImageElement>(null);
   const lengthPhotos = photos ? photos.length - 1 : -1;
 
-  // Volta um slide.
   const changePreviousSlide = (): void => {
     if (slideActive === 0 && lengthPhotos !== -1) setSlideActive(lengthPhotos);
     else setSlideActive(slideActive - 1);
   };
 
-  // Avança um slide.
   const changeNextSlide = (): void => {
     if (slideActive >= lengthPhotos) setSlideActive(0);
     else setSlideActive(slideActive + 1);
   };
 
-  // Atualiza o valor da margim para exibir o slide
   React.useEffect(() => {
     const width = imageSlideRef.current?.offsetWidth;
 

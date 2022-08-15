@@ -1,6 +1,5 @@
 import React from 'react';
 import { FacebookLogo, InstagramLogo, YoutubeLogo } from 'phosphor-react';
-import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 
@@ -16,23 +15,27 @@ const Footer = (): JSX.Element => (
         <C.Title className="font-2-l-b">Contato</C.Title>
         <ul className="font-2-m">
           <C.Li>
-            <C.LinkCustom to="tel:+552199999999">+55 21 9999-9999</C.LinkCustom>
+            <C.LinkCustom as="a" href="tel:+552199999999">
+              +55 21 9999-9999
+            </C.LinkCustom>
           </C.Li>
           <C.Li border>
-            <C.LinkCustom to="mailto:souzsdev@gmail.com">souzsdev@gmail.com</C.LinkCustom>
+            <C.LinkCustom as="a" href="mailto:souzsdev@gmail.com">
+              souzsdev@gmail.com
+            </C.LinkCustom>
           </C.Li>
           <C.Li>Rua Ali Perto</C.Li>
           <C.Li border>Rio de Janeiro - RJ</C.Li>
           <C.LiFlex>
-            <Link to="www.instagram.com">
+            <a href="https://www.instagram.com/">
               <InstagramLogo size={36} color="#8877ff" />
-            </Link>
-            <Link to="www.facebook.com">
+            </a>
+            <a href="https://www.facebook.com/">
               <FacebookLogo size={36} color="#8877ff" />
-            </Link>
-            <Link to="www.youtube.com">
+            </a>
+            <a href="https://www.youtube.com/">
               <YoutubeLogo size={36} color="#8877ff" />
-            </Link>
+            </a>
           </C.LiFlex>
         </ul>
       </div>
@@ -43,7 +46,7 @@ const Footer = (): JSX.Element => (
             <C.LinkCustom to="/products">Produtos</C.LinkCustom>
           </C.Li>
           <C.Li>
-            <C.LinkCustom to="/account">Vender</C.LinkCustom>
+            <C.LinkCustom to="account/create">Vender</C.LinkCustom>
           </C.Li>
           <C.Li>
             <C.LinkCustom to="/contact">Contato</C.LinkCustom>
@@ -54,7 +57,7 @@ const Footer = (): JSX.Element => (
         <p>Ranek © Alguns direitos reservados</p>
         <span>
           Recriado por:
-          <C.LinkAuthor to="https://github.com/souzzs">Caio Souza</C.LinkAuthor>
+          <C.LinkAuthor href="https://github.com/souzzs">Caio Souza</C.LinkAuthor>
           .
         </span>
       </C.RightsReserved>

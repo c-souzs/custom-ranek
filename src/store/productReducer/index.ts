@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ErrorData, Product, ProductPost } from '../../types';
-import { RootState } from '../configure';
+import { IErrorData, IProduct, IProductPost } from '../../types';
 import {
   deleteProduct,
   getProduct,
@@ -11,15 +10,20 @@ import {
   postProduct,
 } from './productService';
 
-export interface InitialStateProduct {
+export interface IInitialStateProduct {
   loading: boolean
   error: string | null
   types: {
-    page: Product | null
-    list: Product[]
-    search: Product[]
-    user: Product[]
+    page: IProduct | null
+    list: IProduct[]
+    search: IProduct[]
+    user: IProduct[]
   }
+}
+
+interface IDataProductPost {
+  dataProduct: IProductPost
+  id: string
 }
 
 export const productPage = createAsyncThunk('product/pageGet', async (slug: string, thunkAPI) => {
@@ -28,7 +32,7 @@ export const productPage = createAsyncThunk('product/pageGet', async (slug: stri
 
     return product;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
@@ -39,7 +43,7 @@ export const productList = createAsyncThunk('product/listGet', async (query: str
 
     return products;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
@@ -50,7 +54,7 @@ export const productSearch = createAsyncThunk('product/searchGet', async (search
 
     return result;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
@@ -61,7 +65,7 @@ export const productUnannounced = createAsyncThunk('product/announceDelete', asy
 
     return true;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
@@ -73,24 +77,26 @@ export const productUser = createAsyncThunk('product/userAnnounceGet', async (id
 
     return products;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
 
-export const productAnnounce = createAsyncThunk('product/announcePost', async (data: ProductPost, thunkAPI) => {
+export const productAnnounce = createAsyncThunk('product/announcePost', async (data: IDataProductPost, thunkAPI) => {
   try {
-    await postProduct(data);
-    await thunkAPI.dispatch(productUser(''));
+    const { dataProduct, id } = data;
+
+    await postProduct(dataProduct);
+    await thunkAPI.dispatch(productUser(id));
 
     return true;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
 
-const initialState: InitialStateProduct = {
+const initialState: IInitialStateProduct = {
   loading: false,
   error: null,
   types: {

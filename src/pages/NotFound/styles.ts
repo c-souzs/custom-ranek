@@ -6,10 +6,12 @@ export const PageNotFound = styled.main`
 
 export const Container = styled.div`
   padding: 1.875rem 0;
+  text-align: center;
 `;
 
 export const ImageAlert = styled.img`
   max-height: 500px;
   min-height: 350px;
   margin: 0 auto;
+  margin-bottom: 1.875rem;
 `;

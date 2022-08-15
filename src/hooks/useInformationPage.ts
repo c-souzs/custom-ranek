@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface InformationPage {
+interface IInformationPage {
   title: string
   description: string
 }
 
-const useInformationPage = ({ title, description }: InformationPage): null => {
+const useInformationPage = ({ title, description }: IInformationPage): null => {
   React.useEffect(() => {
     document.title = `Ranek - ${title}`;
     document.querySelector("meta[name='description']")?.setAttribute('content', description || '');

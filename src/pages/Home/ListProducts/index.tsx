@@ -1,32 +1,28 @@
 import React from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { ThemeContext } from 'styled-components';
+
+import { productList } from '../../../store/productReducer';
 import useMedia from '../../../hooks/useMedia';
+import useControlRedux from '../../../hooks/useControlRedux';
+import { useInterval } from '../../../hooks/useInterval';
 
 import Title from '../../../components/Title';
-
-import * as C from './styles';
-import { productList } from '../../../store/productReducer';
-import useControlRedux from '../../../hooks/useControlRedux';
 import Loader from '../../../components/Loader';
-import { useInterval } from '../../../hooks/useInterval';
 import ProductSampleCard from '../../../components/ProductSampleCard';
 import ProductSampleCardSkeleton from '../../../components/ProductSampleCard/Skeleton';
+import ToastError from '../../../components/ToastError';
+
+import * as C from './styles';
 
 const ListProducts = (): JSX.Element => {
   const changeMargin = useMedia('(max-width: 800px)');
-  const { colors } = React.useContext(ThemeContext);
 
-  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error, types } = useAppSelector((state) => state.product);
   const [showItems, setShowItems] = React.useState(false);
 
-  // Mostra os produtos após 7 segundos para a imagem estar carregada
   useInterval(() => setShowItems(true), 7000);
 
-  // Busca os dados ao entrar na página.
   React.useEffect(() => {
     const getProducts = async (): Promise<void> => {
       await dispatch(productList('?_limit=9'));
@@ -34,11 +30,6 @@ const ListProducts = (): JSX.Element => {
 
     getProducts();
   }, [dispatch]);
-
-  // Exibe um alerta de erro.
-  React.useEffect(() => {
-    if (error) toast.error('Verique a mensagem de erro.');
-  }, [error]);
 
   return (
     <C.ListProducts>
@@ -60,11 +51,7 @@ const ListProducts = (): JSX.Element => {
           <p>Nenhum dado encontrado.</p>
         )}
       </C.CustomList>
-      <Toaster
-        position="top-right"
-        // eslint-disable-next-line max-len
-        toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
-      />
+      <ToastError />
       {error && <p className="error">{error}</p>}
       {loading && <Loader />}
     </C.ListProducts>

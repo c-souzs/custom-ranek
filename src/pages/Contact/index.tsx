@@ -3,18 +3,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FacebookLogo, InstagramLogo, YoutubeLogo } from 'phosphor-react';
-import useInput from '../../hooks/useInput';
 
-import * as C from './styles';
+import useInput from '../../hooks/useInput';
+import useInformationPage from '../../hooks/useInformationPage';
+
+import Input from '../../components/Form/Input';
+import Subtitle from '../../components/Subtitle';
 
 import mapRj from '../../assets/rjMapa.jpg';
 import time from '../../assets/time.svg';
 import local from '../../assets/local.svg';
 import warning from '../../assets/warningCircle.svg';
 import TitlePackage from '../../components/TitlePackage';
-import Input from '../../components/Form/Input';
-import Subtitle from '../../components/Subtitle';
-import useInformationPage from '../../hooks/useInformationPage';
+
+import * as C from './styles';
 
 const Contact = (): JSX.Element => {
   const { setValue: setValueName, ...name } = useInput('');
@@ -22,7 +24,6 @@ const Contact = (): JSX.Element => {
   const { setValue: setValueEmail, ...email } = useInput('email');
   const { setValue: setValueMessage, ...message } = useInput('');
 
-  // Altera o titúlo e a descrição da página.
   const dataInformationPage = {
     title: 'Contato',
     description: 'Entre em contato conosco por email e aguarde 24 horas ou agende sua visita.',

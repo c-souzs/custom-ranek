@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ThemeContext } from 'styled-components';
+
+import { userRegister } from '../../../store/userReducer';
+import { localizationAddress, reset } from '../../../store/localizationReducer';
+import useControlRedux from '../../../hooks/useControlRedux';
+import useInformationPage from '../../../hooks/useInformationPage';
+import useInput from '../../../hooks/useInput';
+
 import Input from '../../../components/Form/Input';
 import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
 import TitlePackage from '../../../components/TitlePackage';
-import useInformationPage from '../../../hooks/useInformationPage';
-import useInput from '../../../hooks/useInput';
-import { AppDispatch, RootState } from '../../../store/configure';
-import { localizationAddress, reset } from '../../../store/localizationReducer';
-import { userRegister } from '../../../store/userReducer';
+import ToastError from '../../../components/ToastError';
 
 import * as C from './styles';
 
@@ -29,7 +29,6 @@ const Create = (): JSX.Element => {
   const [citys, setCitys] = React.useState<string[]>(['Selecione uma cidade']);
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
   const navigate = useNavigate();
-  const { colors } = React.useContext(ThemeContext);
 
   // Altera o titulo e a descrião da página
   const dataInformationPage = {
@@ -39,11 +38,11 @@ const Create = (): JSX.Element => {
   useInformationPage(dataInformationPage);
 
   // Conjunto referente ao redux.
-  const dispatch = useDispatch<AppDispatch>();
-  const stateUser = useSelector((state: RootState) => state.user);
-  const stateLocalization = useSelector((state: RootState) => state.localization);
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const stateUser = useAppSelector((state) => state.user);
+  const stateLocalization = useAppSelector((state) => state.localization);
 
-  // Verifica se os campos foram preenchidos corretamente.
   const validateInputs = (): boolean => name.validateAt()
     && password.validateAt()
     && cep.validateAt()
@@ -53,7 +52,6 @@ const Create = (): JSX.Element => {
     && city !== 'Selecione uma cidade'
     && stateUf.validateAt();
 
-  // Realiza o cadastro do usuário
   const accomplishRegister = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
@@ -74,8 +72,6 @@ const Create = (): JSX.Element => {
     }
   };
 
-  // Após o usuário remover o foco do campo do cep, o valor é validado e é realizado
-  // a consulta na api.
   const customOnBlurCep = (): void => {
     if (cep.validateAt()) {
       dispatch(localizationAddress(cep.value));
@@ -84,14 +80,12 @@ const Create = (): JSX.Element => {
     }
   };
 
-  // Preenche o cep formatado.
   React.useEffect(() => {
     if (stateLocalization.data.cepFormat) {
       setValueCep(stateLocalization.data.cepFormat);
     }
   }, [stateLocalization.data.cepFormat, setValueCep]);
 
-  // Preenche o campo do estado baseado no cep, de forma automatica.
   React.useEffect(() => {
     if (stateLocalization.data.uf) {
       setValueStateUf(stateLocalization.data.uf);
@@ -100,7 +94,6 @@ const Create = (): JSX.Element => {
     }
   }, [stateLocalization.data.uf, setValueStateUf]);
 
-  // Lista as cidades após a consulta de dados do cep.
   React.useEffect(() => {
     if (stateLocalization.data.citys.length) {
       setCitys(stateLocalization.data.citys);
@@ -109,15 +102,9 @@ const Create = (): JSX.Element => {
     }
   }, [stateLocalization.data.citys]);
 
-  // Redireciona o usuário após o login.
   React.useEffect(() => {
     if (stateUser.data.information) navigate('/user/products-sold');
   }, [stateUser.data.information, navigate]);
-
-  // Exibe um alerta de erro.
-  React.useEffect(() => {
-    if (stateUser.error) toast.error('Verique a mensagem de erro.');
-  }, [stateUser.error]);
 
   return (
     <>
@@ -159,11 +146,7 @@ const Create = (): JSX.Element => {
             </C.PositionColumn>
           </C.Form>
         </div>
-        <Toaster
-          position="top-right"
-          // eslint-disable-next-line max-len
-          toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
-        />
+        <ToastError />
         {stateUser.loading && <Loader />}
       </C.Container>
     </>

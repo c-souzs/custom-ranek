@@ -3,8 +3,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import ScrollToTop from './components/ScrollToTop';
 import useControlRedux from './hooks/useControlRedux';
 import usePersistedStateLs from './hooks/usePersistedStateLs';
+import useToastError from './hooks/useToastError';
 import Router from './Router';
 import { userDataAutomatic } from './store/userReducer';
 import GlobalStyles from './styles/globalStyles';
@@ -13,6 +15,8 @@ import light from './styles/themes/light';
 
 const App = (): JSX.Element => {
   const [theme, setTheme] = usePersistedStateLs<DefaultTheme>('theme', dark);
+  useToastError();
+
   // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const { data } = useAppSelector((state) => state.user);
@@ -34,6 +38,7 @@ const App = (): JSX.Element => {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
+        <ScrollToTop />
         <GlobalStyles />
         <Header toggleTheme={toggleTheme} />
         <Router />

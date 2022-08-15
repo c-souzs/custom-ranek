@@ -19,7 +19,6 @@ const axiosInstance = axios.create({
   baseURL: `${url}/api`,
 });
 
-// Trabalha o erro da requisição para ser mais fácil de manipular
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -31,7 +30,6 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-// Verifica se há um token no local storage, caso tenha toda requisição vai com Authorization Token
 axiosInstance.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const { token } = window.localStorage;

@@ -1,12 +1,12 @@
 // Types global
-export interface ErrorData {
+export interface IErrorData {
   code: string
   data: { message: number }
   message: string
 }
 
 // Type userProduct
-export interface Product {
+export interface IProduct {
   id: string
   fotos: { titulo: string; src: string }[]
   nome: string
@@ -16,7 +16,7 @@ export interface Product {
   usuario_id: string
 }
 
-export interface ProductPost {
+export interface IProductPost {
   name: string
   price: string
   description: string
@@ -24,12 +24,12 @@ export interface ProductPost {
 }
 
 // Types userReducer
-export interface UserGetToken {
+export interface IUserGetToken {
   username: string
   password: string
 }
 
-export interface UserInformation {
+export interface IUserInformation {
   id: string
   nome: string
   email: string
@@ -41,15 +41,15 @@ export interface UserInformation {
   estado: string
 }
 
-export interface Transaction {
+export interface ITransaction {
   comprador_id: string
   vendedor_id: string
-  endereco: UserInformation
-  produto: Product
+  endereco: IUserInformation
+  produto: IProduct
   data: string
 }
 
-export interface UserRegister {
+export interface IUserRegister {
   nome: string
   email: string
   senha: string
@@ -61,9 +61,9 @@ export interface UserRegister {
   estado: string
 }
 
-export interface DataPurchase {
+export interface IDataPurchase {
   comprador_id: string
   vendedor_id: string
-  produto: Product
-  endereco: UserInformation
+  produto: IProduct
+  endereco: IUserInformation
 }

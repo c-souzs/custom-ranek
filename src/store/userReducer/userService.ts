@@ -1,6 +1,6 @@
 import { api } from '../../services/api';
 import {
-  DataPurchase, Transaction, UserGetToken, UserInformation, UserRegister,
+  IDataPurchase, ITransaction, IUserGetToken, IUserInformation, IUserRegister,
 } from '../../types';
 
 interface GetTokenResponse {
@@ -10,8 +10,8 @@ interface GetTokenResponse {
   user_display_name: string
 }
 
-export const getToken = async (user: UserGetToken): Promise<GetTokenResponse> => {
-  const { data } = await api.token<GetTokenResponse, UserGetToken>(user);
+export const getToken = async (user: IUserGetToken): Promise<GetTokenResponse> => {
+  const { data } = await api.token<GetTokenResponse, IUserGetToken>(user);
   const { token } = data;
   localStorage.setItem('token', token);
 
@@ -22,32 +22,32 @@ export const validateToken = async (): Promise<void> => {
   await api.validateToken();
 };
 
-export const getUser = async (): Promise<UserInformation> => {
-  const { data } = await api.get<UserInformation>('/usuario');
+export const getUser = async (): Promise<IUserInformation> => {
+  const { data } = await api.get<IUserInformation>('/usuario');
 
   return data;
 };
 
-export const postUser = async (user: UserRegister): Promise<void> => {
-  await api.post<unknown, UserRegister>('/usuario', user);
+export const postUser = async (user: IUserRegister): Promise<void> => {
+  await api.post<unknown, IUserRegister>('/usuario', user);
 };
 
-export const updateUser = async (user: UserRegister): Promise<void> => {
-  await api.put<unknown, UserRegister>('/usuario', user);
+export const updateUser = async (user: IUserRegister): Promise<void> => {
+  await api.put<unknown, IUserRegister>('/usuario', user);
 };
 
-export const getTransactionPurchases = async (): Promise<Transaction[]> => {
-  const { data } = await api.get<Transaction[]>('transacao?tipo=comprador_id');
+export const getTransactionPurchases = async (): Promise<ITransaction[]> => {
+  const { data } = await api.get<ITransaction[]>('transacao?tipo=comprador_id');
 
   return data;
 };
 
-export const getTransactionSales = async (): Promise<Transaction[]> => {
-  const { data } = await api.get<Transaction[]>('transacao?tipo=vendedor_id');
+export const getTransactionSales = async (): Promise<ITransaction[]> => {
+  const { data } = await api.get<ITransaction[]>('transacao?tipo=vendedor_id');
 
   return data;
 };
 
-export const postPurchases = async (purchaseData: DataPurchase): Promise<void> => {
-  await api.post<unknown, DataPurchase>('transacao', purchaseData);
+export const postPurchases = async (purchaseData: IDataPurchase): Promise<void> => {
+  await api.post<unknown, IDataPurchase>('transacao', purchaseData);
 };

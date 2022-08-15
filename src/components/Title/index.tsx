@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import * as C from './styles';
 
-export interface TitleProps {
+export interface ITitleProps {
   children: ReactNode
   // eslint-disable-next-line react/require-default-props
   mB?: string
@@ -10,7 +10,7 @@ export interface TitleProps {
   colorFixed?: boolean
 }
 
-const Title = ({ children, mB, colorFixed }: TitleProps): JSX.Element => (
+const Title = ({ children, mB, colorFixed }: ITitleProps): JSX.Element => (
   <C.Title className="font-1-xxl" mB={mB} colorFixed={colorFixed}>
     {children}
     <C.Decoration>.</C.Decoration>

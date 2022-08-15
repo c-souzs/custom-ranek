@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { ThemeContext } from 'styled-components';
+
+import { localizationAddress, reset } from '../../../store/localizationReducer';
+import { userUpdate } from '../../../store/userReducer';
+import useControlRedux from '../../../hooks/useControlRedux';
+import useInformationPage from '../../../hooks/useInformationPage';
+import useInput from '../../../hooks/useInput';
+
 import Input from '../../../components/Form/Input';
 import Select from '../../../components/Form/Select';
 import Loader from '../../../components/Loader';
 import Subtitle from '../../../components/Subtitle';
-import useControlRedux from '../../../hooks/useControlRedux';
-import useInformationPage from '../../../hooks/useInformationPage';
-import useInput from '../../../hooks/useInput';
-import { localizationAddress, reset } from '../../../store/localizationReducer';
-import { userUpdate } from '../../../store/userReducer';
+import ToastError from '../../../components/ToastError';
 
 import * as C from './styles';
 
@@ -26,15 +27,12 @@ const Edit = (): JSX.Element => {
   const [city, setCity] = React.useState('');
   const [citys, setCitys] = React.useState<string[]>([]);
   const { setValue: setValueStateUf, ...stateUf } = useInput('');
-  const { colors } = React.useContext(ThemeContext);
 
-  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const stateUser = useAppSelector((state) => state.user);
   const stateLocalization = useAppSelector((state) => state.localization);
 
-  // Valida os campos.
   const validateInputs = (): boolean => name.validateAt()
     && password.validateAt()
     && cep.validateAt()
@@ -50,7 +48,6 @@ const Edit = (): JSX.Element => {
   };
   useInformationPage(dataInformationPage);
 
-  // Realiza a atualização de dados do usuário.
   const accomplishUpdate = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
@@ -71,8 +68,6 @@ const Edit = (): JSX.Element => {
     }
   };
 
-  // Após o usuário remover o foco do campo do cep, o valor é validado e é realizado
-  // a consulta na api.
   const customOnBlurCep = (): void => {
     if (cep.validateAt()) {
       dispatch(localizationAddress(cep.value));
@@ -81,7 +76,6 @@ const Edit = (): JSX.Element => {
     }
   };
 
-  // Preenche os campos já com os dados do usuário.
   React.useEffect(() => {
     if (stateUser.data.information) {
       const {
@@ -109,12 +103,12 @@ const Edit = (): JSX.Element => {
   ]);
 
   React.useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const cepActual = stateUser.data.information!.cep;
-    dispatch(localizationAddress(cepActual));
+    const userData = stateUser.data.information;
+    if (userData) {
+      dispatch(localizationAddress(userData.cep));
+    }
   }, [stateUser.data.information, dispatch]);
 
-  // Lista as cidades após a consulta de dados do cep.
   React.useEffect(() => {
     if (stateLocalization.data.citys.length) {
       setCitys(stateLocalization.data.citys);
@@ -123,7 +117,6 @@ const Edit = (): JSX.Element => {
     }
   }, [stateLocalization.data.citys]);
 
-  // Preenche o campo do estado baseado no cep, de forma automatica.
   React.useEffect(() => {
     if (stateLocalization.data.uf) {
       setValueStateUf(stateLocalization.data.uf);
@@ -131,11 +124,6 @@ const Edit = (): JSX.Element => {
       setValueStateUf('');
     }
   }, [stateLocalization.data.uf, setValueStateUf]);
-
-  // Exibe um alerta de erro.
-  React.useEffect(() => {
-    if (stateUser.error) toast.error('Verique a mensagem de erro.');
-  }, [stateUser.error]);
 
   return (
     <C.Edit className="container">
@@ -174,11 +162,7 @@ const Edit = (): JSX.Element => {
           </button>
         </C.ElementColumn>
       </C.Form>
-      <Toaster
-        position="top-right"
-        // eslint-disable-next-line max-len
-        toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
-      />
+      <ToastError />
       {stateUser.loading && <Loader />}
     </C.Edit>
   );

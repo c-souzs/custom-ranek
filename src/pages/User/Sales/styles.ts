@@ -14,10 +14,10 @@ export const List = styled.ul`
   }
 `;
 
-interface CustomListProps {
+interface ICustomList {
   show: boolean
 }
 
-export const CustomList = styled(List)<CustomListProps>`
+export const CustomList = styled(List)<ICustomList>`
   display: ${(props) => (props.show ? 'grid' : 'none')};
 `;

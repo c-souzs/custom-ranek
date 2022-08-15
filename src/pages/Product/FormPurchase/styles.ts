@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-interface PurchaseProps {
+interface IPurchase {
   show: boolean
 }
 
-export const Purchase = styled.section<PurchaseProps>`
+export const Purchase = styled.section<IPurchase>`
   grid-column: 1/-1;
   display: ${(props) => (props.show ? 'block' : 'none')};
   margin-top: 1.875rem;

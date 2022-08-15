@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { IProduct } from '../../types';
+
 import useControlRedux from '../../hooks/useControlRedux';
-import { Product } from '../../types';
 
 import * as C from './styles';
 
-interface ProductSampleCardProps {
+interface IProductSampleCardProps {
   typeSample: 'home' | 'list'
-  product: Product
+  product: IProduct
 }
 
-const ProductSampleCard = ({ typeSample, product }: ProductSampleCardProps): JSX.Element => {
+const ProductSampleCard = ({ typeSample, product }: IProductSampleCardProps): JSX.Element => {
   const {
     id, fotos, nome, preco, descricao, vendido, usuario_id: usuarioId,
   } = product;

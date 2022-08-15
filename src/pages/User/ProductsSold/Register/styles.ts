@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface IOrientation {
+  amountPhotos: number
+}
+
 export const Register = styled.div`
   position: relative;
 `;
@@ -34,10 +38,6 @@ export const ButtonClearPhotos = styled.button`
   }
 `;
 
-interface OrientationProps {
-  amountPhotos: number
-}
-
-export const Orientation = styled.p<OrientationProps>`
+export const Orientation = styled.p<IOrientation>`
   color: ${(props) => (props.amountPhotos >= 3 ? '#16C70B' : '#e54')};
 `;

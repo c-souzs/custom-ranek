@@ -2,19 +2,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getCep, getCitys } from './localizationService';
 
-interface DataLocalization {
+interface IDataLocalization {
   cepFormat: string | null
   uf: string | null
   citys: string[]
 }
 
-export interface InitialStateLocalization {
+export interface IInitialStateLocalization {
   loading: boolean
   error: string | null
-  data: DataLocalization
+  data: IDataLocalization
 }
 
-const initialState: InitialStateLocalization = {
+const initialState: IInitialStateLocalization = {
   loading: false,
   error: null,
   data: {

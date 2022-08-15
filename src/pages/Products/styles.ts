@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface ICustomList {
+  show: boolean
+}
+
 export const Products = styled.main`
   background-color: ${(props) => props.theme.colors.primary};
   padding-bottom: 3.75rem;
@@ -55,10 +59,6 @@ export const List = styled.ul`
   }
 `;
 
-interface CustomListProps {
-  show: boolean
-}
-
-export const CustomList = styled(List)<CustomListProps>`
+export const CustomList = styled(List)<ICustomList>`
   display: ${(props) => (props.show ? 'grid' : 'none')};
 `;

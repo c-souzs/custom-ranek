@@ -2,20 +2,23 @@ import React from 'react';
 import {
   CreditCard, Package, PencilSimple, SignOut, Tag,
 } from 'phosphor-react';
-
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import * as C from './styles';
-import Title from '../../../components/Title';
-import useMedia from '../../../hooks/useMedia';
-import { AppDispatch, RootState } from '../../../store/configure';
+
 import { userLogout } from '../../../store/userReducer';
+import useMedia from '../../../hooks/useMedia';
+import useControlRedux from '../../../hooks/useControlRedux';
+
+import Title from '../../../components/Title';
+
+import * as C from './styles';
 
 const HeaderUser = (): JSX.Element => {
   const changeIcon = useMedia('(max-width: 800px)');
-  const dispatch = useDispatch<AppDispatch>();
-  const stateUser = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
+
+  const { useAppDispatch, useAppSelector } = useControlRedux();
+  const dispatch = useAppDispatch();
+  const stateUser = useAppSelector((state) => state.user);
 
   const handleLogout = async (): Promise<void> => {
     await dispatch(userLogout());

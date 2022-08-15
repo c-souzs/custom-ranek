@@ -3,12 +3,12 @@ import Title from '../Title';
 
 import * as C from './styles';
 
-interface TitleBgProps {
+interface ITitleBgProps {
   subtitle: string
   title: string
 }
 
-const TitlePackage = ({ subtitle, title }: TitleBgProps): JSX.Element => (
+const TitlePackage = ({ subtitle, title }: ITitleBgProps): JSX.Element => (
   <C.BgTitle>
     <div className="container">
       <C.Subtitle className="font-2-l-b">{subtitle}</C.Subtitle>

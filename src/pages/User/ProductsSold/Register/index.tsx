@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { FormEvent } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { ThemeContext } from 'styled-components';
+
+import { productAnnounce } from '../../../../store/productReducer';
+import useControlRedux from '../../../../hooks/useControlRedux';
+import useInput from '../../../../hooks/useInput';
+
 import Input from '../../../../components/Form/Input';
 import Loader from '../../../../components/Loader';
 import Subtitle from '../../../../components/Subtitle';
-import useControlRedux from '../../../../hooks/useControlRedux';
-import useInput from '../../../../hooks/useInput';
-import { productAnnounce, productUser } from '../../../../store/productReducer';
+import ToastError from '../../../../components/ToastError';
 
 import * as C from './styles';
 
@@ -26,15 +28,12 @@ const Register = (): JSX.Element => {
   const [dataPhotos, setDataPhotos] = React.useState<PhotoData[]>([]);
   const [orientationPhotos, setOrientationPhotos] = React.useState<null | string>(null);
   const navigate = useNavigate();
-  const { colors } = React.useContext(ThemeContext);
 
-  // Conjunto referente ao redux.
   const { useAppDispatch, useAppSelector } = useControlRedux();
   const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.product);
   const { data } = useAppSelector((state) => state.user);
 
-  // Valida se os inputs estão preenchidos. Inclusive se o usuário preencheu as 3 fotos.
   const validateInputs = (): boolean => {
     const inputsText = name.validateAt() && price.validateAt() && description.validateAt();
     const photosAmount = dataPhotos.length === 3;
@@ -44,7 +43,6 @@ const Register = (): JSX.Element => {
     return validate;
   };
 
-  // Cadastra o produto.
   const handleSaleProduct = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
 
@@ -55,11 +53,12 @@ const Register = (): JSX.Element => {
         description: description.value,
         photos: dataPhotos,
       };
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const idUser = data.information!.id;
 
       try {
-        await dispatch(productAnnounce(dataProduct));
+        await dispatch(productAnnounce({ dataProduct, id: idUser }));
       } catch (errorAnnounce) {
-        // Exibir um erro aqui!!!
         navigate('/pageNotFound');
       } finally {
         setValueName('');
@@ -70,7 +69,6 @@ const Register = (): JSX.Element => {
     }
   };
 
-  // Armazena os dados da foto e limpa o campo para o usuário selecionar uma nova foto
   const onChangeFiles = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const element = e.target;
     const filesPhoto = element.files;
@@ -82,19 +80,16 @@ const Register = (): JSX.Element => {
       };
       setDataPhotos([...dataPhotos, captureData]);
 
-      // Mostrar uma modal avisando que a foto foi enviada com sucesso
       element.value = '';
       toast.success('Imagem adiciona com sucesso.');
     }
   };
 
-  // Limpa o array de fotos adicionadas pelo usuário
   const clearPhotos = (): void => {
     setDataPhotos([]);
     toast.success('Todas as fotos foram removidas. Adicione fotos novas.');
   };
 
-  // Verifica a quantidade de fotos para dar ao usuário o feedback do processo de cadastro.
   React.useEffect(() => {
     const l = dataPhotos.length;
 
@@ -131,11 +126,7 @@ const Register = (): JSX.Element => {
           Vender
         </button>
       </C.FormAddProduct>
-      <Toaster
-        position="top-right"
-        // eslint-disable-next-line max-len
-        toastOptions={{ success: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
-      />
+      <ToastError />
       {error && <p className="error">{error}</p>}
       {loading && <Loader />}
     </C.Register>

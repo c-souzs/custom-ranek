@@ -2,7 +2,7 @@ import React, { ChangeEvent, InputHTMLAttributes } from 'react';
 
 import * as C from './styles';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   // eslint-disable-next-line react/require-default-props
   label?: string
   error: string | null
@@ -14,7 +14,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = ({
   label, error, validateAt, onChange, onClick, value, ...rest
-}: InputProps): JSX.Element => (
+}: IInputProps): JSX.Element => (
   <C.Label>
     {label}
     {/* eslint-disable-next-line react/jsx-props-no-spreading */}

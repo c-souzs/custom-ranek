@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
-  DataPurchase, ErrorData, Transaction, UserGetToken, UserInformation, UserRegister,
+  IDataPurchase, IErrorData, ITransaction, IUserGetToken, IUserInformation, IUserRegister,
 } from '../../types';
 import {
   getToken,
@@ -14,21 +14,21 @@ import {
   validateToken,
 } from './userService';
 
-interface UserData {
-  information: UserInformation | null
+interface IUserData {
+  information: IUserInformation | null
   transaction: {
-    sales: Transaction[]
-    purchases: Transaction[]
+    sales: ITransaction[]
+    purchases: ITransaction[]
   }
 }
 
-export interface InitialStateUser {
+export interface IInitialStateUser {
   loading: boolean
   error: string | null
-  data: UserData
+  data: IUserData
 }
 
-export const userLogin = createAsyncThunk('user/loginGet', async (user: UserGetToken, thunkAPI) => {
+export const userLogin = createAsyncThunk('user/loginGet', async (user: IUserGetToken, thunkAPI) => {
   try {
     await getToken(user);
     await validateToken();
@@ -38,7 +38,7 @@ export const userLogin = createAsyncThunk('user/loginGet', async (user: UserGetT
     return dataUser;
   } catch (error) {
     localStorage.removeItem('token');
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
@@ -51,12 +51,12 @@ export const userDataAutomatic = createAsyncThunk('user/loginAutomaticGet', asyn
     return dataUser;
   } catch (error) {
     localStorage.removeItem('token');
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
 
-export const userRegister = createAsyncThunk('user/registerPost', async (user: UserRegister, thunkAPI) => {
+export const userRegister = createAsyncThunk('user/registerPost', async (user: IUserRegister, thunkAPI) => {
   try {
     await postUser(user);
     await thunkAPI.dispatch(
@@ -68,19 +68,19 @@ export const userRegister = createAsyncThunk('user/registerPost', async (user: U
 
     return true;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
 
-export const userUpdate = createAsyncThunk('user/dataUpdate', async (user: UserRegister, thunkAPI) => {
+export const userUpdate = createAsyncThunk('user/dataUpdate', async (user: IUserRegister, thunkAPI) => {
   try {
     await updateUser(user);
     const dataUser = await getUser();
 
     return dataUser;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
@@ -91,7 +91,7 @@ export const userTransactionPurchases = createAsyncThunk('user/transactionPurcha
 
     return data;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
@@ -102,20 +102,20 @@ export const userTransactionSales = createAsyncThunk('user/transactionSalesGet',
 
     return data;
   } catch (error) {
-    const errorData = error as ErrorData;
+    const errorData = error as IErrorData;
     return thunkAPI.rejectWithValue(errorData.message);
   }
 });
 
 export const userTransaction = createAsyncThunk(
   'user/transactionPost',
-  async (purchaseData: DataPurchase, thunkAPI) => {
+  async (purchaseData: IDataPurchase, thunkAPI) => {
     try {
       await postPurchases(purchaseData);
 
       return true;
     } catch (error) {
-      const errorData = error as ErrorData;
+      const errorData = error as IErrorData;
       return thunkAPI.rejectWithValue(errorData.message);
     }
   },
@@ -125,7 +125,7 @@ export const userLogout = createAsyncThunk('user/logout', async () => {
   localStorage.removeItem('token');
 });
 
-const initialState: InitialStateUser = {
+const initialState: IInitialStateUser = {
   loading: false,
   error: null,
   data: {

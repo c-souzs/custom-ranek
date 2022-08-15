@@ -12,9 +12,9 @@ const dataValidate = {
   },
 };
 
-type ValidationTypes = keyof typeof dataValidate | '' | null
+type TValidationTypes = keyof typeof dataValidate | '' | null
 
-interface UseInputReturn {
+interface IUseInputReturn {
   value: string
   setValue: React.Dispatch<React.SetStateAction<string>>
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -23,7 +23,7 @@ interface UseInputReturn {
   error: string | null
 }
 
-const useInput = (type: ValidationTypes): UseInputReturn => {
+const useInput = (type: TValidationTypes): IUseInputReturn => {
   const [value, setValue] = React.useState('');
   const [error, setError] = React.useState<string | null>(null);
 

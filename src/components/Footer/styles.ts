@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+interface ILi {
+  border?: boolean
+}
+
 export const Footer = styled.footer`
   background-color: #000;
 `;
@@ -37,11 +41,7 @@ export const Title = styled.h3`
   font-weight: 400 !important;
 `;
 
-interface LiProps {
-  border?: boolean
-}
-
-export const Li = styled.li<LiProps>`
+export const Li = styled.li<ILi>`
   margin-bottom: 1rem;
 
   color: #b2b2b2;
@@ -57,7 +57,7 @@ export const Li = styled.li<LiProps>`
           height: 2px;
 
           display: block;
-          background-color: #030110;
+          background-color: #111111;
           margin-top: 1rem;
         }
       `;
@@ -98,7 +98,7 @@ export const RightsReserved = styled.div`
   align-items: center;
 `;
 
-export const LinkAuthor = styled(Link)`
+export const LinkAuthor = styled.a`
   transition: 0.2s;
   color: inherit;
   margin-left: 0.25rem;

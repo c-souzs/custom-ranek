@@ -1,5 +1,9 @@
 import React from 'react';
 
+import useMedia from '../../../hooks/useMedia';
+
+import Title from '../../../components/Title';
+
 import wildbeast from '../../../assets/partnersLogo/wildbeast.svg';
 import surfbot from '../../../assets/partnersLogo/surfbot.svg';
 import ranek from '../../../assets/partnersLogo/ranek.svg';
@@ -10,15 +14,13 @@ import dogs from '../../../assets/partnersLogo/dogs.svg';
 import flexBlog from '../../../assets/partnersLogo/flexblog.svg';
 
 import * as C from './styles';
-import Title from '../../../components/Title';
-import useMedia from '../../../hooks/useMedia';
 
-interface PartnerImage {
+interface IPartnerImage {
   id: number
   src: string
 }
 
-const partnersImages: PartnerImage[] = [
+const partnersImages: IPartnerImage[] = [
   {
     id: 1,
     src: wildbeast,

@@ -124,11 +124,11 @@ export const ListInformation = styled.ul`
     margin-left: 2rem;
   }
 `;
-interface LiIconProps {
+interface ILiIcon {
   src: string
 }
 
-export const LiIcon = styled.li<LiIconProps>`
+export const LiIcon = styled.li<ILiIcon>`
   display: flex;
   gap: 0.75rem;
   align-items: center;

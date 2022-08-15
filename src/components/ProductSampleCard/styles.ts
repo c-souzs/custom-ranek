@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 
-interface ProductProps {
+interface IProduct {
   backgroundActive: boolean
   soldOrOwned: boolean
 }
 
-export const Product = styled.li<ProductProps>`
+export const Product = styled.li<IProduct>`
   flex: 1;
   min-width: 280px;
   padding: 0.5rem;

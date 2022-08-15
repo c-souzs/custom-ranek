@@ -1,15 +1,18 @@
 import React from 'react';
+import {
+  SkeletonButton, SkeletonImage, SkeletonText, SkeletonTitle,
+} from '../../../styles/globalStyles';
 
 import * as C from './styles';
 
-interface ProductUserCardSkeletonProps {
+interface IProductUserCardSkeletonProps {
   amount: number
   width: string
   height: string
 }
 
 // eslint-disable-next-line max-len
-const ProductUserCardSkeleton = ({ amount, height, width }: ProductUserCardSkeletonProps): JSX.Element => {
+const ProductUserCardSkeleton = ({ amount, height, width }: IProductUserCardSkeletonProps): JSX.Element => {
   const arrayAmount = Array(amount).fill(0);
 
   return (
@@ -17,21 +20,21 @@ const ProductUserCardSkeleton = ({ amount, height, width }: ProductUserCardSkele
       {arrayAmount.map((_, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <li key={index} style={{ minWidth: '280px', position: 'relative', padding: '8px 16px' }}>
-          <C.SkeletonImage h={height} w={width} />
+          <SkeletonImage h={height} w={width} />
           <div>
-            <C.SkeletonText as="span" />
-            <C.SkeletonTitle as="span" />
-            <C.SkeletonText as="span" />
+            <SkeletonText as="span" />
+            <SkeletonTitle as="span" />
+            <SkeletonText as="span" />
           </div>
           <C.ContainerSkeletonDelivery>
-            <C.SkeletonTitle as="span" />
-            <C.SkeletonText as="span" />
-            <C.SkeletonText as="span" />
-            <C.SkeletonText as="span" />
-            <C.SkeletonText as="span" />
+            <SkeletonTitle as="span" />
+            <SkeletonText as="span" />
+            <SkeletonText as="span" />
+            <SkeletonText as="span" />
+            <SkeletonText as="span" />
           </C.ContainerSkeletonDelivery>
           <C.ContainerSkeletonButton>
-            <C.SkeletonButton as="span" />
+            <SkeletonButton as="span" />
           </C.ContainerSkeletonButton>
         </li>
       ))}

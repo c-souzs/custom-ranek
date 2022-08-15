@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface ICustomList {
+  show: boolean
+}
+
 export const ListProperties = styled.div`
   position: relative;
 `;
@@ -14,10 +18,6 @@ export const List = styled.ul`
   }
 `;
 
-interface CustomListProps {
-  show: boolean
-}
-
-export const CustomList = styled(List)<CustomListProps>`
+export const CustomList = styled(List)<ICustomList>`
   display: ${(props) => (props.show ? 'grid' : 'none')};
 `;

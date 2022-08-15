@@ -3,7 +3,7 @@ import React, { ChangeEvent, SelectHTMLAttributes } from 'react';
 
 import * as C from './styles';
 
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+interface ISelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   // eslint-disable-next-line react/require-default-props
   label?: string
   value: string
@@ -13,7 +13,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 const Select = ({
   label, value, setValue, options, ...rest
-}: SelectProps): JSX.Element => (
+}: ISelectProps): JSX.Element => (
   <C.Label>
     {label}
     <C.Select

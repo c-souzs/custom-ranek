@@ -1,13 +1,14 @@
 import React from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { ThemeContext } from 'styled-components';
+
+import { productUser } from '../../../../store/productReducer';
+import useControlRedux from '../../../../hooks/useControlRedux';
+import { useInterval } from '../../../../hooks/useInterval';
+
 import Loader from '../../../../components/Loader';
 import ProductSampleCardSkeleton from '../../../../components/ProductSampleCard/Skeleton';
 import ProductUserCard from '../../../../components/ProductUserCard';
 import Subtitle from '../../../../components/Subtitle';
-import useControlRedux from '../../../../hooks/useControlRedux';
-import { useInterval } from '../../../../hooks/useInterval';
-import { productUser } from '../../../../store/productReducer';
+import ToastError from '../../../../components/ToastError';
 
 import * as C from './styles';
 
@@ -17,22 +18,14 @@ const List = (): JSX.Element => {
   const { loading, error, types } = useAppSelector((state) => state.product);
   const { data } = useAppSelector((state) => state.user);
   const [showItems, setShowItems] = React.useState(false);
-  const { colors } = React.useContext(ThemeContext);
 
-  // Mostra os produtos após 7 segundos para a imagem estar carregada
   useInterval(() => setShowItems(true), 7000);
 
-  // Busca os produtos do usuário
   React.useEffect(() => {
     if (data.information) {
       dispatch(productUser(data.information.id));
     }
   }, [data.information, dispatch]);
-
-  // Exibe um alerta de erro.
-  React.useEffect(() => {
-    if (error) toast.error('Verique a mensagem de erro.');
-  }, [error]);
 
   return (
     <C.ListProperties className="container">
@@ -60,11 +53,7 @@ const List = (): JSX.Element => {
           <p className="error">Nenhum dado foi encontrado.</p>
         )}
       </C.CustomList>
-      <Toaster
-        position="top-right"
-        // eslint-disable-next-line max-len
-        toastOptions={{ error: { duration: 2000 }, style: { backgroundColor: colors.primary, color: colors.text } }}
-      />
+      <ToastError />
       {loading && <Loader />}
     </C.ListProperties>
   );

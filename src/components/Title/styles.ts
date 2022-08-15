@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 
-interface TitlePropsStyle {
+interface ITitleStyle {
   mB: string | undefined
   colorFixed: boolean | undefined
 }
 
-export const Title = styled.h1<TitlePropsStyle>`
+export const Title = styled.h1<ITitleStyle>`
   ${({ mB }) => css`
     margin-bottom: ${mB};
   `}

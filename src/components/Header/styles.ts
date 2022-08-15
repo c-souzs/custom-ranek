@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components';
 
-interface ButtonMenuMobileProps {
+interface IButtonMenuMobile {
   active?: boolean
 }
 
-interface ElementMobile extends ButtonMenuMobileProps {
+interface IElementMobile extends IButtonMenuMobile {
   mobile?: boolean
 }
 
@@ -47,7 +47,7 @@ export const Container = styled.div`
   }
 `;
 
-export const ButtonMenuMobile = styled.button<ButtonMenuMobileProps>`
+export const ButtonMenuMobile = styled.button<IButtonMenuMobile>`
   width: 40px;
   height: 40px;
   background-color: #111;
@@ -113,7 +113,7 @@ const animationMenu = keyframes`
     }
 `;
 
-export const Nav = styled.nav<ElementMobile>`
+export const Nav = styled.nav<IElementMobile>`
   display: ${(props) => {
     if (props.active || !props.mobile) {
       return 'flex';
@@ -143,7 +143,7 @@ export const Nav = styled.nav<ElementMobile>`
   }}
 `;
 
-export const ListMenu = styled.ul<ElementMobile>`
+export const ListMenu = styled.ul<IElementMobile>`
   display: flex;
   align-items: center;
   flex-wrap: wrap;

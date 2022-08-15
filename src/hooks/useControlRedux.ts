@@ -1,19 +1,19 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/configure';
-import { InitialStateLocalization } from '../store/localizationReducer';
-import { InitialStateProduct } from '../store/productReducer';
-import { InitialStateUser } from '../store/userReducer';
+import { IInitialStateLocalization } from '../store/localizationReducer';
+import { IInitialStateProduct } from '../store/productReducer';
+import { IInitialStateUser } from '../store/userReducer';
 
-interface UseControReduxReturn {
+interface IUseControReduxReturn {
   useAppDispatch: () => AppDispatch
   useAppSelector: TypedUseSelectorHook<{
-    user: InitialStateUser
-    product: InitialStateProduct
-    localization: InitialStateLocalization
+    user: IInitialStateUser
+    product: IInitialStateProduct
+    localization: IInitialStateLocalization
   }>
 }
 
-const useControlRedux = (): UseControReduxReturn => {
+const useControlRedux = (): IUseControReduxReturn => {
   const useAppDispatch: () => AppDispatch = useDispatch;
   const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
