@@ -1,46 +1,123 @@
-# Getting Started with Create React App
+<p><h1 align="center">📱 Ranek 🛒 </h1></p>
+<p align="center">E-commerce para a compra e venda de produtos eletrônicos.</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+ <a href="#sobre">Sobre</a> •
+ <a href="#diferenciais">Diferenciais</a> •
+ <a href="#aprendizados">Aprendizados</a> •
+ <a href="#tecnologias">Tecnologias</a> •
+ <a href="#instalacao">Instalação</a>
+</p>
 
-## Available Scripts
+<div id="sobre">
+  <h1>📎 Sobre. </h1>
+  <p>
+      A Ranek é a recriação do projeto <a href="https://ranek.origamid.dev/">Ranek Origamid</a> com tecnologias, funções e layout totalmente diferentes. A readaptação       do projeto tem o objetivo de mostrar minhas habilidades e conhecimentos sobre cada tecnologia adquirido no periodo de estudo. Durante todo o desenvolvimento           busquei ferramentas e bibliotecas que me auxiliasse na produtividade e organização do código, mas sem depender totalmente delas. Também apliquei e aprimorei           minhas experiências, vivências e maturidade em todo o projeto.
+  </p>
+  <p>
+      Para ver o resultado final basta acessar: <a href="https://custom-ranek.vercel.app/">Ranek online 🛒</a>. Lembre-se, os dados da API são apagados a cada 20           minutos.
+  </p>
+  <img src="./src/assets/demo-ranek.PNG" alt="Demo Ranek"/>
+  <p>
+      <em>Pse: Como o Redux é uma biblioteca grande e abrange diferentes funcionalidades, sempre busco manter atualizado as partes onde utilizo essa ferramenta no           projeto.</em>     
+  </p>
+</div>
+        
+<div id="diferenciais">
+  <h1>📌 Diferenciais. </h1>
+  <p>
+      Aqui se encontra as principais diferenças do sitema original para esse. Os diferencias aqui citados são referente as tecnologias usada no projeto, para ver as         diferenças em relação ao layout explore o sistema online clicando <a href="https://custom-ranek.vercel.app/">aqui</a>.
+  </p>
+  <div>
+      <h3>React & Typescript & Redux.</h3>
+      <p>
+          Todo o sistema foi desenvolvido usando o react integrado com o typescript. Já o redux foi responsável por controlar toda parte de requisição da loja. Para             facilitar as requisições foi utilizado a biblioteca axios.
+      </p>
+  </div>
+  <div>
+      <h3>Styled components & Tema dark/light & Layout.</h3>
+      <p>
+          A biblioteca Styled components foi responsável por toda parte de estilização dos componentes e pelo tema dark e light. O layout foi totalmente remodelado com           o objetivo de melhorar a estética, suportar o tema e ser responsivo.
+      </p>
+  </div>
+  <div>
+      <h3>Eslint & Prettier.</h3>
+      <p>
+          Com o ojetivo de manter o código organizado, com padrões e identado, as ferramentas eslint e prettier foram utilizadas.
+      </p>
+  </div>
+  <div>
+      <h3>Figma.</h3>
+      <p>
+          A ferramenta figma foi usada para prototipar parte do sistema. Acesse ela pelo figma clicando 
+          <a href="https://www.figma.com/file/NHO4RzF25O2C1Vojjxoyjt/ranek?node-id=0%3A1">aqui</a>.
+      </p>
+  </div>
+  <div>
+      <h3>Bibliotecas.</h3>
+      <p>
+          Algumas blbiotecas usadas: react-hot-toast, react-switch, phosphor-react, qrcode.react.
+      </p>
+  </div>
+</div>
 
-In the project directory, you can run:
+<div id="aprendizados">
+ <h1>📚 Aprendizados. </h1>
+ <ul>
+  <li>Importância da documentação.</li>
+  <li>Ações assíncrona com o redux.</li>
+  <li>Interceptadores axios.</li>
+  <li>Configuração e instalação do eslint com o prettier.</li>
+  <li>Padronização do projeto.</li>
+  <li>Necessidade de se criar hooks cutomizados.</li>
+  <li>Compreensão de hooks como: useRef, useContent e useCallback.</li>
+  <li>Tipagem de items com o typescript.</li>
+  <li>Animações com css.</li>
+ </ul>
+<div>
+    
+<div id="tecnologias">
+  <h1>🛠 Tecnologias.</h1>
+  <div>
+    <a href="https://pt-br.reactjs.org/"><img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&amp;logo=react&amp;logoColor=%2361DAFB"              alt="React"></a>
+    <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"                  alt="Typescript"></a>
+    <a href="https://redux.js.org/"><img src="https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&amp;logo=redux&amp;logoColor=white" alt="Redux"></a>
+    <a href="https://styled-components.com/"><img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&amp;logo=styled-               components&amp;logoColor=white" alt="Styled Components"></a>
+    <a href="https://reactrouter.com/"><img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&amp;logo=react-router&amp;logoColor=white"            alt="React Router"></a> 
+    <a href="https://www.figma.com/"><img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma" /></a>
+    </div>
+</div>
+    <div id="instalacao">
+   <h1>ℹ️ Instalação.</h1>
+  <ul>
+    <li>
+      <p>Clone o projeto e acesse a pasta do mesmo.</p>
+      <code>
+          $ git clone https://github.com/souzzs/custom-ranek.git
+      </code>
+    </li>
+    <li>
+      <p>Instale as dependências</p>
+      <code>
+          $ npm install
+      </code>
+    </li>
+    <li>
+      <p>Inicie o projeto</p>
+      <code>
+          $ npm start
+      </code>
+    </li>
+  </ul>
+</div>
+  
+<div id="autor">
+  <h1>✏️ Autor.</h1>
+  <p>Desenvolvimento por <a href="https://github.com/souzzs">Caio Souza</a>.</p>
+  <p>
+    <a href="https://instagram.com/seu-usuario/"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&amp;logo=instagram&amp;logoColor=white" alt="Instagram Badge"></a>
+    <a href="https://discord.gg/seu-server"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&amp;logo=discord&amp;logoColor=white" alt="Discord Badge"></a>
+    <a href="https://www.linkedin.com/in/seu-usuario/"><img src="https://img.shields.io/badge/  LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="Linkedin"></a>
+  </p>
+</div>
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
