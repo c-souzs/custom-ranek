@@ -8,7 +8,6 @@
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#instalacao">Instalação</a>
 </p>
-
 <div id="sobre">
   <h1>📎 Sobre. </h1>
   <p>
@@ -22,45 +21,42 @@
       <em>Pse: Como o Redux é uma biblioteca grande e abrange diferentes funcionalidades, sempre busco manter atualizado as partes onde utilizo essa ferramenta no           projeto.</em>     
   </p>
 </div>
-        
 <div id="diferenciais">
   <h1>📌 Diferenciais. </h1>
   <p>
-      Aqui se encontra as principais diferenças do sitema original para esse. Os diferencias aqui citados são referente as tecnologias usada no projeto, para ver as         diferenças em relação ao layout explore o sistema online clicando <a href="https://custom-ranek.vercel.app/">aqui</a>.
+      Aqui você encontrará as principais diferenças em relação ao sistema original. As diferenças mencionadas aqui se referem às tecnologias usadas no projeto. Para ver as diferenças no layout, explore o sistema online clicando <a href="https://custom-ranek.vercel.app/">aqui</a>.
   </p>
   <div>
       <h3>React & Typescript & Redux.</h3>
       <p>
-          Todo o sistema foi desenvolvido usando o react integrado com o typescript. Já o redux foi responsável por controlar toda parte de requisição da loja. Para             facilitar as requisições foi utilizado a biblioteca axios.
+          O sistema foi desenvolvido inteiramente com o React, integrado ao Typescript. O Redux foi responsável por controlar toda a parte de requisições da loja, com a ajuda da biblioteca Axios.
       </p>
   </div>
   <div>
       <h3>Styled components & Tema dark/light & Layout.</h3>
       <p>
-          A biblioteca Styled components foi responsável por toda parte de estilização dos componentes e pelo tema dark e light. O layout foi totalmente remodelado com           o objetivo de melhorar a estética, suportar o tema e ser responsivo.
+          A biblioteca Styled Components foi responsável por toda a estilização dos componentes, incluindo o tema dark e light. O layout foi totalmente redesenhado com o objetivo de melhorar a aparência, suportar o tema e ser responsivo.
       </p>
   </div>
   <div>
       <h3>Eslint & Prettier.</h3>
       <p>
-          Com o ojetivo de manter o código organizado, com padrões e identado, as ferramentas eslint e prettier foram utilizadas.
+          Com o objetivo de manter o código organizado, seguindo padrões e identação, foram utilizadas as ferramentas Eslint e Prettier.
       </p>
   </div>
   <div>
       <h3>Figma.</h3>
       <p>
-          A ferramenta figma foi usada para prototipar parte do sistema. Acesse ela pelo figma clicando 
-          <a href="https://www.figma.com/file/NHO4RzF25O2C1Vojjxoyjt/ranek?node-id=0%3A1">aqui</a>.
+          A ferramenta Figma foi utilizada para prototipar parte do sistema. Você pode acessá-la clicando <a href="https://www.figma.com/file/NHO4RzF25O2C1Vojjxoyjt/ranek?node-id=0%3A1">aqui</a>.
       </p>
   </div>
   <div>
       <h3>Bibliotecas.</h3>
       <p>
-          Algumas blbiotecas usadas: react-hot-toast, react-switch, phosphor-react, qrcode.react.
+          Algumas das bibliotecas utilizadas foram: React-hot-toast, React-switch, Phosphor-react e QRCode.React.
       </p>
   </div>
 </div>
-
 <div id="aprendizados">
  <h1>📚 Aprendizados. </h1>
  <ul>
@@ -92,21 +88,15 @@
   <ul>
     <li>
       <p>Clone o projeto e acesse a pasta do mesmo.</p>
-      <code>
-          $ git clone https://github.com/souzzs/custom-ranek.git
-      </code>
+      <code> $ git clone https://github.com/souzzs/custom-ranek.git </code>
     </li>
     <li>
       <p>Instale as dependências</p>
-      <code>
-          $ npm install
-      </code>
+      <code> $ npm install </code>
     </li>
     <li>
       <p>Inicie o projeto</p>
-      <code>
-          $ npm start
-      </code>
+      <code> $ npm start </code>
     </li>
   </ul>
 </div>
@@ -114,10 +104,15 @@
 <div id="autor">
   <h1>✏️ Autor.</h1>
   <p>Desenvolvimento por <a href="https://github.com/souzzs">Caio Souza</a>.</p>
-  <p>
-    <a href="https://instagram.com/seu-usuario/"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&amp;logo=instagram&amp;logoColor=white" alt="Instagram Badge"></a>
-    <a href="https://discord.gg/seu-server"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&amp;logo=discord&amp;logoColor=white" alt="Discord Badge"></a>
-    <a href="https://www.linkedin.com/in/seu-usuario/"><img src="https://img.shields.io/badge/  LinkedIn-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="Linkedin"></a>
+  <a href="https://www.linkedin.com/in/souzzs/" target="_blank">
+    <img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white">
+  </a>
+  <a href="mailto:souzsdev@gmail.com" target="_blank">
+    <img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white">
+  </a>
+  <a href="https://discord.gg/BsnqGK6e" target="_blank">
+    <img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white">
+  </a>
   </p>
 </div>
 
